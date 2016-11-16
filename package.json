@@ -1,0 +1,23 @@
+{
+  "name": "vue-filters",
+  "version": "0.1.0",
+  "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
+  "main": "dist/vue-filters.js",
+  "scripts": {
+    "build": "webpack src/index.js dist/vue-filters.min.js --optimize-minimize",
+    "dev": "webpack src/index.js dist/vue-filters.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vuejs",
+    "vue",
+    "filters",
+    "vue-filters"
+  ],
+  "author": "Arhey",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^2.1.0-beta.27"
+  },
+  "dependencies": {}
+}
