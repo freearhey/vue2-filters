@@ -1,5 +1,5 @@
 {
-  "name": "vue-filters",
+  "name": "vue2-filters",
   "version": "0.1.0",
   "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
   "main": "dist/vue-filters.js",

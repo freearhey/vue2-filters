@@ -1,4 +1,4 @@
-# vue-filters
+# vue2-filters
 
 The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*
 
@@ -7,14 +7,14 @@ The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*
 ### NPM
 
 ```
-npm install vue-filters
+npm install vue2-filters
 ```
 
 ### Direct include
 
 ```html
 <script src="vue.js"></script>
-<script src="vue-filters.min.js"></script>
+<script src="vue2-filters.min.js"></script>
 ```
 
 ## Usage
@@ -150,7 +150,7 @@ Use a different number decimal places:
 
 ## Contribution
 
-If you find a bug or want to contribute to the code or documentation, you can help by submitting an [issue](https://github.com/freearhey/vue-filters/issues) or a [pull request](https://github.com/freearhey/vue-filters/pulls).
+If you find a bug or want to contribute to the code or documentation, you can help by submitting an [issue](https://github.com/freearhey/vue2-filters/issues) or a [pull request](https://github.com/freearhey/vue2-filters/pulls).
 
 ## License
 
