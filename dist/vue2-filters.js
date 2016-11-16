@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -534,20 +544,24 @@ function install(Vue) {
   __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].each(__WEBPACK_IMPORTED_MODULE_3__other_index__, function(value, key) {
       Vue.filter(key, value)
   })
+
+  Vue.mixin({
+    methods: {
+      limitBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["a" /* limitBy */],
+      filterBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["b" /* filterBy */],
+      orderBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["c" /* orderBy */]
+    }
+  })
 }
 
-var mixins = {
-  methods: {
-    limitBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["a" /* limitBy */],
-    filterBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["b" /* filterBy */],
-    orderBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["c" /* orderBy */]
-  }
-}
-
-if(window.Vue) {
+if (window.Vue) {
   Vue.use(install)
-  Vue.mixin(mixins)
-}
+} else if (true) {
+  module.exports = install
+} else if (typeof define === "function" && define.amd) {
+  define([], function(){ return install })
+} 
 
 /***/ }
 /******/ ]);
+});

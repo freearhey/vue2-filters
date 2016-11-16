@@ -10,6 +10,21 @@ The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*
 npm install vue2-filters
 ```
 
+### CommonJS
+
+```js
+var Vue = require('Vue');
+var Vue2Filters = require('vue2-filters');
+Vue.use(Vue2Filters);
+```
+
+### AMD
+```js
+require(['vue','vue2-filters'], function(Vue, Vue2Filters) {
+  Vue.use(Vue2Filters);
+});
+```
+
 ### Direct include
 
 ```html
