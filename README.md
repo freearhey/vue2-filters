@@ -4,7 +4,7 @@ The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*
 
 ## Installation
 
-#### Direct include
+### Direct include
 
 Simply include `vue2-filters` after Vue and it will install itself automatically:
 
@@ -13,14 +13,14 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 <script src="vue2-filters.min.js"></script>
 ```
 
-#### CDN
+### CDN
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/vue2-filters/0.1.2/vue2-filters.min.js"></script>
 ```
 
-#### NPM
+### NPM
 
 ```
 npm install vue2-filters
