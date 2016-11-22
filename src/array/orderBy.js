@@ -9,7 +9,7 @@ import util from '../util/index'
 
 function orderBy (arr) {
   var comparator = null
-  var sortKeys
+  var sortKey
   arr = util.convertArray(arr)
 
   // determine order (last argument)
@@ -23,18 +23,31 @@ function orderBy (arr) {
   }
 
   // determine sortKeys & comparator
-  var firstArg = args[0]
-  var sortKey = args[1]
+  var firstArg = sortKey = args[0]
   if (!firstArg) {
     return arr
+  } else if (typeof firstArg === 'function') {
+    // custom comparator
+    comparator = function (a, b) {
+      return firstArg(a, b) * order
+    }
   } else {
     comparator = function (a, b) {
-      if (a[sortKey] < b[sortKey])
-        return -order
-      if (a[sortKey] > b[sortKey])
+      return baseCompare(a, b)
+    }
+  }
+
+  function baseCompare(a, b) {
+    if (sortKey) {
+      if (a[sortKey] > b[sortKey]) {
         return order
+      }
+      if (a[sortKey] < b[sortKey]) {
+        return -order
+      }
       return 0
     }
+    return a === b ? 0 : a > b ? order : -order
   }
 
   // sort on a copy to avoid mutating original array
