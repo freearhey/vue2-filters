@@ -25,7 +25,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 ```
 npm install vue2-filters
 ```
-When used with a module system, you must explicitly install the router via `Vue.use()`:
+When used with a module system, you must explicitly install the filters via `Vue.use()`:
 ```js
 import Vue from 'vue'
 import Vue2Filters from 'vue2-filters'
