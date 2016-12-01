@@ -9,7 +9,7 @@ import util from '../util/index'
 
 function orderBy (arr) {
   var comparator = null
-  var sortKey
+  var sortKeys
   arr = util.convertArray(arr)
 
   // determine order (last argument)
@@ -23,7 +23,7 @@ function orderBy (arr) {
   }
 
   // determine sortKeys & comparator
-  var firstArg = sortKey = args[0]
+  var firstArg = args[0]
   if (!firstArg) {
     return arr
   } else if (typeof firstArg === 'function') {
@@ -32,20 +32,25 @@ function orderBy (arr) {
       return firstArg(a, b) * order
     }
   } else {
-    comparator = function (a, b) {
-      return baseCompare(a, b)
+    // string keys. flatten first
+    sortKeys = Array.prototype.concat.apply([], args)
+    comparator = function (a, b, i) {
+      i = i || 0
+      return i >= sortKeys.length - 1
+        ? baseCompare(a, b, i)
+        : baseCompare(a, b, i) || comparator(a, b, i + 1)
     }
   }
 
-  function baseCompare(a, b) {
+  function baseCompare (a, b, sortKeyIndex) {
+    const sortKey = sortKeys[sortKeyIndex]
     if (sortKey) {
-      if (a[sortKey] > b[sortKey]) {
-        return order
+      if (sortKey !== '$key') {
+        if (util.isObject(a) && '$value' in a) a = a.$value
+        if (util.isObject(b) && '$value' in b) b = b.$value
       }
-      if (a[sortKey] < b[sortKey]) {
-        return -order
-      }
-      return 0
+      a = util.isObject(a) ? util.getPath(a, sortKey) : a
+      b = util.isObject(b) ? util.getPath(b, sortKey) : b
     }
     return a === b ? 0 : a > b ? order : -order
   }

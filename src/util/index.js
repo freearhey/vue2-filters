@@ -99,6 +99,14 @@ util.convertArray = function (value) {
     }
 }
 
+function multiIndex(obj,is) {  // obj,['1','2','3'] -> ((obj['1'])['2'])['3']
+    return is.length ? multiIndex(obj[is[0]],is.slice(1)) : obj
+}
+
+util.getPath = function(obj,is) {   // obj,'1.2.3' -> multiIndex(obj,['1','2','3'])
+    return multiIndex(obj,is.split('.'))
+}
+
 /**
  * Strict object type check. Only returns true
  * for plain JavaScript objects.

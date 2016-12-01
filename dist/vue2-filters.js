@@ -180,6 +180,14 @@ util.convertArray = function (value) {
     }
 }
 
+function multiIndex(obj,is) {  // obj,['1','2','3'] -> ((obj['1'])['2'])['3']
+    return is.length ? multiIndex(obj[is[0]],is.slice(1)) : obj
+}
+
+util.getPath = function(obj,is) {   // obj,'1.2.3' -> multiIndex(obj,['1','2','3'])
+    return multiIndex(obj,is.split('.'))
+}
+
 /**
  * Strict object type check. Only returns true
  * for plain JavaScript objects.
@@ -283,7 +291,7 @@ function filterBy (arr, search) {
       while (j--) {
         key = keys[j]
         if ((key === '$key' && contains(item.$key, search)) ||
-            contains(item[key], search)) {
+            contains(__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(val, key), search)) {
           res.push(item)
           break
         }
@@ -361,7 +369,7 @@ function limitBy (arr, n, offset) {
 
 function orderBy (arr) {
   var comparator = null
-  var sortKey
+  var sortKeys
   arr = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].convertArray(arr)
 
   // determine order (last argument)
@@ -375,7 +383,7 @@ function orderBy (arr) {
   }
 
   // determine sortKeys & comparator
-  var firstArg = sortKey = args[0]
+  var firstArg = args[0]
   if (!firstArg) {
     return arr
   } else if (typeof firstArg === 'function') {
@@ -384,20 +392,25 @@ function orderBy (arr) {
       return firstArg(a, b) * order
     }
   } else {
-    comparator = function (a, b) {
-      return baseCompare(a, b)
+    // string keys. flatten first
+    sortKeys = Array.prototype.concat.apply([], args)
+    comparator = function (a, b, i) {
+      i = i || 0
+      return i >= sortKeys.length - 1
+        ? baseCompare(a, b, i)
+        : baseCompare(a, b, i) || comparator(a, b, i + 1)
     }
   }
 
-  function baseCompare(a, b) {
+  function baseCompare (a, b, sortKeyIndex) {
+    const sortKey = sortKeys[sortKeyIndex]
     if (sortKey) {
-      if (a[sortKey] > b[sortKey]) {
-        return order
+      if (sortKey !== '$key') {
+        if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(a) && '$value' in a) a = a.$value
+        if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(b) && '$value' in b) b = b.$value
       }
-      if (a[sortKey] < b[sortKey]) {
-        return -order
-      }
-      return 0
+      a = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(a) ? __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(a, sortKey) : a
+      b = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(b) ? __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(b, sortKey) : b
     }
     return a === b ? 0 : a > b ? order : -order
   }
@@ -469,7 +482,6 @@ function currency (value, currency, decimals) {
 
 function pluralize (value) {
   var args = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].toArray(arguments, 1)
-  args.shift()
   return args.length > 1
     ? (args[value % 10 - 1] || args[args.length - 1])
     : (args[0] + (value === 1 ? '' : 's'))
