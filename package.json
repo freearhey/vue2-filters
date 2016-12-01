@@ -1,12 +1,12 @@
 {
   "name": "vue2-filters",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
   "main": "dist/vue2-filters.js",
   "scripts": {
-    "build": "webpack src/index.js dist/vue2-filters.min.js --output-library-target umd --optimize-minimize",
-    "dev": "webpack src/index.js dist/vue2-filters.js --output-library-target umd --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node_modules/.bin/webpack src/index.js dist/vue2-filters.min.js --output-library-target umd --optimize-minimize",
+    "dev": "node_modules/.bin/webpack src/index.js dist/vue2-filters.js --output-library-target umd --watch",
+    "test": "node_modules/.bin/karma start test/karma.conf.js --single-run --no-auto-watch"
   },
   "keywords": [
     "vuejs",
@@ -17,6 +17,11 @@
   "author": "Arhey",
   "license": "MIT",
   "devDependencies": {
+    "jasmine": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-webpack": "^1.8.0",
     "webpack": "^2.1.0-beta.27"
   },
   "dependencies": {}
