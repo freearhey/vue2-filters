@@ -15,7 +15,6 @@ import util from '../util/index'
 
 function pluralize (value) {
   var args = util.toArray(arguments, 1)
-  args.shift()
   return args.length > 1
     ? (args[value % 10 - 1] || args[args.length - 1])
     : (args[0] + (value === 1 ? '' : 's'))
