@@ -31,7 +31,7 @@ function filterBy (arr, search) {
       while (j--) {
         key = keys[j]
         if ((key === '$key' && contains(item.$key, search)) ||
-            contains(item[key], search)) {
+            contains(util.getPath(val, key), search)) {
           res.push(item)
           break
         }
