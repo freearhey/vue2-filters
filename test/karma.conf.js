@@ -1,5 +1,5 @@
 module.exports = function(config) {
-  config.set({
+  var configuration = {
 
     frameworks: ['jasmine'],
 
@@ -11,7 +11,20 @@ module.exports = function(config) {
       '../test/**/*.spec.js': ['webpack']
     },
 
-    browsers: ['Chrome']
+    browsers: ['Chrome'],
 
-  })
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    }
+
+  }
+
+  if(process.env.TRAVIS){
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration);
 }
