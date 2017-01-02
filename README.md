@@ -61,6 +61,14 @@ You don't need to do this when using global script tags.
 {{ msg | lowercase }} // 'ABC' => 'abc'
 ```
 
+#### placeholder
+
++ Example:
+
+  ```js
+{{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
+```
+
 #### currency
 
 + Arguments:
@@ -105,6 +113,7 @@ Use a different number decimal places:
 // 5 => '5th'
 ```
 
+
 #### limitBy
 
 + Arguments:
@@ -120,6 +129,7 @@ Use a different number decimal places:
 <!-- display items 5 to 15 -->
 <div v-for="item in limitBy(items, 10, 5)"></div>
 ```
+
 
 #### filterBy
 

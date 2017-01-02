@@ -23,6 +23,12 @@ describe('Filters', function() {
     assertNumberAndFalsy(filter)
   })
 
+  it('placeholder', function() {
+    var filter = stringFilters.placeholder
+    expect(filter('sometext', 'placeholder text')).toBe('sometext')
+    expect(filter('', 'placeholder text')).toBe('placeholder text')
+  })
+
   it('currency', function() {
     var filter = otherFilters.currency
     expect(filter(1234)).toBe('$1,234.00')
