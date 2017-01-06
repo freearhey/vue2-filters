@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -241,8 +241,10 @@ util.isPlainObject = function (obj) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__capitalize__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uppercase__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uppercase__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lowercase__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__placeholder__ = __webpack_require__(11);
+
 
 
 
@@ -250,6 +252,7 @@ util.isPlainObject = function (obj) {
 /* harmony reexport (binding) */ __webpack_require__.d(exports, "capitalize", function() { return __WEBPACK_IMPORTED_MODULE_0__capitalize__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(exports, "uppercase", function() { return __WEBPACK_IMPORTED_MODULE_1__uppercase__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(exports, "lowercase", function() { return __WEBPACK_IMPORTED_MODULE_2__lowercase__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(exports, "placeholder", function() { return __WEBPACK_IMPORTED_MODULE_3__placeholder__["a"]; });
 
 
 /***/ },
@@ -534,6 +537,25 @@ function lowercase (value) {
 
 "use strict";
 /**
+ *  If the value is missing outputs the placeholder text
+ * 
+ * '' => {placeholder}
+ * 'foo' => 'foo'
+ */
+
+function placeholder (input, property) {
+  return ( input === undefined || input === '' ) ? property : input;
+}
+
+/* harmony default export */ exports["a"] = placeholder;
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
  * Converts a string to UPPERCASE
  * 
  * 'abc' => 'ABC'
@@ -548,7 +570,7 @@ function uppercase (value) {
 /* harmony default export */ exports["a"] = uppercase;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";

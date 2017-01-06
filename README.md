@@ -17,7 +17,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/vue2-filters/0.1.4/vue2-filters.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue2-filters/0.1.5/vue2-filters.min.js"></script>
 ```
 
 ### NPM
@@ -59,6 +59,14 @@ You don't need to do this when using global script tags.
 
   ```js
 {{ msg | lowercase }} // 'ABC' => 'abc'
+```
+
+#### placeholder
+
++ Example:
+
+  ```js
+{{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
 ```
 
 #### currency
@@ -105,6 +113,7 @@ Use a different number decimal places:
 // 5 => '5th'
 ```
 
+
 #### limitBy
 
 + Arguments:
@@ -120,6 +129,7 @@ Use a different number decimal places:
 <!-- display items 5 to 15 -->
 <div v-for="item in limitBy(items, 10, 5)"></div>
 ```
+
 
 #### filterBy
 
