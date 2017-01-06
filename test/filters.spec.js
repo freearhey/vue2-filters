@@ -29,6 +29,14 @@ describe('Filters', function() {
     expect(filter('', 'placeholder text')).toBe('placeholder text')
   })
 
+  it('initials', function() {
+    var filter = stringFilters.initials
+    expect(filter('John Smith')).toBe('J S')
+    expect(filter('J. Smith')).toBe('J S')
+    expect(filter('John')).toBe('J')
+    expect(filter('John Amadeus Wolfgang Mozart')).toBe('J A')
+  })
+
   it('currency', function() {
     var filter = otherFilters.currency
     expect(filter(1234)).toBe('$1,234.00')
