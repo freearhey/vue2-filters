@@ -7,7 +7,7 @@
  */
 
 function currency (value, currency, decimals) {
-  const digitsRE = /(\d{3})(?=\d)/g
+  var digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
   if (!isFinite(value) || (!value && value !== 0)) return ''
   currency = currency != null ? currency : '$'

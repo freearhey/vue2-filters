@@ -406,7 +406,7 @@ function orderBy (arr) {
   }
 
   function baseCompare (a, b, sortKeyIndex) {
-    const sortKey = sortKeys[sortKeyIndex]
+    var sortKey = sortKeys[sortKeyIndex]
     if (sortKey) {
       if (sortKey !== '$key') {
         if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(a) && '$value' in a) a = a.$value
@@ -438,7 +438,7 @@ function orderBy (arr) {
  */
 
 function currency (value, currency, decimals) {
-  const digitsRE = /(\d{3})(?=\d)/g
+  var digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
   if (!isFinite(value) || (!value && value !== 0)) return ''
   currency = currency != null ? currency : '$'
