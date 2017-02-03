@@ -43,7 +43,7 @@ function orderBy (arr) {
   }
 
   function baseCompare (a, b, sortKeyIndex) {
-    const sortKey = sortKeys[sortKeyIndex]
+    var sortKey = sortKeys[sortKeyIndex]
     if (sortKey) {
       if (sortKey !== '$key') {
         if (util.isObject(a) && '$value' in a) a = a.$value
