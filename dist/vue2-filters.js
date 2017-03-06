@@ -173,9 +173,6 @@ util.convertArray = function (value) {
       }
       return res
     } else {
-      if (typeof value === 'number' && !isNaN(value)) {
-        value = range(value)
-      }
       return value || []
     }
 }
