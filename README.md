@@ -41,8 +41,8 @@ You don't need to do this when using global script tags.
 + Example:
 
   ```js
-{{ msg | capitalize }} // 'abc' => 'Abc'
-```
+  {{ msg | capitalize }} // 'abc' => 'Abc'
+  ```
 
 
 #### uppercase
@@ -50,24 +50,24 @@ You don't need to do this when using global script tags.
 + Example:
 
   ```js
-{{ msg | uppercase }} // 'abc' => 'ABC'
-```
+  {{ msg | uppercase }} // 'abc' => 'ABC'
+  ```
 
 #### lowercase
 
 + Example:
 
   ```js
-{{ msg | lowercase }} // 'ABC' => 'abc'
-```
+  {{ msg | lowercase }} // 'ABC' => 'abc'
+  ```
 
 #### placeholder
 
 + Example:
 
   ```js
-{{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
-```
+  {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
+  ```
 
 #### currency
 
@@ -78,16 +78,16 @@ You don't need to do this when using global script tags.
 + Example:
 
   ```js
-{{ amount | currency }} // 12345 => $12,345.00
-```
-Use a different symbol:
+  {{ amount | currency }} // 12345 => $12,345.00
+  ```
+  Use a different symbol:
   ```js
-{{ amount | currency('£') }} // 12345 => £12,345.00
-```
-Use a different number decimal places:
+  {{ amount | currency('£') }} // 12345 => £12,345.00
+  ```
+  Use a different number decimal places:
   ```js
-{{ amount | currency('₽', 0) }} // 12345 => ₽12,345
-```
+  {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
+  ```
 
 #### pluralize
 
@@ -97,21 +97,21 @@ Use a different number decimal places:
 + Example:
 
   ```js
-{{count}} {{count | pluralize('item')}} 
+  {{count}} {{count | pluralize('item')}} 
 
-// 1 => '1 item'
-// 2 => '2 items'
-```
+  // 1 => '1 item'
+  // 2 => '2 items'
+  ```
 
   ```js
-{{date}} {{date | pluralize('st','nd','rd','th')}} 
+  {{date}} {{date | pluralize('st','nd','rd','th')}} 
 
-// 1 => '1st'
-// 2 => '2nd'
-// 3 => '3rd'
-// 4 => '4th'
-// 5 => '5th'
-```
+  // 1 => '1st'
+  // 2 => '2nd'
+  // 3 => '3rd'
+  // 4 => '4th'
+  // 5 => '5th'
+  ```
 
 
 #### limitBy
@@ -124,11 +124,11 @@ Use a different number decimal places:
 + Example:
 
   ```html
-<!-- only display first 10 items -->
-<div v-for="item in limitBy(items, 10)"></div>
-<!-- display items 5 to 15 -->
-<div v-for="item in limitBy(items, 10, 5)"></div>
-```
+  <!-- only display first 10 items -->
+  <div v-for="item in limitBy(items, 10)"></div>
+  <!-- display items 5 to 15 -->
+  <div v-for="item in limitBy(items, 10, 5)"></div>
+  ```
 
 
 #### filterBy
@@ -141,13 +141,13 @@ Use a different number decimal places:
 + Example:
 
   ```html
-<!-- only items that contain the target string "hello" will be displayed -->
-<div v-for="item in filterBy(items, 'hello')">
-<!-- the filter will only search for "Jack" in the name field of each user object -->
-<div v-for="user in filterBy(users, 'Jack', 'name')">
-<!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
-<div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
-```
+  <!-- only items that contain the target string "hello" will be displayed -->
+  <div v-for="item in filterBy(items, 'hello')">
+  <!-- the filter will only search for "Jack" in the name field of each user object -->
+  <div v-for="user in filterBy(users, 'Jack', 'name')">
+  <!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
+  <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
+  ```
 
 #### orderBy
 
@@ -159,21 +159,23 @@ Use a different number decimal places:
 + Example:
 
   Sort users by name:
+
   ```html
-<ul>
-  <li v-for="user in orderBy(users, 'name')">
-    {{ user.name }}
-  </li>
-</ul>
-```
+  <ul>
+    <li v-for="user in orderBy(users, 'name')">
+      {{ user.name }}
+    </li>
+  </ul>
+  ```
   In descending order:
+
   ```html
-<ul>
-  <li v-for="user in orderBy(users, 'name', -1)">
-    {{ user.name }}
-  </li>
-</ul>
-```
+  <ul>
+    <li v-for="user in orderBy(users, 'name', -1)">
+      {{ user.name }}
+    </li>
+  </ul>
+  ```
 
 ## Contribution
 
