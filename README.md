@@ -69,6 +69,15 @@ You don't need to do this when using global script tags.
   {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
   ```
 
+
+#### initials
+
++ Example:
+
+  ```js
+{{ msg | initials }} // 'Nicola Tesla' => 'N T'
+```
+
 #### currency
 
 + Arguments:
