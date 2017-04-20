@@ -26,7 +26,10 @@ describe('Filters', function() {
   it('placeholder', function() {
     var filter = stringFilters.placeholder
     expect(filter('sometext', 'placeholder text')).toBe('sometext')
+    expect(filter(1234, 'placeholder text')).toBe(1234)
     expect(filter('', 'placeholder text')).toBe('placeholder text')
+    expect(filter(undefined, 'placeholder text')).toBe('placeholder text')
+    expect(filter(null, 'placeholder text')).toBe('placeholder text')
   })
 
   it('currency', function() {

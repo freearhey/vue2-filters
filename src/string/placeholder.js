@@ -6,7 +6,7 @@
  */
 
 function placeholder (input, property) {
-  return ( input === undefined || input === '' ) ? property : input;
+  return ( input === undefined || input === '' || input === null ) ? property : input;
 }
 
 export default placeholder
