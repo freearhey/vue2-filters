@@ -5,7 +5,7 @@
  */
 
 function truncate (value, length) {
-  return (value || value === 0) ? string.substring(0, length || 15) + '...' : '';
+  return (value || value === 0) ? value.substring(0, length || 15) + '...' : '';
 }
 
-export default placeholder
+export default truncate
