@@ -63,6 +63,9 @@ You don't need to do this when using global script tags.
 
 #### placeholder
 
++ Arguments:
+  * `{String} [placeholder]`
+
 + Example:
 
   ```js
