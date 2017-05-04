@@ -75,7 +75,7 @@ You don't need to do this when using global script tags.
 #### truncate
 
 + Arguments:
-  * `{Number} [decimal places] - default: 15`
+  * `{Number} [length] - default: 15`
 
 + Example:
 
