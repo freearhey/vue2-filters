@@ -32,6 +32,17 @@ describe('Filters', function() {
     expect(filter(null, 'placeholder text')).toBe('placeholder text')
   })
 
+  it('truncate', function() {
+    var filter = stringFilters.truncate
+    expect(filter('lorem ipsum dolor')).toBe('lorem ipsum dol...')
+    expect(filter('lorem ipsum dolor', 5)).toBe('lorem...')
+    expect(filter('lorem ipsum dolor', 20)).toBe('lorem ipsum dolor')
+    expect(filter(1234, 5)).toBe('')
+    expect(filter('', 5)).toBe('')
+    expect(filter(undefined, 5)).toBe('')
+    expect(filter(null, 5)).toBe('')
+  })
+
   it('currency', function() {
     var filter = otherFilters.currency
     expect(filter(1234)).toBe('$1,234.00')

@@ -69,6 +69,17 @@ You don't need to do this when using global script tags.
   {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
   ```
 
+#### truncate
+
++ Arguments:
+  * `{Number} [decimal places] - default: 15`
+
++ Example:
+
+  ```js
+  {{ msg | truncate(10) }} // 'lorem ipsum dolor' => 'lorem ipsu...'
+  ```
+
 #### currency
 
 + Arguments:
