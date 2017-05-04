@@ -17,7 +17,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/vue2-filters/0.1.8/vue2-filters.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue2-filters/0.1.9/vue2-filters.min.js"></script>
 ```
 
 ### NPM
@@ -63,10 +63,24 @@ You don't need to do this when using global script tags.
 
 #### placeholder
 
++ Arguments:
+  * `{String} [placeholder]`
+
 + Example:
 
   ```js
   {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
+  ```
+
+#### truncate
+
++ Arguments:
+  * `{Number} [decimal places] - default: 15`
+
++ Example:
+
+  ```js
+  {{ msg | truncate(10) }} // 'lorem ipsum dolor' => 'lorem ipsu...'
   ```
 
 #### currency
