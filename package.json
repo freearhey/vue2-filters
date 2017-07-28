@@ -27,5 +27,8 @@
     "karma-webpack": "1.8.0",
     "webpack": "2.1.0-beta.27"
   },
-  "dependencies": {}
+  "dependencies": {
+    "number-to-words": "^1.2.3",
+    "pluralize": "^6.0.0"
+  }
 }

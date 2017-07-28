@@ -32,6 +32,15 @@ import Vue2Filters from 'vue2-filters'
 
 Vue.use(Vue2Filters)
 ```
+Or individually via `Vue.filter()` or `Vue.mixin()` for array filters:
+```js
+import Vue from 'vue'
+import capitalize from 'vue2-filters/src/string/capitalize'
+import limitBy from 'vue2-filters/src/array/limitBy'
+
+Vue.filter('capitalize', capitalize)
+Vue.mixin({ methods: { limitBy: limitBy } })
+```
 You don't need to do this when using global script tags.
 
 ## Usage
@@ -72,6 +81,26 @@ You don't need to do this when using global script tags.
   {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
   ```
 
+#### pluralize
+
++ Arguments:
+  * `{Number} [amount] - default: 2`
+  * `{Boolean} [prepend amount] - default: false`
+
++ Example:
+
+  ```js
+  {{ string | pluralize }} // item => items
+  ```
+  Getting singular:
+  ```js
+  {{ string | pluralize(1) }} // items => item
+  ```
+  Prepend the amount to the output:
+  ```js
+  {{ string | pluralize(4, true) }} // item => 4 items
+  ```
+
 #### truncate
 
 + Arguments:
@@ -103,22 +132,12 @@ You don't need to do this when using global script tags.
   {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
   ```
 
-#### pluralize
-
-+ Arguments:
-  * `{String} single, [double, triple, ...]`
+#### ordinal
 
 + Example:
 
   ```js
-  {{count}} {{count | pluralize('item')}} 
-
-  // 1 => '1 item'
-  // 2 => '2 items'
-  ```
-
-  ```js
-  {{date}} {{date | pluralize('st','nd','rd','th')}} 
+  {{ number | ordinal }}
 
   // 1 => '1st'
   // 2 => '2nd'
