@@ -21,10 +21,10 @@ function install(Vue) {
   })
 }
 
-if (window.Vue) {
-  Vue.use(install)
-} else if (typeof exports === "object") {
-  module.exports = install
+if (typeof exports === "object") {
+    module.exports = install;
 } else if (typeof define === "function" && define.amd) {
-  define([], function(){ return install })
-} 
+    define([], function(){ return install; })
+} else if (window.Vue) {
+    Vue.use(install);
+}
