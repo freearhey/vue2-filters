@@ -16,7 +16,8 @@ function install(Vue) {
     methods: {
       limitBy: arrayFilters.limitBy,
       filterBy: arrayFilters.filterBy,
-      orderBy: arrayFilters.orderBy
+      orderBy: arrayFilters.orderBy,
+      findFirst: arrayFilters.findFirst
     }
   })
 }
@@ -27,4 +28,4 @@ if (window.Vue) {
   module.exports = install
 } else if (typeof define === "function" && define.amd) {
   define([], function(){ return install })
-} 
+}
