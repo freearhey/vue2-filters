@@ -162,6 +162,21 @@ You don't need to do this when using global script tags.
   <!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
   <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
   ```
+#### findFirst
+
++ Arguments (same as filterBy):
+  * `{Array} [items]`
+  * `{String} [query]`
+  * `{String} [searchKey]`
+
++ Example:
+
+  ```html
+  <!-- only the first item that contains the target string "hello" will be displayed -->
+  <div v-for="item in filterBy(items, 'hello')">
+  <!-- the filter will only search for "Bonnie" in the name or age fields of each user object and return the first result -->
+  <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
+  ```
 
 #### orderBy
 
@@ -189,6 +204,19 @@ You don't need to do this when using global script tags.
       {{ user.name }}
     </li>
   </ul>
+  ```
+#### first
+
++ Arguments:
+  * `{Array} [items]`
+
++ Example:
+
+  ```js
+  {{ items | first }}
+
+  // [1, 2, 3, 4] => 1
+  // [{a: 1}, {b: 2}, {c: 3}] => {a: 1}
   ```
 
 ## Contribution
