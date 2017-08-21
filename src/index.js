@@ -21,7 +21,7 @@ function install(Vue) {
   })
 }
 
-if (window.Vue) {
+if (window && window.Vue) {
   Vue.use(install)
 } else if (typeof exports === "object") {
   module.exports = install
