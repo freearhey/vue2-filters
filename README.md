@@ -17,7 +17,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/vue2-filters/0.1.9/vue2-filters.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue2-filters/0.2.0/vue2-filters.min.js"></script>
 ```
 
 ### NPM
@@ -25,14 +25,44 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 ```
 npm install vue2-filters
 ```
+
 When used with a module system, you must explicitly install the filters via `Vue.use()`:
+
 ```js
 import Vue from 'vue'
 import Vue2Filters from 'vue2-filters'
 
 Vue.use(Vue2Filters)
 ```
+
 You don't need to do this when using global script tags.
+
+### Nuxt.js
+
+```
+npm install vue2-filters
+```
+
+When create file `plugins/vue2-filters.js`:
+
+```js
+import Vue from 'vue'
+import Vue2Filters from 'vue2-filters'
+
+Vue.use(Vue2Filters)
+```
+
+Then, add the file inside the `plugins` key of `nuxt.config.js`:
+
+```js
+module.exports = {
+  //...
+  plugins: [
+    '~/plugins/vue2-filters'
+  ],
+  //...
+}
+```
 
 ## Usage
 
@@ -127,7 +157,6 @@ You don't need to do this when using global script tags.
   // 5 => '5th'
   ```
 
-
 #### limitBy
 
 + Arguments:
@@ -143,7 +172,6 @@ You don't need to do this when using global script tags.
   <!-- display items 5 to 15 -->
   <div v-for="item in limitBy(items, 10, 5)"></div>
   ```
-
 
 #### filterBy
 
@@ -161,6 +189,22 @@ You don't need to do this when using global script tags.
   <div v-for="user in filterBy(users, 'Jack', 'name')">
   <!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
   <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
+  ```
+
+#### find
+
++ Arguments:
+  * `{Array} [items]`
+  * `{String} [query]`
+  * `{String} [searchKey]`
+
++ Example:
+
+  ```html
+  <!-- only the first item that contains the target string "hello" will be displayed -->
+  <div v-for="item in find(items, 'hello')">
+  <!-- the filter will only search for "Bonnie" in the name or age fields of each user object and return the first result -->
+  <div v-for="user in find(users, 'Bonnie', 'name', 'age')">
   ```
 
 #### orderBy
