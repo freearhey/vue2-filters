@@ -25,23 +25,43 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 ```
 npm install vue2-filters
 ```
+
 When used with a module system, you must explicitly install the filters via `Vue.use()`:
+
 ```js
 import Vue from 'vue'
 import Vue2Filters from 'vue2-filters'
 
 Vue.use(Vue2Filters)
 ```
-Or individually via `Vue.filter()` or `Vue.mixin()` for array filters:
+You don't need to do this when using global script tags.
+
+### Nuxt.js
+
+```
+npm install vue2-filters
+```
+
+When create file `plugins/vue2-filters.js`:
+
 ```js
 import Vue from 'vue'
-import capitalize from 'vue2-filters/src/string/capitalize'
-import limitBy from 'vue2-filters/src/array/limitBy'
+import Vue2Filters from 'vue2-filters'
 
-Vue.filter('capitalize', capitalize)
-Vue.mixin({ methods: { limitBy: limitBy } })
+Vue.use(Vue2Filters)
 ```
-You don't need to do this when using global script tags.
+
+Then, add the file inside the `plugins` key of `nuxt.config.js`:
+
+```js
+module.exports = {
+  //...
+  plugins: [
+    '~/plugins/vue2-filters'
+  ],
+  //...
+}
+```
 
 ## Usage
 

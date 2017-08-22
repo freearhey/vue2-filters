@@ -4,9 +4,13 @@
   "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
   "main": "dist/vue2-filters.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack src/index.js dist/vue2-filters.min.js --output-library-target umd --optimize-minimize",
+    "build": "node_modules/.bin/webpack src/index.js dist/vue2-filters.js --output-library-target umd && node_modules/.bin/uglifyjs dist/vue2-filters.js -o dist/vue2-filters.min.js",
     "dev": "node_modules/.bin/webpack src/index.js dist/vue2-filters.js --output-library-target umd --watch",
     "test": "node_modules/.bin/karma start test/karma.conf.js --single-run --no-auto-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/freearhey/vue2-filters.git"
   },
   "keywords": [
     "vuejs",
@@ -17,15 +21,16 @@
   "author": "Arhey",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "6.18.2",
-    "babel-loader": "6.2.8",
-    "babel-preset-es2015": "6.18.0",
-    "jasmine": "2.5.2",
-    "karma": "1.3.0",
-    "karma-jasmine": "1.0.2",
-    "karma-phantomjs-launcher": "1.0.2",
-    "karma-webpack": "1.8.0",
-    "webpack": "2.1.0-beta.27"
+    "babel-core": "6.26.0",
+    "babel-loader": "6.4.1",
+    "babel-preset-es2015": "6.24.1",
+    "jasmine": "2.7.0",
+    "karma": "1.7.0",
+    "karma-jasmine": "1.1.0",
+    "karma-phantomjs-launcher": "1.0.4",
+    "karma-webpack": "1.8.1",
+    "uglify-es": "3.0.28",
+    "webpack": "2.7.0"
   },
   "dependencies": {
     "number-to-words": "^1.2.3",
