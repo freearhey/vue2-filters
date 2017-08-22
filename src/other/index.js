@@ -1,7 +1,7 @@
 import currency from './currency'
-import ordinal from './ordinal'
+import pluralize from './pluralize'
 
 export {
   currency,
-  ordinal
+  pluralize
 }

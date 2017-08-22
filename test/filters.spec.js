@@ -1,6 +1,6 @@
 var stringFilters = require('../src/string/index')
 var arrayFilters = require('../src/array/index')
-var numberFilters = require('../src/number/index')
+var otherFilters = require('../src/other/index')
 
 describe('Filters', function() {
   it('capitalize', function() {
@@ -32,22 +32,6 @@ describe('Filters', function() {
     expect(filter(null, 'placeholder text')).toBe('placeholder text')
   })
 
-  it('pluralize', function() {
-    var filter = stringFilters.pluralize
-
-    var singularString = 'item'
-    var pluralString = 'items'
-    // singluar input
-    expect(filter(singularString, 0)).toBe(pluralString)
-    expect(filter(singularString, 1)).toBe(singularString)
-    expect(filter(singularString, 2)).toBe(pluralString)
-    // plural input
-    expect(filter(pluralString, 1)).toBe(singularString)
-    expect(filter(pluralString, 2)).toBe(pluralString)
-    // prepend amount
-    expect(filter(singularString, 2, true)).toBe('2 ' + pluralString)
-  })
-
   it('truncate', function() {
     var filter = stringFilters.truncate
     expect(filter('lorem ipsum dolor')).toBe('lorem ipsum dol...')
@@ -60,7 +44,7 @@ describe('Filters', function() {
   })
 
   it('currency', function() {
-    var filter = numberFilters.currency
+    var filter = otherFilters.currency
     expect(filter(1234)).toBe('$1,234.00')
     expect(filter(1234.45)).toBe('$1,234.45')
     expect(filter(123443434.4343434)).toBe('$123,443,434.43')
@@ -89,13 +73,19 @@ describe('Filters', function() {
     expect(filter(-1500.4343434)).toBe('-$1,500.43')
   })
 
-  it('ordinal', function() {
-    var filter = numberFilters.ordinal
-    expect(filter(0)).toBe('0th')
-    expect(filter(1)).toBe('1st')
-    expect(filter(2)).toBe('2nd')
-    expect(filter(3)).toBe('3rd')
-    expect(filter(4)).toBe('4th')
+  it('pluralize', function() {
+    var filter = otherFilters.pluralize
+    // single arg
+    var arg = 'item'
+    expect(filter(0, arg)).toBe('items')
+    expect(filter(1, arg)).toBe('item')
+    expect(filter(2, arg)).toBe('items')
+    // multi args
+    expect(filter(0, 'st', 'nd', 'rd', 'th')).toBe('th')
+    expect(filter(1, 'st', 'nd', 'rd', 'th')).toBe('st')
+    expect(filter(2, 'st', 'nd', 'rd', 'th')).toBe('nd')
+    expect(filter(3, 'st', 'nd', 'rd', 'th')).toBe('rd')
+    expect(filter(4, 'st', 'nd', 'rd', 'th')).toBe('th')
   })
 
   it('limitBy', function () {

@@ -34,6 +34,7 @@ import Vue2Filters from 'vue2-filters'
 
 Vue.use(Vue2Filters)
 ```
+
 You don't need to do this when using global script tags.
 
 ### Nuxt.js
@@ -101,26 +102,6 @@ module.exports = {
   {{ msg | placeholder('Text if msg is missing') }} // '' => 'Text if msg is missing'
   ```
 
-#### pluralize
-
-+ Arguments:
-  * `{Number} [amount] - default: 2`
-  * `{Boolean} [prepend amount] - default: false`
-
-+ Example:
-
-  ```js
-  {{ string | pluralize }} // item => items
-  ```
-  Getting singular:
-  ```js
-  {{ string | pluralize(1) }} // items => item
-  ```
-  Prepend the amount to the output:
-  ```js
-  {{ string | pluralize(4, true) }} // item => 4 items
-  ```
-
 #### truncate
 
 + Arguments:
@@ -152,12 +133,22 @@ module.exports = {
   {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
   ```
 
-#### ordinal
+#### pluralize
+
++ Arguments:
+  * `{String} single, [double, triple, ...]`
 
 + Example:
 
   ```js
-  {{ number | ordinal }}
+  {{count}} {{count | pluralize('item')}} 
+
+  // 1 => '1 item'
+  // 2 => '2 items'
+  ```
+
+  ```js
+  {{date}} {{date | pluralize('st','nd','rd','th')}} 
 
   // 1 => '1st'
   // 2 => '2nd'
