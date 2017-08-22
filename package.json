@@ -32,5 +32,8 @@
     "uglify-es": "3.0.28",
     "webpack": "2.7.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "number-to-words": "^1.2.3",
+    "pluralize": "^6.0.0"
+  }
 }
