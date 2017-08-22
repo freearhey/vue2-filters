@@ -157,7 +157,6 @@ module.exports = {
   // 5 => '5th'
   ```
 
-
 #### limitBy
 
 + Arguments:
@@ -173,7 +172,6 @@ module.exports = {
   <!-- display items 5 to 15 -->
   <div v-for="item in limitBy(items, 10, 5)"></div>
   ```
-
 
 #### filterBy
 
@@ -191,6 +189,22 @@ module.exports = {
   <div v-for="user in filterBy(users, 'Jack', 'name')">
   <!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
   <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
+  ```
+
+#### find
+
++ Arguments:
+  * `{Array} [items]`
+  * `{String} [query]`
+  * `{String} [searchKey]`
+
++ Example:
+
+  ```html
+  <!-- only the first item that contains the target string "hello" will be displayed -->
+  <div v-for="item in find(items, 'hello')">
+  <!-- the filter will only search for "Bonnie" in the name or age fields of each user object and return the first result -->
+  <div v-for="user in find(users, 'Bonnie', 'name', 'age')">
   ```
 
 #### orderBy
