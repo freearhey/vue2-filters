@@ -13,10 +13,21 @@ module.exports = function(config) {
 
     browsers: ['PhantomJS'],
 
+    plugins: [
+      'karma-phantomjs-launcher',
+      'karma-jasmine',
+      'karma-webpack'
+    ],
+
     webpack: {
+      entry: 'whatever',
       module: {
-        loaders: [
-          { test: /\.js/, exclude: /node_modules/, loader: 'babel-loader' }
+        rules: [
+          { 
+            test: /\.js$/, 
+            exclude: /node_modules/, 
+            use: [ 'babel-loader' ]
+          }
         ]
       }
     }

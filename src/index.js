@@ -3,29 +3,29 @@ import * as stringFilters from './string/index'
 import * as arrayFilters from './array/index'
 import * as otherFilters from './other/index'
 
-function install(Vue) {
-  util.each(stringFilters, function(value, key) {
-      Vue.filter(key, value)
-  })
+var Vue2Filters = {
+  install(Vue) {
+    util.each(stringFilters, function(value, key) {
+        Vue.filter(key, value)
+    })
 
-  util.each(otherFilters, function(value, key) {
-      Vue.filter(key, value)
-  })
+    util.each(otherFilters, function(value, key) {
+        Vue.filter(key, value)
+    })
 
-  Vue.mixin({
-    methods: {
-      limitBy: arrayFilters.limitBy,
-      filterBy: arrayFilters.filterBy,
-      orderBy: arrayFilters.orderBy,
-      findFirst: arrayFilters.findFirst
-    }
-  })
+    Vue.mixin({
+      methods: {
+        limitBy: arrayFilters.limitBy,
+        filterBy: arrayFilters.filterBy,
+        orderBy: arrayFilters.orderBy,
+        findFirst: arrayFilters.findFirst
+      }
+    })
+  }
 }
 
-if (window.Vue) {
-  Vue.use(install)
-} else if (typeof exports === "object") {
-  module.exports = install
-} else if (typeof define === "function" && define.amd) {
-  define([], function(){ return install })
+export default Vue2Filters;
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(Vue2Filters);
 }
