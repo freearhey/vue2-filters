@@ -1,11 +1,11 @@
 import limitBy from './limitBy'
 import filterBy from './filterBy'
 import orderBy from './orderBy'
-import findFirst from './findFirst'
+import find from './find'
 
 export {
   limitBy,
   filterBy,
   orderBy,
-  findFirst
+  find
 }

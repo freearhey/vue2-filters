@@ -159,15 +159,15 @@ describe('Filters', function() {
     assertArray(res, [arr[0], arr[2]])
   })
 
-  it('filterBy FindFirst', function() {
-    var findFirst = arrayFilters.findFirst
+  it('find', function() {
+    var find = arrayFilters.find
     var arr = [
       { a: 1, b: { c: 'hello' }},
       { a: 2, b: 'hello' },
       { a: 3, b: ['yoyo'] }
     ]
-    var res = findFirst(arr, 'hello')
-    expect(res).toBe(arr[0])
+    var res = find(arr, 'hello')
+    assertArray(res, [arr[0]])
   })
 
   it('orderBy', function () {

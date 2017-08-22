@@ -18,7 +18,7 @@ var Vue2Filters = {
         limitBy: arrayFilters.limitBy,
         filterBy: arrayFilters.filterBy,
         orderBy: arrayFilters.orderBy,
-        findFirst: arrayFilters.findFirst
+        find: arrayFilters.find
       }
     })
   }

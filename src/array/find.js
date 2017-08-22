@@ -1,5 +1,4 @@
 import filterBy from './filterBy'
-import first from '../other/first'
 
 /**
  * Get first matching element from a filtered array
@@ -8,9 +7,11 @@ import first from '../other/first'
  * @param {String|Number} search
  * @returns {mixed}
  */
-function findFirst (arr, search) {
-    var array = filterBy(arr, search);
-    return first(array);
+function find(arr, search) 
+{
+  var array = filterBy.apply(this, arguments);
+  array.splice(1);
+  return array;
 }
 
-export default findFirst;
+export default find;
