@@ -1,6 +1,6 @@
 {
   "name": "vue2-filters",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
   "main": "dist/vue2-filters.js",
   "scripts": {
@@ -23,14 +23,14 @@
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "6.4.1",
-    "babel-preset-es2015": "6.24.1",
-    "jasmine": "2.7.0",
-    "karma": "1.7.0",
+    "babel-preset-env": "1.6.0",
+    "jasmine": "2.8.0",
+    "karma": "1.7.1",
     "karma-jasmine": "1.1.0",
     "karma-phantomjs-launcher": "1.0.4",
     "karma-webpack": "1.8.1",
     "uglify-es": "3.0.28",
-    "webpack": "2.7.0"
+    "webpack": "3.5.5"
   },
   "dependencies": {}
 }
