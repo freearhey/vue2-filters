@@ -20,7 +20,7 @@ module.exports = function(config) {
     ],
 
     webpack: {
-      entry: 'whatever',
+      entry: './src/index.js',
       module: {
         rules: [
           { 

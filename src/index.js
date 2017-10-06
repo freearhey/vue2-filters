@@ -4,7 +4,7 @@ import * as arrayFilters from './array/index'
 import * as otherFilters from './other/index'
 
 var Vue2Filters = {
-  install(Vue) {
+  install: function(Vue) {
     util.each(stringFilters, function(value, key) {
         Vue.filter(key, value)
     })

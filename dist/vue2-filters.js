@@ -291,7 +291,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var Vue2Filters = {
-  install(Vue) {
+  install: function(Vue) {
     __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].each(__WEBPACK_IMPORTED_MODULE_1__string_index__, function(value, key) {
         Vue.filter(key, value)
     })
