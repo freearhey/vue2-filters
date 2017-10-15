@@ -13,7 +13,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 <script src="vue2-filters.min.js"></script>
 ```
 
-### CDN
+### CDN [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/vue2-filters/badge?style=rounded)](https://www.jsdelivr.com/package/npm/vue2-filters)
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
