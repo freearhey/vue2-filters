@@ -116,8 +116,18 @@ module.exports = {
 #### currency
 
 + Arguments:
+  * `{String|Object} [symbol|options] - default: '$'`
+  * `{Number|Object} [decimalDigits|options] - default: 2`
+
++ Options:
   * `{String} [symbol] - default: '$'`
-  * `{Number} [decimal places] - default: 2`
+  * `{String} [thousandsSeparator] - default: ','`
+  * `{String} [decimalSeparator] - default: '.'`
+  * `{Boolean} [symbolOnLeft] - default: true`
+  * `{Boolean} [spaceBetweenAmountAndSymbol] - default: false`
+  * `{Number} [decimalDigits] - default: 2`
+
+  _Options are compatible with [currency-formatter](https://www.npmjs.com/package/currency-formatter)._
 
 + Example:
 
@@ -131,6 +141,14 @@ module.exports = {
   Use a different number decimal places:
   ```js
   {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
+  ```
+  Use symbol on left:
+  ```js
+  {{ amount | currency('kr', {symbolOnLeft: false}) }} // 12345 => 12,345.00kr
+  ```
+  Use multiple options:
+  ```js
+  {{ amount | currency({symbol: 'kr', symbolOnLeft: false}) }} // 12345 => 12,345.00kr
   ```
 
 #### pluralize
