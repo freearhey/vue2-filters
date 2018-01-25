@@ -61,22 +61,6 @@ describe('Filters', function() {
     expect(filter(1234, '', 2)).toBe('1,234.00')
     expect(filter(123.4, '$', 3)).toBe('$123.400')
     expect(filter(-12345, 'VND', 0)).toBe('-VND12,345')
-    // options, symbol is present
-    expect(filter(1234, '', {symbol: '&'})).toBe('&1,234.00')
-    expect(filter(1234, '@', {thousandsSeparator: ','})).toBe('@1,234.00')
-    expect(filter(-1234, 'kr', {thousandsSeparator: '|'})).toBe('-kr1|234.00')
-    expect(filter(1234, '', {decimalSeparator: '|'})).toBe('1,234|00')
-    expect(filter(1234, '$', {symbolOnLeft: false})).toBe('1,234.00$')
-    expect(filter(1234, '$', {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234.00')
-    expect(filter(1234.25, '$', {decimalDigits: 3})).toBe('$1,234.250')
-    // options, no symbol is present
-    expect(filter(1234, {symbol: '&'})).toBe('&1,234.00')
-    expect(filter(1234, {symbol: '@', thousandsSeparator: ','})).toBe('@1,234.00')
-    expect(filter(-1234, {thousandsSeparator: '|'})).toBe('-$1|234.00')
-    expect(filter(1234, {symbol: '', decimalSeparator: '|'})).toBe('1,234|00')
-    expect(filter(-12345, {symbol: 'VND', decimalDigits: 0, symbolOnLeft: true})).toBe('-VND12,345')
-    expect(filter(1234, {symbol: '@', spaceBetweenAmountAndSymbol: false})).toBe('@1,234.00')
-    expect(filter(1234.25, {symbol: '$', decimalDigits: 1})).toBe('$1,234.3')
     // falsy, infinity and 0
     expect(filter(0)).toBe('$0.00')
     expect(filter(false)).toBe('')
@@ -87,6 +71,13 @@ describe('Filters', function() {
     expect(filter(-50)).toBe('-$50.00')
     expect(filter(-150.43)).toBe('-$150.43')
     expect(filter(-1500.4343434)).toBe('-$1,500.43')
+    // options
+    expect(filter(1234, '@', 0, {thousandsSeparator: ','})).toBe('@1,234')
+    expect(filter(1234, '', 2, {decimalSeparator: '|'})).toBe('1,234|00')
+    expect(filter(1234, '$', 2, {symbolOnLeft: false})).toBe('1,234.00$')
+    expect(filter(1234, '$', 0, {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234')
+    expect(filter(1234, '$', 0, {symbolOnLeft: false,spaceBetweenAmountAndSymbol: true})).toBe('1,234 $')
+    expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
   })
 
   it('pluralize', function() {

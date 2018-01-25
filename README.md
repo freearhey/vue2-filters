@@ -116,18 +116,15 @@ module.exports = {
 #### currency
 
 + Arguments:
-  * `{String|Object} [symbol|options] - default: '$'`
-  * `{Number|Object} [decimalDigits|options] - default: 2`
+  * `{String} [symbol] - default: '$'`
+  * `{Number} [decimalDigits] - default: 2`
+  * `{Object} [options] - default: {}`
 
 + Options:
-  * `{String} [symbol] - default: '$'`
   * `{String} [thousandsSeparator] - default: ','`
   * `{String} [decimalSeparator] - default: '.'`
   * `{Boolean} [symbolOnLeft] - default: true`
   * `{Boolean} [spaceBetweenAmountAndSymbol] - default: false`
-  * `{Number} [decimalDigits] - default: 2`
-
-  _Options are compatible with [currency-formatter](https://www.npmjs.com/package/currency-formatter)._
 
 + Example:
 
@@ -135,20 +132,39 @@ module.exports = {
   {{ amount | currency }} // 12345 => $12,345.00
   ```
   Use a different symbol:
+
   ```js
   {{ amount | currency('£') }} // 12345 => £12,345.00
   ```
   Use a different number decimal places:
+
   ```js
   {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
   ```
-  Use symbol on left:
+  Use a different thousands separator:
+
   ```js
-  {{ amount | currency('kr', {symbolOnLeft: false}) }} // 12345 => 12,345.00kr
+  {{ amount | currency('$', 0, { thousandsSeparator: '.' }) }} // 12345 => $12.345
+  ```
+  Use a different decimal separator:
+
+  ```js
+  {{ amount | currency('$', 2, { decimalSeparator: ',' }) }} // 12345 => $12,345,00
+  ```
+  Use symbol on right:
+
+  ```js
+  {{ amount | currency('$', 0, { symbolOnLeft: false }) }} // 12345 => 12,345$
+  ```
+  Add space between amound and symbol:
+
+  ```js
+  {{ amount | currency('$', 0, { spaceBetweenAmountAndSymbol: true }) }} // 12345 => $ 12,345
   ```
   Use multiple options:
+
   ```js
-  {{ amount | currency({symbol: 'kr', symbolOnLeft: false}) }} // 12345 => 12,345.00kr
+  {{ amount | currency('kr', 2, { symbolOnLeft: false, spaceBetweenAmountAndSymbol: true }) }} // 12345 => 12,345.00 kr
   ```
 
 #### pluralize
