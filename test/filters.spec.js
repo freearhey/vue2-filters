@@ -71,6 +71,13 @@ describe('Filters', function() {
     expect(filter(-50)).toBe('-$50.00')
     expect(filter(-150.43)).toBe('-$150.43')
     expect(filter(-1500.4343434)).toBe('-$1,500.43')
+    // options
+    expect(filter(1234, '@', 0, {thousandsSeparator: ','})).toBe('@1,234')
+    expect(filter(1234, '', 2, {decimalSeparator: '|'})).toBe('1,234|00')
+    expect(filter(1234, '$', 2, {symbolOnLeft: false})).toBe('1,234.00$')
+    expect(filter(1234, '$', 0, {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234')
+    expect(filter(1234, '$', 0, {symbolOnLeft: false,spaceBetweenAmountAndSymbol: true})).toBe('1,234 $')
+    expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
   })
 
   it('pluralize', function() {

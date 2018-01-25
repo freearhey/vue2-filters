@@ -117,7 +117,14 @@ module.exports = {
 
 + Arguments:
   * `{String} [symbol] - default: '$'`
-  * `{Number} [decimal places] - default: 2`
+  * `{Number} [decimalDigits] - default: 2`
+  * `{Object} [options] - default: {}`
+
++ Options:
+  * `{String} [thousandsSeparator] - default: ','`
+  * `{String} [decimalSeparator] - default: '.'`
+  * `{Boolean} [symbolOnLeft] - default: true`
+  * `{Boolean} [spaceBetweenAmountAndSymbol] - default: false`
 
 + Example:
 
@@ -125,12 +132,39 @@ module.exports = {
   {{ amount | currency }} // 12345 => $12,345.00
   ```
   Use a different symbol:
+
   ```js
   {{ amount | currency('£') }} // 12345 => £12,345.00
   ```
   Use a different number decimal places:
+
   ```js
   {{ amount | currency('₽', 0) }} // 12345 => ₽12,345
+  ```
+  Use a different thousands separator:
+
+  ```js
+  {{ amount | currency('$', 0, { thousandsSeparator: '.' }) }} // 12345 => $12.345
+  ```
+  Use a different decimal separator:
+
+  ```js
+  {{ amount | currency('$', 2, { decimalSeparator: ',' }) }} // 12345 => $12,345,00
+  ```
+  Use symbol on right:
+
+  ```js
+  {{ amount | currency('$', 0, { symbolOnLeft: false }) }} // 12345 => 12,345$
+  ```
+  Add space between amound and symbol:
+
+  ```js
+  {{ amount | currency('$', 0, { spaceBetweenAmountAndSymbol: true }) }} // 12345 => $ 12,345
+  ```
+  Use multiple options:
+
+  ```js
+  {{ amount | currency('kr', 2, { symbolOnLeft: false, spaceBetweenAmountAndSymbol: true }) }} // 12345 => 12,345.00 kr
   ```
 
 #### pluralize
