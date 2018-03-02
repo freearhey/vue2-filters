@@ -23,7 +23,7 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 ### NPM
 
 ```
-npm install vue2-filters
+npm install --save vue2-filters
 ```
 
 When used with a module system, you must explicitly install the filters via `Vue.use()`:
