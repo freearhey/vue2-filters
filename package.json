@@ -33,6 +33,6 @@
     "webpack": "3.5.5"
   },
   "peerDependecies": {
-    "vue": "^2.0.0",
+    "vue": "^2.0.0"
   }
 }
