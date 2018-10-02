@@ -87,12 +87,35 @@ describe('Filters', function() {
     expect(filter(0, arg)).toBe('items')
     expect(filter(1, arg)).toBe('item')
     expect(filter(2, arg)).toBe('items')
+    expect(filter(21, arg)).toBe('items')
+
     // multi args
-    expect(filter(0, 'st', 'nd', 'rd', 'th')).toBe('th')
-    expect(filter(1, 'st', 'nd', 'rd', 'th')).toBe('st')
-    expect(filter(2, 'st', 'nd', 'rd', 'th')).toBe('nd')
-    expect(filter(3, 'st', 'nd', 'rd', 'th')).toBe('rd')
-    expect(filter(4, 'st', 'nd', 'rd', 'th')).toBe('th')
+    expect(filter(0, 'fry', 'fries')).toBe('fries')
+    expect(filter(1, 'fry', 'fries')).toBe('fry')
+    expect(filter(2, 'fry', 'fries')).toBe('fries')
+
+    expect(filter(0, 'first', 'second', 'third', 'nth')).toBe('nth')
+    expect(filter(1, 'first', 'second', 'third', 'nth')).toBe('first')
+    expect(filter(2, 'first', 'second', 'third', 'nth')).toBe('second')
+    expect(filter(3, 'first', 'second', 'third', 'nth')).toBe('third')
+    expect(filter(4, 'first', 'second', 'third', 'nth')).toBe('nth')
+    expect(filter(50, 'first', 'second', 'third', 'nth')).toBe('nth')
+  })
+
+  it('ordinalize', function() {
+    var filter = otherFilters.ordinalize
+
+    expect(filter(0)).toBe('0th')
+    expect(filter(1)).toBe('1st')
+    expect(filter(2)).toBe('2nd')
+    expect(filter(3)).toBe('3rd')
+    expect(filter(4)).toBe('4th')
+
+    expect(filter(230)).toBe('230th')
+    expect(filter(231)).toBe('231st')
+    expect(filter(232)).toBe('232nd')
+    expect(filter(233)).toBe('233rd')
+    expect(filter(234)).toBe('234th')
   })
 
   it('limitBy', function () {
