@@ -269,6 +269,21 @@ module.exports = {
   </ul>
   ```
 
+## Namespacing
+
+This package adds a set of filters and methods to every Vue component. If you are using `vue2-filters` in combination with other 3rd party components you may run into a collision between these methods and props or methods used by those components. To avoid this, it is possible to namespace the filters and methods added by `vue2-filters`. To do so, change your installation code as follows:
+
+
+```javascript
+import Vue from 'vue'
+import { NamespacedVue2Filters } from 'vue2-filters'
+
+
+Vue.use(NamespacedVue2Filters('VF'))
+```
+
+This will add the string you pass in (in the example above `VF`) to be prepended to every filter and method name. E.g. `VForderBy` and `VFcapitalize`.
+
 ## Contribution
 
 If you find a bug or want to contribute to the code or documentation, you can help by submitting an [issue](https://github.com/freearhey/vue2-filters/issues) or a [pull request](https://github.com/freearhey/vue2-filters/pulls).
