@@ -15,10 +15,10 @@ var Vue2Filters = {
 
     Vue.mixin({
       methods: {
-        limitBy: arrayFilters.limitBy,
-        filterBy: arrayFilters.filterBy,
-        orderBy: arrayFilters.orderBy,
-        find: arrayFilters.find
+        limitBy2: arrayFilters.limitBy,
+        filterBy2: arrayFilters.filterBy,
+        orderBy2: arrayFilters.orderBy,
+        find2: arrayFilters.find
       }
     })
   }
