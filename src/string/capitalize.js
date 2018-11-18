@@ -6,7 +6,7 @@
 
 function capitalize (value) {
   if (!value && value !== 0) return ''
-  value = value.toString()
+  value = value.toString().toLowerCase()
   return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
