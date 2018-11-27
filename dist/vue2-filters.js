@@ -299,15 +299,14 @@ var Vue2Filters = {
     __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].each(__WEBPACK_IMPORTED_MODULE_3__other_index__, function(value, key) {
         Vue.filter(key, value)
     })
-
-    Vue.mixin({
-      methods: {
+  },
+  mixin: {
+    methods: {
         limitBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["c" /* limitBy */],
         filterBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["a" /* filterBy */],
         orderBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["d" /* orderBy */],
         find: __WEBPACK_IMPORTED_MODULE_2__array_index__["b" /* find */]
-      }
-    })
+    }
   }
 }
 
@@ -315,6 +314,7 @@ var Vue2Filters = {
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vue2Filters);
+  window.Vue2Filters = Vue2Filters;
 }
 
 

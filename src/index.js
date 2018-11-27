@@ -12,15 +12,14 @@ var Vue2Filters = {
     util.each(otherFilters, function(value, key) {
         Vue.filter(key, value)
     })
-
-    Vue.mixin({
-      methods: {
+  },
+  mixin: {
+    methods: {
         limitBy: arrayFilters.limitBy,
         filterBy: arrayFilters.filterBy,
         orderBy: arrayFilters.orderBy,
         find: arrayFilters.find
-      }
-    })
+    }
   }
 }
 
@@ -28,4 +27,5 @@ export default Vue2Filters;
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vue2Filters);
+  window.Vue2Filters = Vue2Filters;
 }

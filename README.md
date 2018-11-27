@@ -13,11 +13,35 @@ Simply include `vue2-filters` after Vue and it will install itself automatically
 <script src="vue2-filters.min.js"></script>
 ```
 
+To use one of the predefined methods (such as `limitBy`, `filterBy`, `find`, or `orderBy`) in your component, you also need to add `Vue2Filters.mixin` to mixin list:
+
+```html
+<script>
+  new Vue({
+    ...
+    mixins: [Vue2Filters.mixin],
+    ...
+  })
+</script>
+```
+
 ### CDN [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/vue2-filters/badge?style=rounded)](https://www.jsdelivr.com/package/npm/vue2-filters)
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>
+```
+
+To use one of the predefined methods (such as `limitBy`, `filterBy`, `find`, or `orderBy`) in your component, you also need to add `Vue2Filters.mixin` to mixin list:
+
+```html
+<script>
+  new Vue({
+    ...
+    mixins: [Vue2Filters.mixin],
+    ...
+  })
+</script>
 ```
 
 ### NPM
@@ -36,6 +60,18 @@ Vue.use(Vue2Filters)
 ```
 
 You don't need to do this when using global script tags.
+
+To use one of the predefined methods (such as `limitBy`, `filterBy`, `find`, or `orderBy`) in your component, you also need to add `Vue2Filters.mixin` to mixin list:
+
+```js
+import Vue2Filters from 'vue2-filters'
+
+export default {
+  ...
+  mixins: [Vue2Filters.mixin],
+  ...
+}
+```
 
 ### Nuxt.js
 
@@ -61,6 +97,18 @@ module.exports = {
     '~/plugins/vue2-filters'
   ],
   //...
+}
+```
+
+To use one of the predefined methods (such as `limitBy`, `filterBy`, `find`, or `orderBy`) in your component, you also need to add `Vue2Filters.mixin` to mixin list:
+
+```js
+import Vue2Filters from 'vue2-filters'
+
+export default {
+  ...
+  mixins: [Vue2Filters.mixin],
+  ...
 }
 ```
 
@@ -268,6 +316,20 @@ module.exports = {
     </li>
   </ul>
   ```
+
+## Upgrade to 0.4.0 from 0.3.*
+
+In the new version it was decided to refuse from global registration of mixins, as it could lead to errors when using this package with other packages. Therefore, you need to manually add `Vue2Filters.mixin` into the mixin list of your components if you use at least one of the predefined methods (such as `limitBy`, `filterBy`, `find` or `orderBy`):
+
+```js
+export default {
+  ...
+  mixins: [Vue2Filters.mixin],
+  ...
+}
+```
+
+You can read more about the reasons for this change [here](https://github.com/freearhey/vue2-filters/issues/52)
 
 ## Contribution
 
