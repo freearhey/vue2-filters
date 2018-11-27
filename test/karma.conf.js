@@ -21,15 +21,7 @@ module.exports = function(config) {
 
     webpack: {
       entry: './src/index.js',
-      module: {
-        rules: [
-          { 
-            test: /\.js$/, 
-            exclude: /node_modules/, 
-            use: [ 'babel-loader' ]
-          }
-        ]
-      }
+      mode: 'development'
     }
 
   })

@@ -7,7 +7,7 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -46,12 +46,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -69,616 +89,204 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ "./src/array/filterBy.js":
+/*!*******************************!*\
+  !*** ./src/array/filterBy.js ***!
+  \*******************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var
-    ArrayProto = Array.prototype,
-    ObjProto = Object.prototype;
-
-var
-    slice = ArrayProto.slice,
-    toString = ObjProto.toString;
-
-var util = {};
-
-util.isArray = function(obj) {
-    return Array.isArray(obj);
-};
-
-var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-util.isArrayLike = function(obj) {
-    if(typeof obj !== 'object' || !obj){
-        return false;
-    }
-    var length = obj.length;
-    return typeof length === 'number'
-        && length % 1 === 0 && length >= 0 && length <= MAX_ARRAY_INDEX;
-};
-
-util.isObject = function(obj) {
-    var type = typeof obj;
-    return type === 'function' || type === 'object' && !!obj;
-};
-
-
-util.each = function(obj, callback) {
-    var i,
-        len;
-    if (util.isArray(obj)) {
-        for (i = 0, len = obj.length; i < len; i++) {
-            if (callback(obj[i], i, obj) === false) {
-                break;
-            }
-        }
-    } else {
-        for (i in obj) {
-            if (callback(obj[i], i, obj) === false) {
-                break;
-            }
-        }
-    }
-    return obj;
-};
-
-util.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
-    util['is' + name] = function(obj) {
-        return toString.call(obj) === '[object ' + name + ']';
-    };
-});
-
-util.toArray = function(list, start) {
-  start = start || 0
-  var i = list.length - start
-  var ret = new Array(i)
-  while (i--) {
-    ret[i] = list[i + start]
-  }
-  return ret
-}
-
-util.toNumber = function(value) {
-  if (typeof value !== 'string') {
-    return value
-  } else {
-    var parsed = Number(value)
-    return isNaN(parsed)
-      ? value
-      : parsed
-  }
-};
-
-util.convertArray = function (value) {
-    if (util.isArray(value)) {
-      return value
-    } else if (util.isPlainObject(value)) {
-      // convert plain object to array.
-      var keys = Object.keys(value)
-      var i = keys.length
-      var res = new Array(i)
-      var key
-      while (i--) {
-        key = keys[i]
-        res[i] = {
-          $key: key,
-          $value: value[key]
-        }
-      }
-      return res
-    } else {
-      return value || []
-    }
-}
-
-function multiIndex(obj,is) {  // obj,['1','2','3'] -> ((obj['1'])['2'])['3']
-    return is.length ? multiIndex(obj[is[0]],is.slice(1)) : obj
-}
-
-util.getPath = function(obj,is) {   // obj,'1.2.3' -> multiIndex(obj,['1','2','3'])
-    return multiIndex(obj,is.split('.'))
-}
-
-/**
- * Strict object type check. Only returns true
- * for plain JavaScript objects.
- *
- * @param {*} obj
- * @return {Boolean}
- */
-
-var toString = Object.prototype.toString
-var OBJECT_STRING = '[object Object]'
-util.isPlainObject = function (obj) {
-  return toString.call(obj) === OBJECT_STRING
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (util);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n\n/**\n * Filter filter for arrays\n *\n * @param {Array} arr\n * @param {String} prop\n * @param {String|Number} search\n */\n\nfunction filterBy (arr, search) {\n  var arr = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].convertArray(arr)\n  if (search == null) {\n    return arr\n  }\n  if (typeof search === 'function') {\n    return arr.filter(search)\n  }\n  // cast to lowercase string\n  search = ('' + search).toLowerCase()\n  var n = 2\n  // extract and flatten keys\n  var keys = Array.prototype.concat.apply([], _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].toArray(arguments, n))\n  var res = []\n  var item, key, val, j\n  for (var i = 0, l = arr.length; i < l; i++) {\n    item = arr[i]\n    val = (item && item.$value) || item\n    j = keys.length\n    if (j) {\n      while (j--) {\n        key = keys[j]\n        if ((key === '$key' && contains(item.$key, search)) ||\n            contains(_util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].getPath(val, key), search)) {\n          res.push(item)\n          break\n        }\n      }\n    } else if (contains(item, search)) {\n      res.push(item)\n    }\n  }\n  return res\n}\n\nfunction contains (val, search) {\n  var i\n  if (_util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isPlainObject(val)) {\n    var keys = Object.keys(val)\n    i = keys.length\n    while (i--) {\n      if (contains(val[keys[i]], search)) {\n        return true\n      }\n    }\n  } else if (_util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isArray(val)) {\n    i = val.length\n    while (i--) {\n      if (contains(val[i], search)) {\n        return true\n      }\n    }\n  } else if (val != null) {\n    return val.toString().toLowerCase().indexOf(search) > -1\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (filterBy);\n\n//# sourceURL=webpack:///./src/array/filterBy.js?");
 
 /***/ }),
-/* 1 */
+
+/***/ "./src/array/find.js":
+/*!***************************!*\
+  !*** ./src/array/find.js ***!
+  \***************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_index__ = __webpack_require__(0);
-
-
-/**
- * Filter filter for arrays
- *
- * @param {Array} arr
- * @param {String} prop
- * @param {String|Number} search
- */
-
-function filterBy (arr, search) {
-  var arr = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].convertArray(arr)
-  if (search == null) {
-    return arr
-  }
-  if (typeof search === 'function') {
-    return arr.filter(search)
-  }
-  // cast to lowercase string
-  search = ('' + search).toLowerCase()
-  var n = 2
-  // extract and flatten keys
-  var keys = Array.prototype.concat.apply([], __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].toArray(arguments, n))
-  var res = []
-  var item, key, val, j
-  for (var i = 0, l = arr.length; i < l; i++) {
-    item = arr[i]
-    val = (item && item.$value) || item
-    j = keys.length
-    if (j) {
-      while (j--) {
-        key = keys[j]
-        if ((key === '$key' && contains(item.$key, search)) ||
-            contains(__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(val, key), search)) {
-          res.push(item)
-          break
-        }
-      }
-    } else if (contains(item, search)) {
-      res.push(item)
-    }
-  }
-  return res
-}
-
-function contains (val, search) {
-  var i
-  if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isPlainObject(val)) {
-    var keys = Object.keys(val)
-    i = keys.length
-    while (i--) {
-      if (contains(val[keys[i]], search)) {
-        return true
-      }
-    }
-  } else if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isArray(val)) {
-    i = val.length
-    while (i--) {
-      if (contains(val[i], search)) {
-        return true
-      }
-    }
-  } else if (val != null) {
-    return val.toString().toLowerCase().indexOf(search) > -1
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (filterBy);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _filterBy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filterBy */ \"./src/array/filterBy.js\");\n\n\n/**\n * Get first matching element from a filtered array\n *\n * @param {Array} arr\n * @param {String|Number} search\n * @returns {mixed}\n */\nfunction find(arr, search) \n{\n  var array = _filterBy__WEBPACK_IMPORTED_MODULE_0__[\"default\"].apply(this, arguments);\n  array.splice(1);\n  return array;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (find);\n\n\n//# sourceURL=webpack:///./src/array/find.js?");
 
 /***/ }),
-/* 2 */
+
+/***/ "./src/array/index.js":
+/*!****************************!*\
+  !*** ./src/array/index.js ***!
+  \****************************/
+/*! exports provided: limitBy, filterBy, orderBy, find */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_index__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__string_index__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__array_index__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__other_index__ = __webpack_require__(13);
-
-
-
-
-
-var Vue2Filters = {
-  install: function(Vue) {
-    __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].each(__WEBPACK_IMPORTED_MODULE_1__string_index__, function(value, key) {
-        Vue.filter(key, value)
-    })
-
-    __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].each(__WEBPACK_IMPORTED_MODULE_3__other_index__, function(value, key) {
-        Vue.filter(key, value)
-    })
-  },
-  mixin: {
-    methods: {
-        limitBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["c" /* limitBy */],
-        filterBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["a" /* filterBy */],
-        orderBy: __WEBPACK_IMPORTED_MODULE_2__array_index__["d" /* orderBy */],
-        find: __WEBPACK_IMPORTED_MODULE_2__array_index__["b" /* find */]
-    }
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Vue2Filters);
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(Vue2Filters);
-  window.Vue2Filters = Vue2Filters;
-}
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _limitBy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./limitBy */ \"./src/array/limitBy.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"limitBy\", function() { return _limitBy__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _filterBy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filterBy */ \"./src/array/filterBy.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"filterBy\", function() { return _filterBy__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n/* harmony import */ var _orderBy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./orderBy */ \"./src/array/orderBy.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"orderBy\", function() { return _orderBy__WEBPACK_IMPORTED_MODULE_2__[\"default\"]; });\n\n/* harmony import */ var _find__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./find */ \"./src/array/find.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"find\", function() { return _find__WEBPACK_IMPORTED_MODULE_3__[\"default\"]; });\n\n\n\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/array/index.js?");
 
 /***/ }),
-/* 3 */
+
+/***/ "./src/array/limitBy.js":
+/*!******************************!*\
+  !*** ./src/array/limitBy.js ***!
+  \******************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__capitalize__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uppercase__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lowercase__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__placeholder__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__truncate__ = __webpack_require__(8);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "capitalize", function() { return __WEBPACK_IMPORTED_MODULE_0__capitalize__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "uppercase", function() { return __WEBPACK_IMPORTED_MODULE_1__uppercase__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "lowercase", function() { return __WEBPACK_IMPORTED_MODULE_2__lowercase__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "placeholder", function() { return __WEBPACK_IMPORTED_MODULE_3__placeholder__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "truncate", function() { return __WEBPACK_IMPORTED_MODULE_4__truncate__["a"]; });
-
-
-
-
-
-
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n\n/**\n * Limit filter for arrays\n *\n * @param {Number} n\n * @param {Number} offset (Decimal expected)\n */\n\nfunction limitBy (arr, n, offset) {\n  offset = offset ? parseInt(offset, 10) : 0\n  n = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].toNumber(n)\n  return typeof n === 'number'\n    ? arr.slice(offset, offset + n)\n    : arr\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (limitBy);\n\n//# sourceURL=webpack:///./src/array/limitBy.js?");
 
 /***/ }),
-/* 4 */
+
+/***/ "./src/array/orderBy.js":
+/*!******************************!*\
+  !*** ./src/array/orderBy.js ***!
+  \******************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- *  Converts a string into Capitalize
- * 
- * 'abc' => 'Abc'
- */
-
-function capitalize (value) {
-  if (!value && value !== 0) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (capitalize);
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n\n/**\n * Filter filter for arrays\n *\n * @param {String|Array<String>|Function} ...sortKeys\n * @param {Number} [order]\n */\n\nfunction orderBy (arr) {\n  var comparator = null\n  var sortKeys\n  arr = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].convertArray(arr)\n\n  // determine order (last argument)\n  var args = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].toArray(arguments, 1)\n  var order = args[args.length - 1]\n  if (typeof order === 'number') {\n    order = order < 0 ? -1 : 1\n    args = args.length > 1 ? args.slice(0, -1) : args\n  } else {\n    order = 1\n  }\n\n  // determine sortKeys & comparator\n  var firstArg = args[0]\n  if (!firstArg) {\n    return arr\n  } else if (typeof firstArg === 'function') {\n    // custom comparator\n    comparator = function (a, b) {\n      return firstArg(a, b) * order\n    }\n  } else {\n    // string keys. flatten first\n    sortKeys = Array.prototype.concat.apply([], args)\n    comparator = function (a, b, i) {\n      i = i || 0\n      return i >= sortKeys.length - 1\n        ? baseCompare(a, b, i)\n        : baseCompare(a, b, i) || comparator(a, b, i + 1)\n    }\n  }\n\n  function baseCompare (a, b, sortKeyIndex) {\n    var sortKey = sortKeys[sortKeyIndex]\n    if (sortKey) {\n      if (sortKey !== '$key') {\n        if (_util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isObject(a) && '$value' in a) a = a.$value\n        if (_util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isObject(b) && '$value' in b) b = b.$value\n      }\n      a = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isObject(a) ? _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].getPath(a, sortKey) : a\n      b = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].isObject(b) ? _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].getPath(b, sortKey) : b\n    }\n    return a === b ? 0 : a > b ? order : -order\n  }\n\n  // sort on a copy to avoid mutating original array\n  return arr.slice().sort(comparator)\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (orderBy);\n\n//# sourceURL=webpack:///./src/array/orderBy.js?");
 
 /***/ }),
-/* 5 */
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- * Converts a string to UPPERCASE
- * 
- * 'abc' => 'ABC'
- */
-
-function uppercase (value) {
-  return (value || value === 0)
-    ? value.toString().toUpperCase()
-    : ''
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (uppercase);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/index */ \"./src/util/index.js\");\n/* harmony import */ var _string_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./string/index */ \"./src/string/index.js\");\n/* harmony import */ var _array_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./array/index */ \"./src/array/index.js\");\n/* harmony import */ var _other_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./other/index */ \"./src/other/index.js\");\n\n\n\n\n\nvar Vue2Filters = {\n  install: function(Vue) {\n    _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].each(_string_index__WEBPACK_IMPORTED_MODULE_1__, function(value, key) {\n        Vue.filter(key, value)\n    })\n\n    _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].each(_other_index__WEBPACK_IMPORTED_MODULE_3__, function(value, key) {\n        Vue.filter(key, value)\n    })\n  },\n  mixin: {\n    methods: {\n        limitBy: _array_index__WEBPACK_IMPORTED_MODULE_2__[\"limitBy\"],\n        filterBy: _array_index__WEBPACK_IMPORTED_MODULE_2__[\"filterBy\"],\n        orderBy: _array_index__WEBPACK_IMPORTED_MODULE_2__[\"orderBy\"],\n        find: _array_index__WEBPACK_IMPORTED_MODULE_2__[\"find\"]\n    }\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Vue2Filters);\n\nif (typeof window !== 'undefined' && window.Vue) {\n  window.Vue.use(Vue2Filters);\n  window.Vue2Filters = Vue2Filters;\n}\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
-/* 6 */
+
+/***/ "./src/other/currency.js":
+/*!*******************************!*\
+  !*** ./src/other/currency.js ***!
+  \*******************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- * Converts a string to lowercase
- * 
- * 'AbC' => 'abc'
- */
-
-function lowercase (value) {
-  return (value || value === 0)
-    ? value.toString().toLowerCase()
-    : ''
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (lowercase);
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n * \n * 12345 => $12,345.00\n *\n * @param {String} symbol\n * @param {Number} decimals Decimal places\n * @param {Object} options\n */\n\nfunction currency (value, symbol, decimals, options) {\n  var thousandsSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol\n  var digitsRE = /(\\d{3})(?=\\d)/g\n  options = options || {}\n  value = parseFloat(value)\n  if (!isFinite(value) || (!value && value !== 0)) return ''\n  symbol = symbol != null ? symbol : '$'\n  decimals = decimals != null ? decimals : 2\n  thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ','\n  symbolOnLeft = options.symbolOnLeft != null ? options.symbolOnLeft : true\n  spaceBetweenAmountAndSymbol = options.spaceBetweenAmountAndSymbol != null ? options.spaceBetweenAmountAndSymbol : false\n  var stringified = Math.abs(value).toFixed(decimals)\n  stringified = options.decimalSeparator\n    ? stringified.replace('.', options.decimalSeparator)\n    : stringified\n  var _int = decimals\n    ? stringified.slice(0, -1 - decimals)\n    : stringified\n  var i = _int.length % 3\n  var head = i > 0\n    ? (_int.slice(0, i) + (_int.length > 3 ? thousandsSeparator : ''))\n    : ''\n  var _float = decimals\n    ? stringified.slice(-1 - decimals)\n    : ''\n  symbol = spaceBetweenAmountAndSymbol\n    ? (symbolOnLeft ? symbol + ' ' : ' ' + symbol)\n    : symbol\n  symbol = symbolOnLeft\n    ? symbol + head +\n      _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float\n    : head +\n      _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float + symbol\n  var sign = value < 0 ? '-' : ''\n  return sign + symbol\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (currency);\n\n//# sourceURL=webpack:///./src/other/currency.js?");
 
 /***/ }),
-/* 7 */
+
+/***/ "./src/other/index.js":
+/*!****************************!*\
+  !*** ./src/other/index.js ***!
+  \****************************/
+/*! exports provided: currency, pluralize */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- *  If the value is missing outputs the placeholder text
- * 
- * '' => {placeholder}
- * 'foo' => 'foo'
- */
-
-function placeholder (input, property) {
-  return ( input === undefined || input === '' || input === null ) ? property : input;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (placeholder);
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _currency__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./currency */ \"./src/other/currency.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"currency\", function() { return _currency__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _pluralize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pluralize */ \"./src/other/pluralize.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"pluralize\", function() { return _pluralize__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/other/index.js?");
 
 /***/ }),
-/* 8 */
+
+/***/ "./src/other/pluralize.js":
+/*!********************************!*\
+  !*** ./src/other/pluralize.js ***!
+  \********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- *  Truncate at the given || default length
- *
- * 'lorem ipsum dolor' => 'lorem ipsum dol...'
- */
-
-function truncate (value, length) {
-  length = length || 15
-  if( !value || typeof value !== 'string' ) return ''
-  if( value.length <= length) return value
-  return value.substring(0, length) + '...'
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (truncate);
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n\n/**\n * 'item' => 'items'\n *\n * @params\n *  an array of strings corresponding to\n *  the single, double, triple ... forms of the word to\n *  be pluralized. When the number to be pluralized\n *  exceeds the length of the args, it will use the last\n *  entry in the array.\n *\n *  e.g. ['single', 'double', 'triple', 'multiple']\n */\n\nfunction pluralize (value) {\n  var args = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].toArray(arguments, 1)\n  return args.length > 1\n    ? (args[value % 10 - 1] || args[args.length - 1])\n    : (args[0] + (value === 1 ? '' : 's'))\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (pluralize);\n\n//# sourceURL=webpack:///./src/other/pluralize.js?");
 
 /***/ }),
-/* 9 */
+
+/***/ "./src/string/capitalize.js":
+/*!**********************************!*\
+  !*** ./src/string/capitalize.js ***!
+  \**********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__limitBy__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__filterBy__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__orderBy__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__find__ = __webpack_require__(12);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_0__limitBy__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__filterBy__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__orderBy__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_3__find__["a"]; });
-
-
-
-
-
-
-
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n *  Converts a string into Capitalize\n * \n * 'abc' => 'Abc'\n */\n\nfunction capitalize (value) {\n  if (!value && value !== 0) return ''\n  value = value.toString()\n  return value.charAt(0).toUpperCase() + value.slice(1)\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (capitalize);\n\n\n//# sourceURL=webpack:///./src/string/capitalize.js?");
 
 /***/ }),
-/* 10 */
+
+/***/ "./src/string/index.js":
+/*!*****************************!*\
+  !*** ./src/string/index.js ***!
+  \*****************************/
+/*! exports provided: capitalize, uppercase, lowercase, placeholder, truncate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_index__ = __webpack_require__(0);
-
-
-/**
- * Limit filter for arrays
- *
- * @param {Number} n
- * @param {Number} offset (Decimal expected)
- */
-
-function limitBy (arr, n, offset) {
-  offset = offset ? parseInt(offset, 10) : 0
-  n = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].toNumber(n)
-  return typeof n === 'number'
-    ? arr.slice(offset, offset + n)
-    : arr
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (limitBy);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _capitalize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./capitalize */ \"./src/string/capitalize.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"capitalize\", function() { return _capitalize__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _uppercase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uppercase */ \"./src/string/uppercase.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"uppercase\", function() { return _uppercase__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n/* harmony import */ var _lowercase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lowercase */ \"./src/string/lowercase.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"lowercase\", function() { return _lowercase__WEBPACK_IMPORTED_MODULE_2__[\"default\"]; });\n\n/* harmony import */ var _placeholder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./placeholder */ \"./src/string/placeholder.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"placeholder\", function() { return _placeholder__WEBPACK_IMPORTED_MODULE_3__[\"default\"]; });\n\n/* harmony import */ var _truncate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./truncate */ \"./src/string/truncate.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"truncate\", function() { return _truncate__WEBPACK_IMPORTED_MODULE_4__[\"default\"]; });\n\n\n\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/string/index.js?");
 
 /***/ }),
-/* 11 */
+
+/***/ "./src/string/lowercase.js":
+/*!*********************************!*\
+  !*** ./src/string/lowercase.js ***!
+  \*********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_index__ = __webpack_require__(0);
-
-
-/**
- * Filter filter for arrays
- *
- * @param {String|Array<String>|Function} ...sortKeys
- * @param {Number} [order]
- */
-
-function orderBy (arr) {
-  var comparator = null
-  var sortKeys
-  arr = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].convertArray(arr)
-
-  // determine order (last argument)
-  var args = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].toArray(arguments, 1)
-  var order = args[args.length - 1]
-  if (typeof order === 'number') {
-    order = order < 0 ? -1 : 1
-    args = args.length > 1 ? args.slice(0, -1) : args
-  } else {
-    order = 1
-  }
-
-  // determine sortKeys & comparator
-  var firstArg = args[0]
-  if (!firstArg) {
-    return arr
-  } else if (typeof firstArg === 'function') {
-    // custom comparator
-    comparator = function (a, b) {
-      return firstArg(a, b) * order
-    }
-  } else {
-    // string keys. flatten first
-    sortKeys = Array.prototype.concat.apply([], args)
-    comparator = function (a, b, i) {
-      i = i || 0
-      return i >= sortKeys.length - 1
-        ? baseCompare(a, b, i)
-        : baseCompare(a, b, i) || comparator(a, b, i + 1)
-    }
-  }
-
-  function baseCompare (a, b, sortKeyIndex) {
-    var sortKey = sortKeys[sortKeyIndex]
-    if (sortKey) {
-      if (sortKey !== '$key') {
-        if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(a) && '$value' in a) a = a.$value
-        if (__WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(b) && '$value' in b) b = b.$value
-      }
-      a = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(a) ? __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(a, sortKey) : a
-      b = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].isObject(b) ? __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].getPath(b, sortKey) : b
-    }
-    return a === b ? 0 : a > b ? order : -order
-  }
-
-  // sort on a copy to avoid mutating original array
-  return arr.slice().sort(comparator)
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (orderBy);
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n * Converts a string to lowercase\n * \n * 'AbC' => 'abc'\n */\n\nfunction lowercase (value) {\n  return (value || value === 0)\n    ? value.toString().toLowerCase()\n    : ''\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (lowercase);\n\n//# sourceURL=webpack:///./src/string/lowercase.js?");
 
 /***/ }),
-/* 12 */
+
+/***/ "./src/string/placeholder.js":
+/*!***********************************!*\
+  !*** ./src/string/placeholder.js ***!
+  \***********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__filterBy__ = __webpack_require__(1);
-
-
-/**
- * Get first matching element from a filtered array
- *
- * @param {Array} arr
- * @param {String|Number} search
- * @returns {mixed}
- */
-function find(arr, search) 
-{
-  var array = __WEBPACK_IMPORTED_MODULE_0__filterBy__["a" /* default */].apply(this, arguments);
-  array.splice(1);
-  return array;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (find);
-
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n *  If the value is missing outputs the placeholder text\n * \n * '' => {placeholder}\n * 'foo' => 'foo'\n */\n\nfunction placeholder (input, property) {\n  return ( input === undefined || input === '' || input === null ) ? property : input;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (placeholder);\n\n\n//# sourceURL=webpack:///./src/string/placeholder.js?");
 
 /***/ }),
-/* 13 */
+
+/***/ "./src/string/truncate.js":
+/*!********************************!*\
+  !*** ./src/string/truncate.js ***!
+  \********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__currency__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pluralize__ = __webpack_require__(15);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "currency", function() { return __WEBPACK_IMPORTED_MODULE_0__currency__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "pluralize", function() { return __WEBPACK_IMPORTED_MODULE_1__pluralize__["a"]; });
-
-
-
-
-
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n *  Truncate at the given || default length\n *\n * 'lorem ipsum dolor' => 'lorem ipsum dol...'\n */\n\nfunction truncate (value, length) {\n  length = length || 15\n  if( !value || typeof value !== 'string' ) return ''\n  if( value.length <= length) return value\n  return value.substring(0, length) + '...'\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (truncate);\n\n\n//# sourceURL=webpack:///./src/string/truncate.js?");
 
 /***/ }),
-/* 14 */
+
+/***/ "./src/string/uppercase.js":
+/*!*********************************!*\
+  !*** ./src/string/uppercase.js ***!
+  \*********************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- * 
- * 12345 => $12,345.00
- *
- * @param {String} symbol
- * @param {Number} decimals Decimal places
- * @param {Object} options
- */
-
-function currency (value, symbol, decimals, options) {
-  var thousandsSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol
-  var digitsRE = /(\d{3})(?=\d)/g
-  options = options || {}
-  value = parseFloat(value)
-  if (!isFinite(value) || (!value && value !== 0)) return ''
-  symbol = symbol != null ? symbol : '$'
-  decimals = decimals != null ? decimals : 2
-  thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ','
-  symbolOnLeft = options.symbolOnLeft != null ? options.symbolOnLeft : true
-  spaceBetweenAmountAndSymbol = options.spaceBetweenAmountAndSymbol != null ? options.spaceBetweenAmountAndSymbol : false
-  var stringified = Math.abs(value).toFixed(decimals)
-  stringified = options.decimalSeparator
-    ? stringified.replace('.', options.decimalSeparator)
-    : stringified
-  var _int = decimals
-    ? stringified.slice(0, -1 - decimals)
-    : stringified
-  var i = _int.length % 3
-  var head = i > 0
-    ? (_int.slice(0, i) + (_int.length > 3 ? thousandsSeparator : ''))
-    : ''
-  var _float = decimals
-    ? stringified.slice(-1 - decimals)
-    : ''
-  symbol = spaceBetweenAmountAndSymbol
-    ? (symbolOnLeft ? symbol + ' ' : ' ' + symbol)
-    : symbol
-  symbol = symbolOnLeft
-    ? symbol + head +
-      _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float
-    : head +
-      _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float + symbol
-  var sign = value < 0 ? '-' : ''
-  return sign + symbol
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (currency);
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n * Converts a string to UPPERCASE\n * \n * 'abc' => 'ABC'\n */\n\nfunction uppercase (value) {\n  return (value || value === 0)\n    ? value.toString().toUpperCase()\n    : ''\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (uppercase);\n\n//# sourceURL=webpack:///./src/string/uppercase.js?");
 
 /***/ }),
-/* 15 */
+
+/***/ "./src/util/index.js":
+/*!***************************!*\
+  !*** ./src/util/index.js ***!
+  \***************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_index__ = __webpack_require__(0);
-
-
-/**
- * 'item' => 'items'
- *
- * @params
- *  an array of strings corresponding to
- *  the single, double, triple ... forms of the word to
- *  be pluralized. When the number to be pluralized
- *  exceeds the length of the args, it will use the last
- *  entry in the array.
- *
- *  e.g. ['single', 'double', 'triple', 'multiple']
- */
-
-function pluralize (value) {
-  var args = __WEBPACK_IMPORTED_MODULE_0__util_index__["a" /* default */].toArray(arguments, 1)
-  return args.length > 1
-    ? (args[value % 10 - 1] || args[args.length - 1])
-    : (args[0] + (value === 1 ? '' : 's'))
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (pluralize);
+eval("__webpack_require__.r(__webpack_exports__);\nvar\n    ArrayProto = Array.prototype,\n    ObjProto = Object.prototype;\n\nvar\n    slice = ArrayProto.slice,\n    toString = ObjProto.toString;\n\nvar util = {};\n\nutil.isArray = function(obj) {\n    return Array.isArray(obj);\n};\n\nvar MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;\nutil.isArrayLike = function(obj) {\n    if(typeof obj !== 'object' || !obj){\n        return false;\n    }\n    var length = obj.length;\n    return typeof length === 'number'\n        && length % 1 === 0 && length >= 0 && length <= MAX_ARRAY_INDEX;\n};\n\nutil.isObject = function(obj) {\n    var type = typeof obj;\n    return type === 'function' || type === 'object' && !!obj;\n};\n\n\nutil.each = function(obj, callback) {\n    var i,\n        len;\n    if (util.isArray(obj)) {\n        for (i = 0, len = obj.length; i < len; i++) {\n            if (callback(obj[i], i, obj) === false) {\n                break;\n            }\n        }\n    } else {\n        for (i in obj) {\n            if (callback(obj[i], i, obj) === false) {\n                break;\n            }\n        }\n    }\n    return obj;\n};\n\nutil.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {\n    util['is' + name] = function(obj) {\n        return toString.call(obj) === '[object ' + name + ']';\n    };\n});\n\nutil.toArray = function(list, start) {\n  start = start || 0\n  var i = list.length - start\n  var ret = new Array(i)\n  while (i--) {\n    ret[i] = list[i + start]\n  }\n  return ret\n}\n\nutil.toNumber = function(value) {\n  if (typeof value !== 'string') {\n    return value\n  } else {\n    var parsed = Number(value)\n    return isNaN(parsed)\n      ? value\n      : parsed\n  }\n};\n\nutil.convertArray = function (value) {\n    if (util.isArray(value)) {\n      return value\n    } else if (util.isPlainObject(value)) {\n      // convert plain object to array.\n      var keys = Object.keys(value)\n      var i = keys.length\n      var res = new Array(i)\n      var key\n      while (i--) {\n        key = keys[i]\n        res[i] = {\n          $key: key,\n          $value: value[key]\n        }\n      }\n      return res\n    } else {\n      return value || []\n    }\n}\n\nfunction multiIndex(obj,is) {  // obj,['1','2','3'] -> ((obj['1'])['2'])['3']\n    return is.length ? multiIndex(obj[is[0]],is.slice(1)) : obj\n}\n\nutil.getPath = function(obj,is) {   // obj,'1.2.3' -> multiIndex(obj,['1','2','3'])\n    return multiIndex(obj,is.split('.'))\n}\n\n/**\n * Strict object type check. Only returns true\n * for plain JavaScript objects.\n *\n * @param {*} obj\n * @return {Boolean}\n */\n\nvar toString = Object.prototype.toString\nvar OBJECT_STRING = '[object Object]'\nutil.isPlainObject = function (obj) {\n  return toString.call(obj) === OBJECT_STRING\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (util);\n\n//# sourceURL=webpack:///./src/util/index.js?");
 
 /***/ })
-/******/ ]);
+
+/******/ });
 });
