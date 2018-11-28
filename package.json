@@ -4,8 +4,8 @@
   "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
   "main": "dist/vue2-filters.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack --mode development src/index.js -o dist/vue2-filters.js --output-library-target umd && node_modules/.bin/uglifyjs dist/vue2-filters.js -o dist/vue2-filters.min.js",
-    "dev": "node_modules/.bin/webpack --mode development src/index.js -o dist/vue2-filters.js --output-library-target umd --watch",
+    "build": "node_modules/.bin/webpack && node_modules/.bin/uglifyjs dist/vue2-filters.js -o dist/vue2-filters.min.js",
+    "dev": "node_modules/.bin/webpack --watch",
     "test": "node_modules/.bin/karma start test/karma.conf.js --single-run --no-auto-watch"
   },
   "repository": {
