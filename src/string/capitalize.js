@@ -6,8 +6,10 @@
 
 function capitalize (value) {
   if (!value && value !== 0) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
+  value = value.toString().toLowerCase().split(' ')
+  return value.map( item => {
+    return item.charAt(0).toUpperCase() + item.slice(1)
+  }).join(' ')
 }
 
 export default capitalize
