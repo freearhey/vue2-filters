@@ -26,14 +26,16 @@
     "babel-preset-env": "1.7.0",
     "jasmine": "3.3.0",
     "karma": "3.1.1",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "2.0.1",
-    "karma-phantomjs-launcher": "1.0.4",
     "karma-webpack": "3.0.5",
+    "puppeteer": "^1.12.2",
     "uglify-es": "3.3.9",
     "webpack": "4.26.1",
     "webpack-cli": "^3.1.2"
   },
   "peerDependecies": {
     "vue": "^2.0.0"
-  }
+  },
+  "dependencies": {}
 }

@@ -1,3 +1,6 @@
+const puppeteer = require('puppeteer')
+process.env.CHROME_BIN = puppeteer.executablePath()
+
 module.exports = function(config) {
   config.set({
 
@@ -11,10 +14,10 @@ module.exports = function(config) {
       '../test/**/*.spec.js': ['webpack']
     },
 
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
 
     plugins: [
-      'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-jasmine',
       'karma-webpack'
     ],
