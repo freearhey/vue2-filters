@@ -212,7 +212,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/**\n *  Converts a string into Capitalize\n * \n * 'abc' => 'Abc'\n */\n\nfunction capitalize (value) {\n  if (!value && value !== 0) return ''\n  value = value.toString()\n  return value.charAt(0).toUpperCase() + value.slice(1)\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (capitalize);\n\n\n//# sourceURL=webpack:///./src/string/capitalize.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/**\n *  Converts a string into Capitalize\n * \n * 'abc' => 'Abc'\n * \n * @param {Object} options\n */\n\nfunction capitalize (value, options) {\n  options = options || {}\n  var onlyFirstLetter = options.onlyFirstLetter != null ? options.onlyFirstLetter : false\n  if (!value && value !== 0) return ''\n  if(onlyFirstLetter === true) {\n    return value.charAt(0).toUpperCase() + value.slice(1)\n  } else {\n    value = value.toString().toLowerCase().split(' ')\n    return value.map( item => {\n      return item.charAt(0).toUpperCase() + item.slice(1)\n    }).join(' ')\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (capitalize);\n\n\n//# sourceURL=webpack:///./src/string/capitalize.js?");
 
 /***/ }),
 

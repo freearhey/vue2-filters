@@ -5,9 +5,23 @@ var otherFilters = require('../src/other/index')
 describe('Filters', function() {
   it('capitalize', function() {
     var filter = stringFilters.capitalize
-    var res = filter('fsefsfsef')
-    expect(res.charAt(0)).toBe('F')
-    expect(res.slice(1)).toBe('sefsfsef')
+    var res = filter('fsefsfsef zxcvxzsaxz')
+    var words = res.split(' ')
+    expect(words[0].charAt(0)).toBe('F')
+    expect(words[0].slice(1)).toBe('sefsfsef')
+    expect(words[1].charAt(0)).toBe('Z')
+    expect(words[1].slice(1)).toBe('xcvxzsaxz')
+    assertNumberAndFalsy(filter)
+  })
+
+  it('capitalize only first letter of sentence', function() {
+    var filter = stringFilters.capitalize
+    var res = filter('fsefsfsef zxcvxzsaxz', { onlyFirstLetter: true })
+    var words = res.split(' ')
+    expect(words[0].charAt(0)).toBe('F')
+    expect(words[0].slice(1)).toBe('sefsfsef')
+    expect(words[1].charAt(0)).toBe('z')
+    expect(words[1].slice(1)).toBe('xcvxzsaxz')
     assertNumberAndFalsy(filter)
   })
 
