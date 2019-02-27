@@ -44,7 +44,7 @@ To use one of the predefined methods (such as `limitBy`, `filterBy`, `find`, or 
 </script>
 ```
 
-### NPM
+### NPM [![npm](https://img.shields.io/npm/dm/vue2-filters.svg)](https://www.npmjs.com/package/vue2-filters)
 
 ```
 npm install vue2-filters
