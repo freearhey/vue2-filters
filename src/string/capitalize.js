@@ -14,7 +14,7 @@ function capitalize (value, options) {
     return value.charAt(0).toUpperCase() + value.slice(1)
   } else {
     value = value.toString().toLowerCase().split(' ')
-    return value.map( item => {
+    return value.map(function(item) {
       return item.charAt(0).toUpperCase() + item.slice(1)
     }).join(' ')
   }
