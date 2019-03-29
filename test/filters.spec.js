@@ -96,24 +96,29 @@ describe('Filters', function() {
 
   it('pluralize', function() {
     var filter = otherFilters.pluralize
-    // single arg
-    var arg = 'item'
-    expect(filter(0, arg)).toBe('items')
-    expect(filter(1, arg)).toBe('item')
-    expect(filter(2, arg)).toBe('items')
-    expect(filter(21, arg)).toBe('items')
+    // single word
+    var word = 'item'
+    expect(filter(0, word)).toBe('items')
+    expect(filter(1, word)).toBe('item')
+    expect(filter(2, word)).toBe('items')
+    expect(filter(21, word)).toBe('items')
 
-    // multi args
-    expect(filter(0, 'fry', 'fries')).toBe('fries')
-    expect(filter(1, 'fry', 'fries')).toBe('fry')
-    expect(filter(2, 'fry', 'fries')).toBe('fries')
+    // multi words
+    expect(filter(0, ['fry', 'fries'])).toBe('fries')
+    expect(filter(1, ['fry', 'fries'])).toBe('fry')
+    expect(filter(2, ['fry', 'fries'])).toBe('fries')
 
-    expect(filter(0, 'first', 'second', 'third', 'nth')).toBe('nth')
-    expect(filter(1, 'first', 'second', 'third', 'nth')).toBe('first')
-    expect(filter(2, 'first', 'second', 'third', 'nth')).toBe('second')
-    expect(filter(3, 'first', 'second', 'third', 'nth')).toBe('third')
-    expect(filter(4, 'first', 'second', 'third', 'nth')).toBe('nth')
-    expect(filter(50, 'first', 'second', 'third', 'nth')).toBe('nth')
+    expect(filter(0, ['first', 'second', 'third', 'nth'])).toBe('nth')
+    expect(filter(1, ['first', 'second', 'third', 'nth'])).toBe('first')
+    expect(filter(2, ['first', 'second', 'third', 'nth'])).toBe('second')
+    expect(filter(3, ['first', 'second', 'third', 'nth'])).toBe('third')
+    expect(filter(4, ['first', 'second', 'third', 'nth'])).toBe('nth')
+    expect(filter(50, ['first', 'second', 'third', 'nth'])).toBe('nth')
+
+    // include number
+    expect(filter(1, word, { includeNumber: false })).toBe('item')
+    expect(filter(1, word, { includeNumber: true })).toBe('1 item')
+    expect(filter(1, ['fry', 'fries'], { includeNumber: true })).toBe('1 fry')
   })
 
   it('ordinalize', function() {
