@@ -121,20 +121,24 @@ describe('Filters', function() {
     expect(filter(1, ['fry', 'fries'], { includeNumber: true })).toBe('1 fry')
   })
 
-  it('ordinalize', function() {
-    var filter = otherFilters.ordinalize
+  it('ordinal', function() {
+    var filter = otherFilters.ordinal
 
-    expect(filter(0)).toBe('0th')
-    expect(filter(1)).toBe('1st')
-    expect(filter(2)).toBe('2nd')
-    expect(filter(3)).toBe('3rd')
-    expect(filter(4)).toBe('4th')
+    expect(filter(0)).toBe('th')
+    expect(filter(1)).toBe('st')
+    expect(filter(2)).toBe('nd')
+    expect(filter(3)).toBe('rd')
+    expect(filter(4)).toBe('th')
 
-    expect(filter(230)).toBe('230th')
-    expect(filter(231)).toBe('231st')
-    expect(filter(232)).toBe('232nd')
-    expect(filter(233)).toBe('233rd')
-    expect(filter(234)).toBe('234th')
+    expect(filter(230)).toBe('th')
+    expect(filter(231)).toBe('st')
+    expect(filter(232)).toBe('nd')
+    expect(filter(233)).toBe('rd')
+    expect(filter(234)).toBe('th')
+
+    expect(filter(4, { includeNumber: false })).toBe('th')
+    expect(filter(0, { includeNumber: true })).toBe('0th')
+    expect(filter(1, { includeNumber: true })).toBe('1st')
   })
 
   it('limitBy', function () {
