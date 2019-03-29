@@ -263,21 +263,33 @@ export default {
   // 2 => '2 tests'
   ```
 
-#### ordinalize
+#### ordinal
 
 + Arguments:
-  * `{Number}`
+  * `{Object} [options] - default: {}`
+
++ Options:
+  * `{Boolean} [includeNumber] - default: false`
 
 + Example:
 
   ```js
-  {{date | ordinalize}} 
+  {{ date | ordinal }} 
+
+  // 1 => 'st'
+  // 2 => 'nd'
+  // 3 => 'rd'
+  // 4 => 'th'
+  // 5 => 'th'
+  ```
+
+  Include number to output:
+
+  ```js
+  {{ date | ordinal({ includeNumber: true }) }} 
 
   // 1 => '1st'
   // 2 => '2nd'
-  // 3 => '3rd'
-  // 4 => '4th'
-  // 5 => '5th'
   ```
 
 #### limitBy
