@@ -229,23 +229,38 @@ export default {
 #### pluralize
 
 + Arguments:
-  * `{Number} single, [double, triple, ...]`
+  * `{String|Array} single or Array(single, double, triple, ...)`
+  * `{Object} [options] - default: {}`
+
++ Options:
+  * `{Boolean} [includeNumber] - default: false`
 
 + Example:
 
   ```js
-  {{count}} {{count | pluralize('item')}} 
+  {{ count }} {{ count | pluralize('item') }} 
 
   // 1 => '1 item'
   // 2 => '2 items'
   ```
 
+  Use an array of words:
+
   ```js
-  {{amount}} {{amount | pluralize('fry', 'fries')}} 
+  {{ count }} {{ count | pluralize(['fry', 'fries']) }} 
 
   // 1 => '1 fry'
   // 2 => '2 fries'
   // 3 => '3 fries'
+  ```
+
+  Include number to output:
+
+  ```js
+  {{ count | pluralize('test', { includeNumber: true }) }} 
+
+  // 1 => '1 test'
+  // 2 => '2 tests'
   ```
 
 #### ordinalize
