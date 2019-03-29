@@ -229,7 +229,7 @@ export default {
 #### pluralize
 
 + Arguments:
-  * `{String} single, [double, triple, ...]`
+  * `{Number} single, [double, triple, ...]`
 
 + Example:
 
@@ -241,7 +241,22 @@ export default {
   ```
 
   ```js
-  {{date}} {{date | pluralize('st','nd','rd','th')}} 
+  {{amount}} {{amount | pluralize('fry', 'fries')}} 
+
+  // 1 => '1 fry'
+  // 2 => '2 fries'
+  // 3 => '3 fries'
+  ```
+
+#### ordinalize
+
++ Arguments:
+  * `{Number}`
+
++ Example:
+
+  ```js
+  {{date | ordinalize}} 
 
   // 1 => '1st'
   // 2 => '2nd'
