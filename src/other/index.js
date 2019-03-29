@@ -1,9 +1,9 @@
 import currency from './currency'
 import pluralize from './pluralize'
-import ordinalize from './ordinalize'
+import ordinal from './ordinal'
 
 export {
   currency,
   pluralize,
-  ordinalize
+  ordinal
 }
