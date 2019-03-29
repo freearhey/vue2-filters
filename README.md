@@ -112,6 +112,21 @@ export default {
 }
 ```
 
+## Available Filters
+
+- [capitalize](#capitalize)
+- [uppercase](#uppercase)
+- [lowercase](#lowercase)
+- [placeholder](#placeholder)
+- [truncate](#truncate)
+- [currency](#currency)
+- [pluralize](#pluralize)
+- [ordinal](#ordinal)
+- [limitBy](#limitBy)
+- [filterBy](#filterBy)
+- [find](#find)
+- [orderBy](#orderBy)
+
 ## Usage
 
 #### capitalize
