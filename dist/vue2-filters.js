@@ -184,11 +184,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/**\n * \n * 12345 => $12,345
 /*!****************************!*\
   !*** ./src/other/index.js ***!
   \****************************/
-/*! exports provided: currency, pluralize */
+/*! exports provided: currency, pluralize, ordinal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _currency__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./currency */ \"./src/other/currency.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"currency\", function() { return _currency__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _pluralize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pluralize */ \"./src/other/pluralize.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"pluralize\", function() { return _pluralize__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n\n\n\n\n//# sourceURL=webpack:///./src/other/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _currency__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./currency */ \"./src/other/currency.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"currency\", function() { return _currency__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _pluralize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pluralize */ \"./src/other/pluralize.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"pluralize\", function() { return _pluralize__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n/* harmony import */ var _ordinal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ordinal */ \"./src/other/ordinal.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"ordinal\", function() { return _ordinal__WEBPACK_IMPORTED_MODULE_2__[\"default\"]; });\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/other/index.js?");
+
+/***/ }),
+
+/***/ "./src/other/ordinal.js":
+/*!******************************!*\
+  !*** ./src/other/ordinal.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n/**\n * 42 => 'nd'\n *\n * @params {Object} options\n * \n */\n\nfunction ordinal(value, options) {\n  options = options || {};\n  var output = '';\n  var includeNumber = options.includeNumber != null ? options.includeNumber : false;\n  if (includeNumber === true) output += value;\n  var j = value % 10,\n      k = value % 100;\n  if (j == 1 && k != 11) output += 'st';else if (j == 2 && k != 12) output += 'nd';else if (j == 3 && k != 13) output += 'rd';else output += 'th';\n  return output;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (ordinal);\n\n//# sourceURL=webpack:///./src/other/ordinal.js?");
 
 /***/ }),
 
@@ -200,7 +212,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _cur
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n/**\n * 'item' => 'items'\n *\n * @params\n *  an array of strings corresponding to\n *  the single, double, triple ... forms of the word to\n *  be pluralized. When the number to be pluralized\n *  exceeds the length of the args, it will use the last\n *  entry in the array.\n *\n *  e.g. ['single', 'double', 'triple', 'multiple']\n */\n\nfunction pluralize(value) {\n  var args = _util_index__WEBPACK_IMPORTED_MODULE_0__[\"default\"].toArray(arguments, 1);\n  return args.length > 1 ? args[value % 10 - 1] || args[args.length - 1] : args[0] + (value === 1 ? '' : 's');\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (pluralize);\n\n//# sourceURL=webpack:///./src/other/pluralize.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/index */ \"./src/util/index.js\");\n\n/**\n * 'item' => 'items'\n *\n * @param {String|Array} word\n * @param {Object} options\n *\n */\n\nfunction pluralize(value, word, options) {\n  options = options || {};\n  var output = '';\n  var includeNumber = options.includeNumber != null ? options.includeNumber : false;\n  if (includeNumber === true) output += value + ' ';\n  if (!value && value !== 0 || !word) return output;\n\n  if (Array.isArray(word)) {\n    output += word[value - 1] || word[word.length - 1];\n  } else {\n    output += word + (value === 1 ? '' : 's');\n  }\n\n  return output;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (pluralize);\n\n//# sourceURL=webpack:///./src/other/pluralize.js?");
 
 /***/ }),
 
