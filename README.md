@@ -1,6 +1,6 @@
 # vue2-filters [![Build Status](https://travis-ci.org/freearhey/vue2-filters.svg?branch=master)](https://travis-ci.org/freearhey/vue2-filters)
 
-The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*
+A collection Vue.js filters.
 
 ## Installation
 
