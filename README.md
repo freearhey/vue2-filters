@@ -413,6 +413,22 @@ If you want capitalize only first letter of sentence, you just need to add the `
 {{ msg | capitalize({ onlyFirstLetter: true }) }}
 ```
 
+### Upgrade to 0.6.0 from 0.5.*
+
+#### The `pluralize` filter
+
+The `pluralize` filter arguments order has been changed. In the new version to specify several variants of words you can do this by passing an array as first argument, like so:
+
+```js
+{{ count | pluralize(['item', 'items']) }}
+````
+
+In addition, the function of translate a regular number to its ordinal representation was removed from the `pluralize` filter. Now there is a separate `ordinal` filter for this:
+
+```js
+{{ count | ordinal }}
+```
+
 ## Contribution
 
 If you find a bug or want to contribute to the code or documentation, you can help by submitting an [issue](https://github.com/freearhey/vue2-filters/issues) or a [pull request](https://github.com/freearhey/vue2-filters/pulls).
