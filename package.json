@@ -1,7 +1,7 @@
 {
   "name": "vue2-filters",
-  "version": "0.5.1",
-  "description": "The list of standard filters Vue.js 1.* adapted for use in Vue.js 2.*",
+  "version": "0.6.0",
+  "description": "A collection of Vue.js filters",
   "main": "dist/vue2-filters.js",
   "scripts": {
     "build": "node_modules/.bin/webpack && node_modules/.bin/uglifyjs dist/vue2-filters.js -o dist/vue2-filters.min.js",
