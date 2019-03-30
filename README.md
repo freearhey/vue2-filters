@@ -387,32 +387,6 @@ export default {
 
 ## Upgrade Guide
 
-### Upgrade to 0.4.0 from 0.3.*
-
-In the new version it was decided to refuse from global registration of mixins, as it could lead to errors when using this package with other packages. Therefore, you need to manually add `Vue2Filters.mixin` into the mixin list of your components if you use at least one of the predefined methods (such as `limitBy`, `filterBy`, `find` or `orderBy`):
-
-```js
-export default {
-  ...
-  mixins: [Vue2Filters.mixin],
-  ...
-}
-```
-
-You can read more about the reasons for this change [here](https://github.com/freearhey/vue2-filters/issues/52)
-
-### Upgrade to 0.5.0 from 0.4.*
-
-#### The `capitalize` filter
-
-To match the definition of the word "capitalize", the default filter behavior has been changed. The filter now capitalizes the first letter in each word in the sentence (like CSS property `text-transform`). 
-
-If you want capitalize only first letter of sentence, you just need to add the `onlyFirstLetter` parameter to the filter, like so:
-
-```js
-{{ msg | capitalize({ onlyFirstLetter: true }) }}
-```
-
 ### Upgrade to 0.6.0 from 0.5.*
 
 #### The `pluralize` filter
@@ -428,6 +402,32 @@ In addition, the function of translate a regular number to its ordinal represent
 ```js
 {{ count | ordinal }}
 ```
+
+### Upgrade to 0.5.0 from 0.4.*
+
+#### The `capitalize` filter
+
+To match the definition of the word "capitalize", the default filter behavior has been changed. The filter now capitalizes the first letter in each word in the sentence (like CSS property `text-transform`). 
+
+If you want capitalize only first letter of sentence, you just need to add the `onlyFirstLetter` parameter to the filter, like so:
+
+```js
+{{ msg | capitalize({ onlyFirstLetter: true }) }}
+```
+
+### Upgrade to 0.4.0 from 0.3.*
+
+In the new version it was decided to refuse from global registration of mixins, as it could lead to errors when using this package with other packages. Therefore, you need to manually add `Vue2Filters.mixin` into the mixin list of your components if you use at least one of the predefined methods (such as `limitBy`, `filterBy`, `find` or `orderBy`):
+
+```js
+export default {
+  ...
+  mixins: [Vue2Filters.mixin],
+  ...
+}
+```
+
+You can read more about the reasons for this change [here](https://github.com/freearhey/vue2-filters/issues/52)
 
 ## Contribution
 
