@@ -8,10 +8,6 @@ var
 
 var util = {};
 
-util.isNumber = function(number) {
-  return !isNaN(number)
-};
-
 util.isArray = function(obj) {
     return Array.isArray(obj);
 };
