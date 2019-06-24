@@ -141,7 +141,7 @@ describe('Filters', function() {
     expect(filter(1, { includeNumber: true })).toBe('1st')
   })
 
-  it('limitBy', function () {
+  it('limitByArray', function () {
     var filter = arrayFilters.limitBy
     var arr = [1, 2, 3]
     var res = filter(arr, false)
@@ -158,6 +158,26 @@ describe('Filters', function() {
     res = filter(arr, 2, 1)
     assertArray(res, [2, 3])
     res = filter(arr, 1, 2)
+    assertArray(res, [3])
+  })
+
+  it('limitByRange', function () {
+    var filter = arrayFilters.limitBy
+    var range = 3
+    var res = filter(range, false)
+    expect(res).toEqual([1, 2, 3])
+    res = filter(range, 1)
+    assertArray(res, [1])
+    res = filter(range, 10)
+    assertArray(res, [1, 2, 3])
+    res = filter(range, -1)
+    assertArray(res, [1, 2])
+    // with offsets, note offsets are 0 bound (as expected)
+    res = filter(range, 1, 1)
+    assertArray(res, [2])
+    res = filter(range, 2, 1)
+    assertArray(res, [2, 3])
+    res = filter(range, 1, 2)
     assertArray(res, [3])
   })
 

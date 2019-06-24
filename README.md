@@ -310,7 +310,7 @@ export default {
 #### limitBy
 
 + Arguments:
-  * `{Array} [items]`
+  * `{Number|Array} [items]`
   * `{Number} [limit]`
   * `{Number} [offset]`
 

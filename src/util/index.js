@@ -8,6 +8,10 @@ var
 
 var util = {};
 
+util.isNumber = function(number) {
+  return !isNaN(number)
+};
+
 util.isArray = function(obj) {
     return Array.isArray(obj);
 };
@@ -72,6 +76,11 @@ util.toNumber = function(value) {
       ? value
       : parsed
   }
+};
+
+util.convertRangeToArray = function (range) {
+  if (util.isArray(range)) return range
+  else return [...Array(range + 1).keys()].slice(1)
 };
 
 util.convertArray = function (value) {
