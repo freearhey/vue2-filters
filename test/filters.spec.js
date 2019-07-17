@@ -25,6 +25,17 @@ describe('Filters', function() {
     assertNumberAndFalsy(filter)
   })
 
+  it('capitalize with global options', function() {
+    var filter = stringFilters.capitalize.bind({ capitalize: { onlyFirstLetter: true }})
+    var res = filter('fsefsfsef zxcvxzsaxz')
+    var words = res.split(' ')
+    expect(words[0].charAt(0)).toBe('F')
+    expect(words[0].slice(1)).toBe('sefsfsef')
+    expect(words[1].charAt(0)).toBe('z')
+    expect(words[1].slice(1)).toBe('xcvxzsaxz')
+    assertNumberAndFalsy(filter)
+  })
+
   it('uppercase', function() {
     var filter = stringFilters.uppercase
     expect(filter('fsefef')).toBe('FSEFEF')
@@ -94,6 +105,21 @@ describe('Filters', function() {
     expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
   })
 
+  it('currency with global options', function() {
+    var filter = otherFilters.currency.bind({
+      currency: {
+        symbol: '@',
+        decimalDigits: 3,
+        thousandsSeparator: ',',
+        decimalSeparator: '|',
+        symbolOnLeft: false,
+        spaceBetweenAmountAndSymbol: true
+      }
+    })
+
+    expect(filter(1234)).toBe('1,234|000 @')
+  })
+
   it('pluralize', function() {
     var filter = otherFilters.pluralize
     // single word
@@ -121,6 +147,15 @@ describe('Filters', function() {
     expect(filter(1, ['fry', 'fries'], { includeNumber: true })).toBe('1 fry')
   })
 
+  it('pluralize with global options', function() {
+    var filter = otherFilters.pluralize.bind({
+      pluralize: { includeNumber: false }
+    })
+    var word = 'item'
+
+    expect(filter(1, word)).toBe('item')
+  })
+
   it('ordinal', function() {
     var filter = otherFilters.ordinal
 
@@ -141,7 +176,15 @@ describe('Filters', function() {
     expect(filter(1, { includeNumber: true })).toBe('1st')
   })
 
-  it('limitBy', function () {
+  it('ordinal with global options', function() {
+    var filter = otherFilters.ordinal.bind({
+      ordinal: { includeNumber: false }
+    })
+
+    expect(filter(4)).toBe('th')
+  })
+
+  it('limitByArray', function () {
     var filter = arrayFilters.limitBy
     var arr = [1, 2, 3]
     var res = filter(arr, false)
@@ -158,6 +201,26 @@ describe('Filters', function() {
     res = filter(arr, 2, 1)
     assertArray(res, [2, 3])
     res = filter(arr, 1, 2)
+    assertArray(res, [3])
+  })
+
+  it('limitByRange', function () {
+    var filter = arrayFilters.limitBy
+    var range = 3
+    var res = filter(range, false)
+    expect(res).toEqual([1, 2, 3])
+    res = filter(range, 1)
+    assertArray(res, [1])
+    res = filter(range, 10)
+    assertArray(res, [1, 2, 3])
+    res = filter(range, -1)
+    assertArray(res, [1, 2])
+    // with offsets, note offsets are 0 bound (as expected)
+    res = filter(range, 1, 1)
+    assertArray(res, [2])
+    res = filter(range, 2, 1)
+    assertArray(res, [2, 3])
+    res = filter(range, 1, 2)
     assertArray(res, [3])
   })
 

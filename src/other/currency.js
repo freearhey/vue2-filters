@@ -1,3 +1,5 @@
+import util from '../util/index'
+
 /**
  * 
  * 12345 => $12,345.00
@@ -8,13 +10,16 @@
  */
 
 function currency (value, symbol, decimals, options) {
+  const globalOptions = (this && this.currency) ? this.currency : {}
+  symbol = util.exist(symbol) ? symbol : globalOptions.symbol
+  decimals = util.exist(decimals) ? decimals : globalOptions.decimalDigits
+  options = options || globalOptions
   var thousandsSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol
   var digitsRE = /(\d{3})(?=\d)/g
-  options = options || {}
   value = parseFloat(value)
   if (!isFinite(value) || (!value && value !== 0)) return ''
-  symbol = symbol != null ? symbol : '$'
-  decimals = decimals != null ? decimals : 2
+  symbol = (typeof symbol !== 'undefined') ? symbol : '$'
+  decimals = (typeof decimals !== 'undefined') ? decimals : 2
   thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ','
   symbolOnLeft = options.symbolOnLeft != null ? options.symbolOnLeft : true
   spaceBetweenAmountAndSymbol = options.spaceBetweenAmountAndSymbol != null ? options.spaceBetweenAmountAndSymbol : false

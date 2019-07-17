@@ -74,6 +74,10 @@ util.toNumber = function(value) {
   }
 };
 
+util.convertRangeToArray = function (range) {
+  return [...Array(range + 1).keys()].slice(1)
+};
+
 util.convertArray = function (value) {
     if (util.isArray(value)) {
       return value
@@ -116,6 +120,10 @@ var toString = Object.prototype.toString
 var OBJECT_STRING = '[object Object]'
 util.isPlainObject = function (obj) {
   return toString.call(obj) === OBJECT_STRING
+}
+
+util.exist = function(value) {
+  return value !== null && typeof value !== 'undefined'
 }
 
 export default util;

@@ -4,13 +4,13 @@ import * as arrayFilters from './array/index'
 import * as otherFilters from './other/index'
 
 var Vue2Filters = {
-  install: function(Vue) {
+  install: function(Vue, options) {
     util.each(stringFilters, function(value, key) {
-        Vue.filter(key, value)
+      Vue.filter(key, value.bind(options))
     })
 
     util.each(otherFilters, function(value, key) {
-        Vue.filter(key, value)
+      Vue.filter(key, value.bind(options))
     })
   },
   mixin: {

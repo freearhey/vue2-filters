@@ -310,7 +310,7 @@ export default {
 #### limitBy
 
 + Arguments:
-  * `{Array} [items]`
+  * `{Number|Array} [items]`
   * `{Number} [limit]`
   * `{Number} [offset]`
 
@@ -318,9 +318,11 @@ export default {
 
   ```html
   <!-- only display first 10 items -->
-  <div v-for="item in limitBy(items, 10)"></div>
+  <div v-for="item in limitBy(items, 10)">{{ item }}</div>
   <!-- display items 5 to 15 -->
-  <div v-for="item in limitBy(items, 10, 5)"></div>
+  <div v-for="item in limitBy(items, 10, 5)">{{ item }}</div>
+  <!-- with a Range -->
+  <div v-for="n in limitBy(10, 4, 2)">{{ n }}</div>
   ```
 
 #### filterBy
@@ -384,6 +386,57 @@ export default {
     </li>
   </ul>
   ```
+
+## Global Configuration
+
+If you need to override filter options globally you can do so by passing an object into `Vue.use()` function as the second argument:
+
+```js
+import Vue from 'vue'
+import Vue2Filters from 'vue2-filters'
+
+var Vue2FiltersConfig = {
+  capitalize: {
+    onlyFirstLetter: false
+  },
+  currency: {
+    symbol: '$',
+    decimalDigits: 2,
+    thousandsSeparator: ',',
+    decimalSeparator: '.',
+    symbolOnLeft: true,
+    spaceBetweenAmountAndSymbol: false
+  },
+  pluralize: {
+    includeNumber: false
+  },
+  ordinal: {
+    includeNumber: false
+  }
+}
+
+Vue.use(Vue2Filters, Vue2FiltersConfig)
+```
+
+## Programmatic Usage
+
+Aside from using filters inside templates you can do this programmatically using default filters object:
+
+```js
+this.$options.filters.filterName(value)
+```
+
+For example, here's how you can use the `currency`filter:
+
+```js
+this.$options.filters.currency(100) // => $100.00
+```
+
+As for such filters as `limitBy`, `filterBy`, `find`, or `orderBy`, they can be used as usual methods:
+
+```js
+this.limitBy([1,2,3,4,5], 2) // => [1,2]
+```
 
 ## Upgrade Guide
 
