@@ -385,6 +385,26 @@ export default {
   </ul>
   ```
 
+## Programmatic Usage
+
+Aside from using filters inside templates you can do this programmatically using default filters object:
+
+```js
+this.$options.filters.filterName(value)
+```
+
+For example, here's how you can use the `currency`filter:
+
+```js
+this.$options.filters.currency(100) // => $100.00
+```
+
+As for such filters as `limitBy`, `filterBy`, `find`, or `orderBy`, they can be used as usual methods:
+
+```js
+this.limitBy([1,2,3,4,5], 2) // => [1,2]
+```
+
 ## Upgrade Guide
 
 ### Upgrade to 0.6.0 from 0.5.*
