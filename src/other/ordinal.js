@@ -8,7 +8,8 @@ import util from '../util/index'
  */
 
 function ordinal (value, options) {
-  options = options || {}
+  const globalOptions = (this && this.ordinal) ? this.ordinal : {}
+  options = options || globalOptions
   var output = ''
   var includeNumber = options.includeNumber != null ? options.includeNumber : false
   if(includeNumber === true) output += value

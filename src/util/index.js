@@ -122,4 +122,8 @@ util.isPlainObject = function (obj) {
   return toString.call(obj) === OBJECT_STRING
 }
 
+util.exist = function(value) {
+  return value !== null && typeof value !== 'undefined'
+}
+
 export default util;

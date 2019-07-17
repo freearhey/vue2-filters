@@ -9,7 +9,8 @@ import util from '../util/index'
  */
 
 function pluralize (value, word, options) {
-  options = options || {}
+  const globalOptions = (this && this.pluralize) ? this.pluralize : {}
+  options = options || globalOptions
   var output = ''
   var includeNumber = options.includeNumber != null ? options.includeNumber : false
   if(includeNumber === true) output += value + ' '
