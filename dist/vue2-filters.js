@@ -114,6 +114,14 @@ __webpack_require__.d(other_namespaceObject, "pluralize", function() { return ot
 __webpack_require__.d(other_namespaceObject, "ordinal", function() { return other_ordinal; });
 
 // CONCATENATED MODULE: ./src/util/index.js
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var ArrayProto = Array.prototype,
@@ -188,6 +196,10 @@ util.toNumber = function (value) {
     var parsed = Number(value);
     return isNaN(parsed) ? value : parsed;
   }
+};
+
+util.convertRangeToArray = function (range) {
+  return _toConsumableArray(Array(range + 1).keys()).slice(1);
 };
 
 util.convertArray = function (value) {
@@ -324,11 +336,13 @@ function truncate(value, length) {
 /**
  * Limit filter for arrays
  *
+ * @param {Number|Array} arr (If Number, decimal expected)
  * @param {Number} n
  * @param {Number} offset (Decimal expected)
  */
 
 function limitBy(arr, n, offset) {
+  arr = src_util.isArray(arr) ? arr : src_util.convertRangeToArray(arr);
   offset = offset ? parseInt(offset, 10) : 0;
   n = src_util.toNumber(n);
   return typeof n === 'number' ? arr.slice(offset, offset + n) : arr;
