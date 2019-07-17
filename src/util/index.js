@@ -74,6 +74,10 @@ util.toNumber = function(value) {
   }
 };
 
+util.convertRangeToArray = function (range) {
+  return [...Array(range + 1).keys()].slice(1)
+};
+
 util.convertArray = function (value) {
     if (util.isArray(value)) {
       return value
