@@ -1,13 +1,22 @@
 var path = require('path');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  entry: {
+    'vue2-filters': './src/index.js',
+    'vue2-filters.min': './src/index.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'vue2-filters.js',
+    filename: '[name].js',
     libraryTarget: "umd",
     globalObject: 'typeof self !== \'undefined\' ? self : this'
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      include: /\.min\.js$/
+    })]
   },
   module: {
     rules: [
