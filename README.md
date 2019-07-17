@@ -318,9 +318,11 @@ export default {
 
   ```html
   <!-- only display first 10 items -->
-  <div v-for="item in limitBy(items, 10)"></div>
+  <div v-for="item in limitBy(items, 10)">{{ item }}</div>
   <!-- display items 5 to 15 -->
-  <div v-for="item in limitBy(items, 10, 5)"></div>
+  <div v-for="item in limitBy(items, 10, 5)">{{ item }}</div>
+  <!-- with a Range -->
+  <div v-for="n in limitBy(10, 4, 2)">{{ n }}</div>
   ```
 
 #### filterBy
