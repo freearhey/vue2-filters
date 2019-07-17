@@ -75,8 +75,7 @@ util.toNumber = function(value) {
 };
 
 util.convertRangeToArray = function (range) {
-  if (util.isArray(range)) return range
-  else return [...Array(range + 1).keys()].slice(1)
+  return [...Array(range + 1).keys()].slice(1)
 };
 
 util.convertArray = function (value) {
