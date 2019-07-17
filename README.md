@@ -387,6 +387,37 @@ export default {
   </ul>
   ```
 
+## Global Configuration
+
+If you need to override filter options globally you can do so by passing an object into `Vue.use()` function as the second argument:
+
+```js
+import Vue from 'vue'
+import Vue2Filters from 'vue2-filters'
+
+var Vue2FiltersConfig = {
+  capitalize: {
+    onlyFirstLetter: false
+  },
+  currency: {
+    symbol: '$',
+    decimalDigits: 2,
+    thousandsSeparator: ',',
+    decimalSeparator: '.',
+    symbolOnLeft: true,
+    spaceBetweenAmountAndSymbol: false
+  },
+  pluralize: {
+    includeNumber: false
+  },
+  ordinal: {
+    includeNumber: false
+  }
+}
+
+Vue.use(Vue2Filters, Vue2FiltersConfig)
+```
+
 ## Programmatic Usage
 
 Aside from using filters inside templates you can do this programmatically using default filters object:
