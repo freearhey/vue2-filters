@@ -3,3 +3,4 @@ npm-debug.log
 index.html
 package-lock.json
 examples/
+.DS_Store
