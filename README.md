@@ -230,7 +230,7 @@ export default {
   ```js
   {{ amount | currency('$', 0, { symbolOnLeft: false }) }} // 12345 => 12,345$
   ```
-  Add space between amound and symbol:
+  Add space between amount and symbol:
 
   ```js
   {{ amount | currency('$', 0, { spaceBetweenAmountAndSymbol: true }) }} // 12345 => $ 12,345
