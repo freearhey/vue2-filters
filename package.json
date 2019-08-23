@@ -1,6 +1,6 @@
 {
   "name": "vue2-filters",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A collection of Vue.js filters",
   "main": "dist/vue2-filters.js",
   "types": "types/index.d.ts",
