@@ -544,7 +544,8 @@ function currency(value, symbol, decimals, options) {
   thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ',';
   symbolOnLeft = options.symbolOnLeft != null ? options.symbolOnLeft : true;
   spaceBetweenAmountAndSymbol = options.spaceBetweenAmountAndSymbol != null ? options.spaceBetweenAmountAndSymbol : false;
-  var stringified = Math.abs(value).toFixed(decimals);
+  var number = Math.abs(value);
+  var stringified = toFixed(number, decimals);
   stringified = options.decimalSeparator ? stringified.replace('.', options.decimalSeparator) : stringified;
 
   var _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
@@ -558,6 +559,10 @@ function currency(value, symbol, decimals, options) {
   symbol = symbolOnLeft ? symbol + head + _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float : head + _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float + symbol;
   var sign = value < 0 ? '-' : '';
   return sign + symbol;
+}
+
+function toFixed(num, precision) {
+  return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
 }
 
 /* harmony default export */ var other_currency = (currency);
