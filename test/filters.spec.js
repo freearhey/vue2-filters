@@ -103,6 +103,9 @@ describe('Filters', function() {
     expect(filter(1234, '$', 0, {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234')
     expect(filter(1234, '$', 0, {symbolOnLeft: false,spaceBetweenAmountAndSymbol: true})).toBe('1,234 $')
     expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
+    // round up
+    expect(filter(4514.275)).toBe('$4,514.28')
+    expect(filter(9446.975)).toBe('$9,446.98')
   })
 
   it('currency with global options', function() {
