@@ -43,6 +43,7 @@ function orderBy (arr) {
   }
 
   function baseCompare (a, b, sortKeyIndex) {
+    
     var sortKey = sortKeys[sortKeyIndex]
     if (sortKey) {
       if (sortKey !== '$key') {
@@ -51,6 +52,9 @@ function orderBy (arr) {
       }
       a = util.isObject(a) ? util.getPath(a, sortKey) : a
       b = util.isObject(b) ? util.getPath(b, sortKey) : b
+    }
+    if (typeof a === 'string' && typeof b === 'string') {
+      return a.toLowerCase() === b.toLowerCase() ? 0 : a.toLowerCase() > b.toLowerCase() ? order : -order
     }
     return a === b ? 0 : a > b ? order : -order
   }
