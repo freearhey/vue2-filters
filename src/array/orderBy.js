@@ -51,6 +51,8 @@ function orderBy (arr) {
       }
       a = util.isObject(a) ? util.getPath(a, sortKey) : a
       b = util.isObject(b) ? util.getPath(b, sortKey) : b
+      a = (typeof a === 'string') ? a.toLowerCase() : a
+      b = (typeof b === 'string') ? b.toLowerCase() : b
     }
     return a === b ? 0 : a > b ? order : -order
   }
