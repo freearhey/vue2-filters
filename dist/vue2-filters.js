@@ -486,6 +486,8 @@ function orderBy(arr) {
 
       a = src_util.isObject(a) ? src_util.getPath(a, sortKey) : a;
       b = src_util.isObject(b) ? src_util.getPath(b, sortKey) : b;
+      a = typeof a === 'string' ? a.toLowerCase() : a;
+      b = typeof b === 'string' ? b.toLowerCase() : b;
     }
 
     return a === b ? 0 : a > b ? order : -order;
