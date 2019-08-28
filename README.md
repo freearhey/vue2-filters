@@ -386,6 +386,15 @@ export default {
     </li>
   </ul>
   ```
+  Sort primitive values:
+
+  ```html
+  <ul>
+    <li v-for="name in orderBy(names, true)">
+      {{ name }}
+    </li>
+  </ul>
+  ```
 
 ## Global Configuration
 
