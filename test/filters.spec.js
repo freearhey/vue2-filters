@@ -342,6 +342,13 @@ describe('Filters', function() {
     assertArray(res, [arr[2], arr[3], arr[0], arr[1]])
   })
 
+  it('orderBy array of strings', function () {
+    var filter = arrayFilters.orderBy
+    var arr = ['C', 'a', 'B', 'b']
+    var res = filter(arr, true)
+    assertArray(res, [arr[1], arr[2], arr[3], arr[0]])
+  })
+
   it('orderBy multiple fields', function () {
     var filter = arrayFilters.orderBy
     var arr = [
