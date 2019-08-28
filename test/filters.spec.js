@@ -292,7 +292,7 @@ describe('Filters', function() {
   it('orderBy', function () {
     var filter = arrayFilters.orderBy
     var arr = [
-      { a: { b: 0 }, c: 'b' },
+      { a: { b: 0 }, c: 'B' },
       { a: { b: 2 }, c: 'c' },
       { a: { b: 1 }, c: 'a' }
     ]
