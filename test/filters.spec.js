@@ -3,6 +3,43 @@ var arrayFilters = require('../src/array/index')
 var otherFilters = require('../src/other/index')
 
 describe('Filters', function() {
+  it('number', function() {
+    var filter = otherFilters.number
+    expect(filter(123456)).toBe('123456')
+    expect(filter('123456')).toBe('123456')
+    expect(filter(-123456)).toBe('-123456')
+    expect(filter(123456, '+0,0')).toBe('+123,456')
+    expect(filter(123456, '-0,0')).toBe('-123,456')
+    expect(filter(-123456, '+0,0')).toBe('+123,456')
+    expect(filter(12345.67, '0,0')).toBe('12,346')
+    expect(filter(12345.67, '0,0.0000')).toBe('12,345.6700')
+    expect(filter(12345.6789, '0,0.0000')).toBe('12,345.6789')
+    expect(filter(12345, '0,0.0')).toBe('12,345.0')
+    expect(filter(-12345, '0,0.0')).toBe('-12,345.0')
+    expect(filter(12345.6789, '0.000')).toBe('12345.679')
+    expect(filter(1024, '0a')).toBe('1K')
+    expect(filter(1224, '0.0a')).toBe('1.2K')
+    expect(filter(10245, '0 a')).toBe('10 K')
+    expect(filter(10245678, '0.0a')).toBe('10.2M')
+    expect(filter(-10245678, '.0a')).toBe('-10.2M')
+    expect(filter(-123456.093, '0.00 a')).toBe('-123.46 K')
+    expect(filter(-0.23, '.00')).toBe('-.23')
+    // options
+    expect(filter(123456, '0,0', {thousandsSeparator: '|'})).toBe('123|456')
+    expect(filter(123456.789, '0.00', {decimalSeparator: '|'})).toBe('123456|79')
+  })
+
+  it('number with global options', function() {
+    var filter = otherFilters.number.bind({
+      number: {
+        thousandsSeparator: '@',
+        decimalSeparator: '|'
+      }
+    })
+
+    expect(filter(123456.789, '0,0.000')).toBe('123@456|789')
+  })
+
   it('capitalize', function() {
     var filter = stringFilters.capitalize
     var res = filter('fsefsfsef zxcvxzsaxz')
