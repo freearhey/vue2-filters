@@ -9,6 +9,9 @@
     "dev": "node_modules/.bin/webpack --mode=development --watch",
     "test": "node_modules/.bin/karma start test/karma.conf.js --single-run --no-auto-watch"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/freearhey/vue2-filters.git"
