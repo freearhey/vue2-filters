@@ -112,6 +112,7 @@ __webpack_require__.r(other_namespaceObject);
 __webpack_require__.d(other_namespaceObject, "currency", function() { return other_currency; });
 __webpack_require__.d(other_namespaceObject, "pluralize", function() { return other_pluralize; });
 __webpack_require__.d(other_namespaceObject, "ordinal", function() { return other_ordinal; });
+__webpack_require__.d(other_namespaceObject, "number", function() { return other_number; });
 
 // CONCATENATED MODULE: ./src/util/index.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -618,7 +619,115 @@ function ordinal(value, options) {
 }
 
 /* harmony default export */ var other_ordinal = (ordinal);
+// CONCATENATED MODULE: ./src/other/number.js
+/**
+ * 123456 => '123,456'
+ *
+ * @params {Object} options
+ * 
+ */
+function number_number(value, format, options) {
+  var globalOptions = this && this.number ? this.number : {};
+  options = options || globalOptions;
+  var config = parseFormat(format);
+  var number = parseNumber(value);
+  var thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ',';
+  var decimalSeparator = options.decimalSeparator != null ? options.decimalSeparator : '.';
+  config.sign = config.sign || number.sign;
+
+  if (config.unit) {
+    var numberWithUnit = addUnit(number.float, config);
+    return config.sign + numberWithUnit;
+  }
+
+  var int = config.decimals === 0 ? number_toFixed(number.float, 0) : number.int;
+
+  switch (config.base) {
+    case '':
+      int = '';
+      break;
+
+    case '0,0':
+      int = addSeparator(int, thousandsSeparator);
+      break;
+  }
+
+  var fraction = getFraction(number.float, config.decimals, decimalSeparator);
+  return config.sign + int + fraction;
+}
+
+function parseNumber(num) {
+  return {
+    float: Math.abs(parseFloat(num)),
+    int: Math.abs(parseInt(num)),
+    sign: Math.sign(num) < 0 ? '-' : ''
+  };
+}
+
+function parseFormat() {
+  var string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '0';
+  var regex = /([\+\-])?([0-9\,]+)?([\.0-9]+)?([a\s]+)?/;
+  var matches = string ? string.match(regex) : ['', '', '', '', ''];
+  var float = matches[3];
+  var decimals = float ? float.match(/0/g).length : 0;
+  return {
+    sign: matches[1] || '',
+    base: matches[2] || '',
+    decimals: decimals,
+    unit: matches[4] || ''
+  };
+}
+
+function addUnit(num, config) {
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var si = [{
+    value: 1,
+    symbol: ""
+  }, {
+    value: 1E3,
+    symbol: "K"
+  }, {
+    value: 1E6,
+    symbol: "M"
+  }];
+  var i;
+
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+
+  num = (num / si[i].value).toFixed(config.decimals).replace(rx, "$1");
+  return num + config.unit.replace('a', si[i].symbol);
+}
+
+function addSeparator(num, separator) {
+  var regex = /(\d+)(\d{3})/;
+  var string = num.toString();
+  var x = string.split('.');
+  var x1 = x[0];
+  var x2 = x.length > 1 ? '.' + x[1] : '';
+
+  while (regex.test(x1)) {
+    x1 = x1.replace(regex, '$1' + separator + '$2');
+  }
+
+  return x1 + x2;
+}
+
+function getFraction(num, decimals, separator) {
+  var fraction = number_toFixed(num, decimals).toString().split('.')[1];
+  return fraction ? separator + fraction : '';
+}
+
+function number_toFixed(num, precision) {
+  return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+}
+
+/* harmony default export */ var other_number = (number_number);
 // CONCATENATED MODULE: ./src/other/index.js
+
 
 
 
