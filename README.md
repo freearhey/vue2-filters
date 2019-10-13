@@ -119,6 +119,7 @@ export default {
 - [lowercase](#lowercase)
 - [placeholder](#placeholder)
 - [truncate](#truncate)
+- [number](#number)
 - [currency](#currency)
 - [pluralize](#pluralize)
 - [ordinal](#ordinal)
@@ -185,6 +186,54 @@ export default {
 
   ```js
   {{ msg | truncate(10) }} // 'lorem ipsum dolor' => 'lorem ipsu...'
+  ```
+
+#### number
+
++ Arguments:
+  * `{String} [format] - default: ''`
+  * `{Object} [options] - default: {}`
+
++ Options:
+  * `{String} [thousandsSeparator] - default: ','`
+  * `{String} [decimalSeparator] - default: '.'`
+
++ Examples:
+
+  ```js
+  {{ 123456 | number('0,0') }} // => 123,456
+  ```
+
+  Change the number of digits after the decimal point:
+
+  ```js
+  {{ 12345.67 | number('0.0000') }} // => 12345.6700
+  ```
+
+  Add a plus or minus sign to the beginning:
+
+  ```js
+  {{ 123456 | number('+0') }} // => +123456
+  {{ 123456 | number('-0') }} // => -123456
+  ```
+
+  Show number in thousand (K) or in millions (M):
+
+  ```js
+  {{ 123456 | number('0a') }} // => 123K
+  {{ 123456 | number('0 a') }} // => 123 K
+  {{ 123456789 | number('0a') }} // => 123M
+  ```
+
+  Use a different thousands separator:
+
+  ```js
+  {{ 1234567 | number('0,0', { thousandsSeparator: ' ' }) }} // => 1 234 567
+  ```
+  Use a different decimal separator:
+
+  ```js
+  {{ 12345.67 | number('0.00', { decimalSeparator: '|' }) }} // => 12,345|67
   ```
 
 #### currency
