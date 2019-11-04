@@ -457,6 +457,11 @@ var Vue2FiltersConfig = {
   capitalize: {
     onlyFirstLetter: false
   },
+  number: {
+    format: '0',
+    thousandsSeparator: ',',
+    decimalSeparator: '.'
+  },
   currency: {
     symbol: '$',
     decimalDigits: 2,
