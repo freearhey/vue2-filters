@@ -248,6 +248,7 @@ export default {
   * `{String} [decimalSeparator] - default: '.'`
   * `{Boolean} [symbolOnLeft] - default: true`
   * `{Boolean} [spaceBetweenAmountAndSymbol] - default: false`
+  * `{Boolean} [showPlusSign] - default: false`
 
 + Example:
 
@@ -283,6 +284,12 @@ export default {
 
   ```js
   {{ amount | currency('$', 0, { spaceBetweenAmountAndSymbol: true }) }} // 12345 => $ 12,345
+  ```
+
+  Show the plus sign if the value is greater than zero:
+
+  ```js
+  {{ amount | currency('$', 0, { showPlusSign: true }) }} // 12345 => +$12,345
   ```
   Use multiple options:
 
@@ -468,7 +475,8 @@ var Vue2FiltersConfig = {
     thousandsSeparator: ',',
     decimalSeparator: '.',
     symbolOnLeft: true,
-    spaceBetweenAmountAndSymbol: false
+    spaceBetweenAmountAndSymbol: false,
+    showPlusSign: false
   },
   pluralize: {
     includeNumber: false

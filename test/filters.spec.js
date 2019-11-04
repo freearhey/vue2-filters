@@ -145,6 +145,9 @@ describe('Filters', function() {
     expect(filter(1234, '$', 0, {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234')
     expect(filter(1234, '$', 0, {symbolOnLeft: false,spaceBetweenAmountAndSymbol: true})).toBe('1,234 $')
     expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
+    expect(filter(12345, 'VND', 0, {showPlusSign: true})).toBe('+VND12,345')
+    expect(filter(-12345, 'VND', 0, {showPlusSign: true})).toBe('-VND12,345')
+    expect(filter(0, 'VND', 0, {showPlusSign: true})).toBe('VND0')
     // round up
     expect(filter(4514.275)).toBe('$4,514.28')
     expect(filter(9446.975)).toBe('$9,446.98')
@@ -158,11 +161,12 @@ describe('Filters', function() {
         thousandsSeparator: ',',
         decimalSeparator: '|',
         symbolOnLeft: false,
-        spaceBetweenAmountAndSymbol: true
+        spaceBetweenAmountAndSymbol: true,
+        showPlusSign: true
       }
     })
 
-    expect(filter(1234)).toBe('1,234|000 @')
+    expect(filter(1234)).toBe('+1,234|000 @')
   })
 
   it('pluralize', function() {
