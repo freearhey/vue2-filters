@@ -1,3 +1,5 @@
+import util from '../util/index'
+
 /**
  * 123456 => '123,456'
  *
@@ -8,6 +10,7 @@
 function number (value, format, options) {
   const globalOptions = (this && this.number) ? this.number : {}
   options = options || globalOptions
+  format = util.exist(format) ? format : globalOptions.format
   const config = parseFormat(format)
   const number = parseNumber(value)
   const thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ','

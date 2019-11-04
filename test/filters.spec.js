@@ -36,11 +36,13 @@ describe('Filters', function() {
     var filter = otherFilters.number.bind({
       number: {
         thousandsSeparator: '@',
-        decimalSeparator: '|'
+        decimalSeparator: '|',
+        format: '0,0.000'
       }
     })
 
-    expect(filter(123456.789, '0,0.000')).toBe('123@456|789')
+    expect(filter(123456.789)).toBe('123@456|789')
+    expect(filter(123456.789, '0,0.0')).toBe('123@456|8')
   })
 
   it('capitalize', function() {
