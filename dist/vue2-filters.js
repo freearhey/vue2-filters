@@ -538,7 +538,7 @@ function currency(value, symbol, decimals, options) {
   symbol = src_util.exist(symbol) ? symbol : globalOptions.symbol;
   decimals = src_util.exist(decimals) ? decimals : globalOptions.decimalDigits;
   options = options || globalOptions;
-  var thousandsSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol;
+  var thousandsSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol, showPlusSign;
   var digitsRE = /(\d{3})(?=\d)/g;
   value = parseFloat(value);
   if (!isFinite(value) || !value && value !== 0) return '';
@@ -547,6 +547,7 @@ function currency(value, symbol, decimals, options) {
   thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ',';
   symbolOnLeft = options.symbolOnLeft != null ? options.symbolOnLeft : true;
   spaceBetweenAmountAndSymbol = options.spaceBetweenAmountAndSymbol != null ? options.spaceBetweenAmountAndSymbol : false;
+  showPlusSign = options.showPlusSign != null ? options.showPlusSign : false;
   var number = Math.abs(value);
   var stringified = toFixed(number, decimals);
   stringified = options.decimalSeparator ? stringified.replace('.', options.decimalSeparator) : stringified;
@@ -561,7 +562,8 @@ function currency(value, symbol, decimals, options) {
   symbol = spaceBetweenAmountAndSymbol ? symbolOnLeft ? symbol + ' ' : ' ' + symbol : symbol;
   symbol = symbolOnLeft ? symbol + head + _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float : head + _int.slice(i).replace(digitsRE, '$1' + thousandsSeparator) + _float + symbol;
   var sign = value < 0 ? '-' : '';
-  return sign + symbol;
+  var plusSign = value > 0 && showPlusSign ? '+' : '';
+  return plusSign + sign + symbol;
 }
 
 function toFixed(num, precision) {
@@ -620,14 +622,17 @@ function ordinal(value, options) {
 
 /* harmony default export */ var other_ordinal = (ordinal);
 // CONCATENATED MODULE: ./src/other/number.js
+
 /**
  * 123456 => '123,456'
  *
  * @params {Object} options
  * 
  */
+
 function number_number(value, format, options) {
   var globalOptions = this && this.number ? this.number : {};
+  format = src_util.exist(format) ? format : globalOptions.format;
   options = options || globalOptions;
   var config = parseFormat(format);
   var number = parseNumber(value);
