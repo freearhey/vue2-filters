@@ -1,6 +1,6 @@
 {
   "name": "vue2-filters",
-  "version": "0.8.0-beta.2",
+  "version": "0.8.0-beta.3",
   "description": "A collection of Vue.js filters",
   "main": "dist/vue2-filters.js",
   "types": "types/index.d.ts",
