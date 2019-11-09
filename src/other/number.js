@@ -9,8 +9,8 @@ import util from '../util/index'
 
 function number (value, format, options) {
   const globalOptions = (this && this.number) ? this.number : {}
-  options = options || globalOptions
   format = util.exist(format) ? format : globalOptions.format
+  options = options || globalOptions
   const config = parseFormat(format)
   const number = parseNumber(value)
   const thousandsSeparator = options.thousandsSeparator != null ? options.thousandsSeparator : ','
