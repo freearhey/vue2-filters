@@ -110,6 +110,7 @@ __webpack_require__.d(string_namespaceObject, "truncate", function() { return st
 var other_namespaceObject = {};
 __webpack_require__.r(other_namespaceObject);
 __webpack_require__.d(other_namespaceObject, "currency", function() { return other_currency; });
+__webpack_require__.d(other_namespaceObject, "fileSize", function() { return other_fileSize; });
 __webpack_require__.d(other_namespaceObject, "pluralize", function() { return other_pluralize; });
 __webpack_require__.d(other_namespaceObject, "ordinal", function() { return other_ordinal; });
 __webpack_require__.d(other_namespaceObject, "number", function() { return other_number; });
@@ -571,6 +572,40 @@ function toFixed(num, precision) {
 }
 
 /* harmony default export */ var other_currency = (currency);
+// CONCATENATED MODULE: ./src/other/fileSize.js
+/**
+ * 8                => '8 byte'
+ * 1024             => '1.00 kb'
+ * 2000000          => '1.90 MB'
+ * 2000000000       => '1.86 GB'
+ * 2000000000000    => '1.82 TB'
+ *
+ * @param {Number} valueInBytes The file size in bytes
+ * @param {Number} decimals Decimal places (default: 2)
+ */
+function fileSize(valueInBytes) {
+  var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  valueInBytes = valueInBytes === null || isNaN(valueInBytes) ? 0 : valueInBytes;
+
+  if (valueInBytes >= Math.pow(1024, 4)) {
+    // TB
+    return "".concat((valueInBytes / Math.pow(1024, 4)).toFixed(decimals), " TB");
+  } else if (valueInBytes >= Math.pow(1024, 3)) {
+    // GB
+    return "".concat((valueInBytes / Math.pow(1024, 3)).toFixed(decimals), " GB");
+  } else if (valueInBytes >= Math.pow(1024, 2)) {
+    // MB
+    return "".concat((valueInBytes / Math.pow(1024, 2)).toFixed(decimals), " MB");
+  } else if (valueInBytes >= 1024) {
+    // kb
+    return "".concat((valueInBytes / 1024).toFixed(decimals), " kb");
+  } // byte
+
+
+  return "".concat(valueInBytes, " byte");
+}
+
+/* harmony default export */ var other_fileSize = (fileSize);
 // CONCATENATED MODULE: ./src/other/pluralize.js
 
 /**
@@ -732,6 +767,7 @@ function number_toFixed(num, precision) {
 
 /* harmony default export */ var other_number = (number_number);
 // CONCATENATED MODULE: ./src/other/index.js
+
 
 
 
