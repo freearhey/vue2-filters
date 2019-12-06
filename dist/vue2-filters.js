@@ -110,7 +110,7 @@ __webpack_require__.d(string_namespaceObject, "truncate", function() { return st
 var other_namespaceObject = {};
 __webpack_require__.r(other_namespaceObject);
 __webpack_require__.d(other_namespaceObject, "currency", function() { return other_currency; });
-__webpack_require__.d(other_namespaceObject, "fileSize", function() { return other_fileSize; });
+__webpack_require__.d(other_namespaceObject, "bytes", function() { return other_bytes; });
 __webpack_require__.d(other_namespaceObject, "pluralize", function() { return other_pluralize; });
 __webpack_require__.d(other_namespaceObject, "ordinal", function() { return other_ordinal; });
 __webpack_require__.d(other_namespaceObject, "number", function() { return other_number; });
@@ -572,7 +572,8 @@ function toFixed(num, precision) {
 }
 
 /* harmony default export */ var other_currency = (currency);
-// CONCATENATED MODULE: ./src/other/fileSize.js
+// CONCATENATED MODULE: ./src/other/bytes.js
+
 /**
  * 8                => '8 byte'
  * 1024             => '1.00 kb'
@@ -580,32 +581,35 @@ function toFixed(num, precision) {
  * 2000000000       => '1.86 GB'
  * 2000000000000    => '1.82 TB'
  *
- * @param {Number} valueInBytes The file size in bytes
+ * @param {Number} value
  * @param {Number} decimals Decimal places (default: 2)
  */
-function fileSize(valueInBytes) {
-  var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-  valueInBytes = valueInBytes === null || isNaN(valueInBytes) ? 0 : valueInBytes;
 
-  if (valueInBytes >= Math.pow(1024, 4)) {
+function bytes(value, decimals) {
+  var globalOptions = this && this.bytes ? this.bytes : {};
+  decimals = src_util.exist(decimals) ? decimals : globalOptions.decimalDigits;
+  decimals = typeof decimals !== 'undefined' ? decimals : 2;
+  value = value === null || isNaN(value) ? 0 : value;
+
+  if (value >= Math.pow(1024, 4)) {
     // TB
-    return "".concat((valueInBytes / Math.pow(1024, 4)).toFixed(decimals), " TB");
-  } else if (valueInBytes >= Math.pow(1024, 3)) {
+    return "".concat((value / Math.pow(1024, 4)).toFixed(decimals), " TB");
+  } else if (value >= Math.pow(1024, 3)) {
     // GB
-    return "".concat((valueInBytes / Math.pow(1024, 3)).toFixed(decimals), " GB");
-  } else if (valueInBytes >= Math.pow(1024, 2)) {
+    return "".concat((value / Math.pow(1024, 3)).toFixed(decimals), " GB");
+  } else if (value >= Math.pow(1024, 2)) {
     // MB
-    return "".concat((valueInBytes / Math.pow(1024, 2)).toFixed(decimals), " MB");
-  } else if (valueInBytes >= 1024) {
+    return "".concat((value / Math.pow(1024, 2)).toFixed(decimals), " MB");
+  } else if (value >= 1024) {
     // kb
-    return "".concat((valueInBytes / 1024).toFixed(decimals), " kb");
+    return "".concat((value / 1024).toFixed(decimals), " kb");
   } // byte
 
 
-  return "".concat(valueInBytes, " byte");
+  return "".concat(value, " byte");
 }
 
-/* harmony default export */ var other_fileSize = (fileSize);
+/* harmony default export */ var other_bytes = (bytes);
 // CONCATENATED MODULE: ./src/other/pluralize.js
 
 /**
