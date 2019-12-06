@@ -225,7 +225,15 @@ describe('Filters', function() {
     expect(filter(1, { includeNumber: true })).toBe('1st')
   })
 
-  it('file size', function() {
+  it('ordinal with global options', function() {
+    var filter = otherFilters.ordinal.bind({
+      ordinal: { includeNumber: false }
+    })
+
+    expect(filter(4)).toBe('th')
+  })
+
+  it('bytes', function() {
     var filter = otherFilters.bytes
     
     expect(filter(12)).toBe('12 byte')
@@ -247,12 +255,12 @@ describe('Filters', function() {
     expect(filter("a random string")).toBe('0 byte')
   })
 
-  it('ordinal with global options', function() {
-    var filter = otherFilters.ordinal.bind({
-      ordinal: { includeNumber: false }
+  it('bytes with global options', function() {
+    var filter = otherFilters.bytes.bind({
+      bytes: { decimalDigits: 1 }
     })
 
-    expect(filter(4)).toBe('th')
+    expect(filter(2000)).toBe('2.0 kb')
   })
 
   it('limitByArray', function () {
