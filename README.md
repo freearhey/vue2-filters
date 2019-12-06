@@ -491,6 +491,9 @@ var Vue2FiltersConfig = {
     thousandsSeparator: ',',
     decimalSeparator: '.'
   },
+  bytes: {
+    decimalDigits: 2
+  },
   currency: {
     symbol: '$',
     decimalDigits: 2,
