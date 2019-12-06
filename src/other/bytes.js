@@ -8,7 +8,7 @@
  * @param {Number} valueInBytes The file size in bytes
  * @param {Number} decimals Decimal places (default: 2)
  */
-function fileSize(valueInBytes, decimals = 2) {
+function bytes(valueInBytes, decimals = 2) {
     valueInBytes = valueInBytes === null || isNaN(valueInBytes) ? 0 : valueInBytes
     
     if (valueInBytes >= Math.pow(1024, 4)) {
@@ -28,4 +28,4 @@ function fileSize(valueInBytes, decimals = 2) {
     return `${valueInBytes} byte`
 }
 
-export default fileSize
+export default bytes

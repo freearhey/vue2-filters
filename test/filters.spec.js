@@ -226,7 +226,7 @@ describe('Filters', function() {
   })
 
   it('file size', function() {
-    var filter = otherFilters.fileSize
+    var filter = otherFilters.bytes
     
     expect(filter(12)).toBe('12 byte')
     expect(filter(2000, 0)).toBe('2 kb')

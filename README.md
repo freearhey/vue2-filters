@@ -120,7 +120,7 @@ export default {
 - [placeholder](#placeholder)
 - [truncate](#truncate)
 - [number](#number)
-- [fileSize](#fileSize)
+- [bytes](#bytes)
 - [currency](#currency)
 - [pluralize](#pluralize)
 - [ordinal](#ordinal)
@@ -237,26 +237,25 @@ export default {
   {{ 12345.67 | number('0.00', { decimalSeparator: '|' }) }} // => 12,345|67
   ```
 
-#### fileSize
+#### bytes
 
 + Arguments:
-  * `{Number} valueInBytes`
   * `{Number} [decimalDigits] - default: 2`
 
 + Examples:
 
   ```js
-  {{ 20 | fileSize }}             // => 20 byte
-  {{ 2000 | fileSize }}           // => 1.95 kb
-  {{ 2000000 | fileSize }}        // => 1.91 MB
-  {{ 2000000000 | fileSize }}     // => 1.86 GB
-  {{ 2000000000000 | fileSize }}  // => 1.82 TB
+  {{ 20 | bytes }}             // => 20 byte
+  {{ 2000 | bytes }}           // => 1.95 kb
+  {{ 2000000 | bytes }}        // => 1.91 MB
+  {{ 2000000000 | bytes }}     // => 1.86 GB
+  {{ 2000000000000 | bytes }}  // => 1.82 TB
   ```
 
   Change the number of digits after the decimal point:
 
   ```js
-  {{ 2000000000 | fileSize(4) }}  // => 1.8626 GB
+  {{ 2000000000 | bytes(4) }}  // => 1.8626 GB
   ```
 
 #### currency
