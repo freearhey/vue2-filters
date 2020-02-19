@@ -114,6 +114,7 @@ __webpack_require__.d(other_namespaceObject, "bytes", function() { return other_
 __webpack_require__.d(other_namespaceObject, "pluralize", function() { return other_pluralize; });
 __webpack_require__.d(other_namespaceObject, "ordinal", function() { return other_ordinal; });
 __webpack_require__.d(other_namespaceObject, "number", function() { return other_number; });
+__webpack_require__.d(other_namespaceObject, "percent", function() { return other_percent; });
 
 // CONCATENATED MODULE: ./src/util/index.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -780,7 +781,34 @@ function number_toFixed(num, precision) {
 }
 
 /* harmony default export */ var other_number = (number_number);
+// CONCATENATED MODULE: ./src/other/percent.js
+
+/**
+ * 12               => '12%'
+ * 100              => '100%'
+ * 1000             => '1000%'
+ * 0.97             => '97%'
+ *
+ * @param {Number} value
+ * @param {Number} decimals Decimal places (default: 2)
+ */
+
+function percent(value, decimals) {
+  var globalOptions = this && this.percent ? this.percent : {};
+  decimals = src_util.exist(decimals) ? decimals : globalOptions.decimalDigits;
+  decimals = typeof decimals !== 'undefined' ? decimals : 0;
+  value = value === null || isNaN(value) ? 0 : value;
+
+  if (value <= 1) {
+    return "".concat((value * 100).toFixed(decimals), "%");
+  }
+
+  return "".concat(value.toFixed(decimals), "%");
+}
+
+/* harmony default export */ var other_percent = (percent);
 // CONCATENATED MODULE: ./src/other/index.js
+
 
 
 
