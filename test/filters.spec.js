@@ -263,6 +263,29 @@ describe('Filters', function() {
     expect(filter(2000)).toBe('2.0 kb')
   })
 
+  it('percent', function() {
+    var filter = otherFilters.percent
+    
+    expect(filter(12)).toBe('12%')
+    expect(filter(100, 0)).toBe('100%')
+    expect(filter(100, 1)).toBe('100.0%')
+    expect(filter(0.974878234, 3)).toBe('97.488%')
+    expect(filter(0.0003, 1)).toBe('0.0%')
+
+    // edge cases
+    expect(filter(undefined)).toBe('0%')
+    expect(filter(null)).toBe('0%')
+    expect(filter("a random string")).toBe('0%')
+  })
+
+  it('percent with global options', function() {
+    var filter = otherFilters.percent.bind({
+      percent: { decimalDigits: 1 }
+    })
+
+    expect(filter(100)).toBe('100.0%')
+  })
+
   it('limitByArray', function () {
     var filter = arrayFilters.limitBy
     var arr = [1, 2, 3]
