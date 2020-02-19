@@ -121,6 +121,7 @@ export default {
 - [truncate](#truncate)
 - [number](#number)
 - [bytes](#bytes)
+- [percent](#percent)
 - [currency](#currency)
 - [pluralize](#pluralize)
 - [ordinal](#ordinal)
@@ -256,6 +257,26 @@ export default {
 
   ```js
   {{ 2000000000 | bytes(4) }}  // => 1.8626 GB
+  ```
+
+#### percent
+
++ Arguments:
+  * `{Number} [decimalDigits] - default: 0`
+
++ Examples:
+
+  ```js
+  {{ 10 | percent }} // => 10%
+  {{ 100 | percent }} // => 100%
+  {{ 1000 | percent }} // => 1000%
+  {{ 0.97 | percent }} // => 97%
+  ```
+
+  Change the number of digits after the decimal point:
+
+  ```js
+  {{ 0.974878234 | percent(3) }} // => 97.488%
   ```
 
 #### currency
@@ -492,6 +513,9 @@ var Vue2FiltersConfig = {
     decimalSeparator: '.'
   },
   bytes: {
+    decimalDigits: 2
+  },
+  percent: {
     decimalDigits: 2
   },
   currency: {
