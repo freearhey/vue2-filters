@@ -236,12 +236,13 @@ describe('Filters', function() {
   it('bytes', function() {
     var filter = otherFilters.bytes
     
-    expect(filter(12)).toBe('12 byte')
-    expect(filter(2000, 0)).toBe('2 kb')
-    expect(filter(2000, 1)).toBe('2.0 kb')
-    expect(filter(2000)).toBe('1.95 kb')
-    expect(filter(2000, 3)).toBe('1.953 kb')
-    expect(filter(2000, 4)).toBe('1.9531 kb')
+    expect(filter(1)).toBe('1 byte')
+    expect(filter(12)).toBe('12 bytes')
+    expect(filter(2000, 0)).toBe('2 kB')
+    expect(filter(2000, 1)).toBe('2.0 kB')
+    expect(filter(2000)).toBe('1.95 kB')
+    expect(filter(2000, 3)).toBe('1.953 kB')
+    expect(filter(2000, 4)).toBe('1.9531 kB')
     expect(filter(2000000)).toBe('1.91 MB')
     expect(filter(2000000, 4)).toBe('1.9073 MB')
     expect(filter(2000000000)).toBe('1.86 GB')
@@ -250,9 +251,9 @@ describe('Filters', function() {
     expect(filter(2000000000000, 4)).toBe('1.8190 TB')
 
     // edge cases
-    expect(filter(undefined)).toBe('0 byte')
-    expect(filter(null)).toBe('0 byte')
-    expect(filter("a random string")).toBe('0 byte')
+    expect(filter(undefined)).toBe('0 bytes')
+    expect(filter(null)).toBe('0 bytes')
+    expect(filter("a random string")).toBe('0 bytes')
   })
 
   it('bytes with global options', function() {
@@ -260,7 +261,7 @@ describe('Filters', function() {
       bytes: { decimalDigits: 1 }
     })
 
-    expect(filter(2000)).toBe('2.0 kb')
+    expect(filter(2000)).toBe('2.0 kB')
   })
 
   it('percent', function() {

@@ -1,8 +1,9 @@
 import util from '../util/index'
 
 /**
- * 8                => '8 byte'
- * 1024             => '1.00 kb'
+ * 1                => '8 byte'
+ * 8                => '8 bytes'
+ * 1024             => '1.00 kB'
  * 2000000          => '1.90 MB'
  * 2000000000       => '1.86 GB'
  * 2000000000000    => '1.82 TB'
@@ -27,10 +28,10 @@ function bytes(value, decimals) {
         return `${(value / Math.pow(1024, 2)).toFixed(decimals)} MB`
     } else if (value >= 1024) {
         // kb
-        return `${(value / 1024).toFixed(decimals)} kb`
+        return `${(value / 1024).toFixed(decimals)} kB`
     }
     // byte
-    return `${value} byte`
+    return value === 1 ? `${value} byte` : `${value} bytes`
 }
 
 export default bytes

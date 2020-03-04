@@ -246,8 +246,9 @@ export default {
 + Examples:
 
   ```js
-  {{ 20 | bytes }}             // => 20 byte
-  {{ 2000 | bytes }}           // => 1.95 kb
+  {{ 1 | bytes }}              // => 1 byte
+  {{ 20 | bytes }}             // => 20 bytes
+  {{ 2000 | bytes }}           // => 1.95 kB
   {{ 2000000 | bytes }}        // => 1.91 MB
   {{ 2000000000 | bytes }}     // => 1.86 GB
   {{ 2000000000000 | bytes }}  // => 1.82 TB
