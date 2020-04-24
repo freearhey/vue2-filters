@@ -268,9 +268,10 @@ export default {
 + Examples:
 
   ```js
-  {{ 10 | percent }} // => 10%
-  {{ 100 | percent }} // => 100%
-  {{ 1000 | percent }} // => 1000%
+  {{ 0.01 | percent }} // => 1%
+  {{ 0.1 | percent }} // => 10%
+  {{ 1 | percent }} // => 100%
+  {{ 100 | percent }} // => 10000%
   {{ 0.97 | percent }} // => 97%
   ```
 
