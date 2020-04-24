@@ -2,8 +2,8 @@ var stringFilters = require('../src/string/index')
 var arrayFilters = require('../src/array/index')
 var otherFilters = require('../src/other/index')
 
-describe('Filters', function() {
-  it('number', function() {
+describe('Filters', function () {
+  it('number', function () {
     var filter = otherFilters.number
     expect(filter(123456)).toBe('123456')
     expect(filter('123456')).toBe('123456')
@@ -28,24 +28,24 @@ describe('Filters', function() {
     expect(filter(-123456.093, '0.00 a')).toBe('-123.46 K')
     expect(filter(-0.23, '.00')).toBe('-.23')
     // options
-    expect(filter(123456, '0,0', {thousandsSeparator: '|'})).toBe('123|456')
-    expect(filter(123456.789, '0.00', {decimalSeparator: '|'})).toBe('123456|79')
+    expect(filter(123456, '0,0', { thousandsSeparator: '|' })).toBe('123|456')
+    expect(filter(123456.789, '0.00', { decimalSeparator: '|' })).toBe('123456|79')
   })
 
-  it('number with global options', function() {
+  it('number with global options', function () {
     var filter = otherFilters.number.bind({
       number: {
         thousandsSeparator: '@',
         decimalSeparator: '|',
-        format: '0,0.000'
-      }
+        format: '0,0.000',
+      },
     })
 
     expect(filter(123456.789)).toBe('123@456|789')
     expect(filter(123456.789, '0,0.0')).toBe('123@456|8')
   })
 
-  it('capitalize', function() {
+  it('capitalize', function () {
     var filter = stringFilters.capitalize
     var res = filter('fsefsfsef zxcvxzsaxz')
     var words = res.split(' ')
@@ -56,7 +56,7 @@ describe('Filters', function() {
     assertNumberAndFalsy(filter)
   })
 
-  it('capitalize only first letter of sentence', function() {
+  it('capitalize only first letter of sentence', function () {
     var filter = stringFilters.capitalize
     var res = filter('fsefsfsef zxcvxzsaxz', { onlyFirstLetter: true })
     var words = res.split(' ')
@@ -67,8 +67,8 @@ describe('Filters', function() {
     assertNumberAndFalsy(filter)
   })
 
-  it('capitalize with global options', function() {
-    var filter = stringFilters.capitalize.bind({ capitalize: { onlyFirstLetter: true }})
+  it('capitalize with global options', function () {
+    var filter = stringFilters.capitalize.bind({ capitalize: { onlyFirstLetter: true } })
     var res = filter('fsefsfsef zxcvxzsaxz')
     var words = res.split(' ')
     expect(words[0].charAt(0)).toBe('F')
@@ -78,19 +78,19 @@ describe('Filters', function() {
     assertNumberAndFalsy(filter)
   })
 
-  it('uppercase', function() {
+  it('uppercase', function () {
     var filter = stringFilters.uppercase
     expect(filter('fsefef')).toBe('FSEFEF')
     assertNumberAndFalsy(filter)
   })
 
-  it('lowercase', function() {
+  it('lowercase', function () {
     var filter = stringFilters.lowercase
     expect(filter('AWEsoME')).toBe('awesome')
     assertNumberAndFalsy(filter)
   })
 
-  it('placeholder', function() {
+  it('placeholder', function () {
     var filter = stringFilters.placeholder
     expect(filter('sometext', 'placeholder text')).toBe('sometext')
     expect(filter(1234, 'placeholder text')).toBe(1234)
@@ -99,7 +99,7 @@ describe('Filters', function() {
     expect(filter(null, 'placeholder text')).toBe('placeholder text')
   })
 
-  it('truncate', function() {
+  it('truncate', function () {
     var filter = stringFilters.truncate
     expect(filter('lorem ipsum dolor')).toBe('lorem ipsum dol...')
     expect(filter('lorem ipsum dolor', 5)).toBe('lorem...')
@@ -110,7 +110,7 @@ describe('Filters', function() {
     expect(filter(null, 5)).toBe('')
   })
 
-  it('currency', function() {
+  it('currency', function () {
     var filter = otherFilters.currency
     expect(filter(1234)).toBe('$1,234.00')
     expect(filter(1234.45)).toBe('$1,234.45')
@@ -139,21 +139,23 @@ describe('Filters', function() {
     expect(filter(-150.43)).toBe('-$150.43')
     expect(filter(-1500.4343434)).toBe('-$1,500.43')
     // options
-    expect(filter(1234, '@', 0, {thousandsSeparator: ','})).toBe('@1,234')
-    expect(filter(1234, '', 2, {decimalSeparator: '|'})).toBe('1,234|00')
-    expect(filter(1234, '$', 2, {symbolOnLeft: false})).toBe('1,234.00$')
-    expect(filter(1234, '$', 0, {spaceBetweenAmountAndSymbol: true})).toBe('$ 1,234')
-    expect(filter(1234, '$', 0, {symbolOnLeft: false,spaceBetweenAmountAndSymbol: true})).toBe('1,234 $')
-    expect(filter(-12345, 'VND', 0, {symbolOnLeft: true})).toBe('-VND12,345')
-    expect(filter(12345, 'VND', 0, {showPlusSign: true})).toBe('+VND12,345')
-    expect(filter(-12345, 'VND', 0, {showPlusSign: true})).toBe('-VND12,345')
-    expect(filter(0, 'VND', 0, {showPlusSign: true})).toBe('VND0')
+    expect(filter(1234, '@', 0, { thousandsSeparator: ',' })).toBe('@1,234')
+    expect(filter(1234, '', 2, { decimalSeparator: '|' })).toBe('1,234|00')
+    expect(filter(1234, '$', 2, { symbolOnLeft: false })).toBe('1,234.00$')
+    expect(filter(1234, '$', 0, { spaceBetweenAmountAndSymbol: true })).toBe('$ 1,234')
+    expect(filter(1234, '$', 0, { symbolOnLeft: false, spaceBetweenAmountAndSymbol: true })).toBe(
+      '1,234 $'
+    )
+    expect(filter(-12345, 'VND', 0, { symbolOnLeft: true })).toBe('-VND12,345')
+    expect(filter(12345, 'VND', 0, { showPlusSign: true })).toBe('+VND12,345')
+    expect(filter(-12345, 'VND', 0, { showPlusSign: true })).toBe('-VND12,345')
+    expect(filter(0, 'VND', 0, { showPlusSign: true })).toBe('VND0')
     // round up
     expect(filter(4514.275)).toBe('$4,514.28')
     expect(filter(9446.975)).toBe('$9,446.98')
   })
 
-  it('currency with global options', function() {
+  it('currency with global options', function () {
     var filter = otherFilters.currency.bind({
       currency: {
         symbol: '@',
@@ -162,14 +164,14 @@ describe('Filters', function() {
         decimalSeparator: '|',
         symbolOnLeft: false,
         spaceBetweenAmountAndSymbol: true,
-        showPlusSign: true
-      }
+        showPlusSign: true,
+      },
     })
 
     expect(filter(1234)).toBe('+1,234|000 @')
   })
 
-  it('pluralize', function() {
+  it('pluralize', function () {
     var filter = otherFilters.pluralize
     // single word
     var word = 'item'
@@ -196,16 +198,16 @@ describe('Filters', function() {
     expect(filter(1, ['fry', 'fries'], { includeNumber: true })).toBe('1 fry')
   })
 
-  it('pluralize with global options', function() {
+  it('pluralize with global options', function () {
     var filter = otherFilters.pluralize.bind({
-      pluralize: { includeNumber: false }
+      pluralize: { includeNumber: false },
     })
     var word = 'item'
 
     expect(filter(1, word)).toBe('item')
   })
 
-  it('ordinal', function() {
+  it('ordinal', function () {
     var filter = otherFilters.ordinal
 
     expect(filter(0)).toBe('th')
@@ -225,17 +227,17 @@ describe('Filters', function() {
     expect(filter(1, { includeNumber: true })).toBe('1st')
   })
 
-  it('ordinal with global options', function() {
+  it('ordinal with global options', function () {
     var filter = otherFilters.ordinal.bind({
-      ordinal: { includeNumber: false }
+      ordinal: { includeNumber: false },
     })
 
     expect(filter(4)).toBe('th')
   })
 
-  it('bytes', function() {
+  it('bytes', function () {
     var filter = otherFilters.bytes
-    
+
     expect(filter(1)).toBe('1 byte')
     expect(filter(12)).toBe('12 bytes')
     expect(filter(2000, 0)).toBe('2 kB')
@@ -253,38 +255,40 @@ describe('Filters', function() {
     // edge cases
     expect(filter(undefined)).toBe('0 bytes')
     expect(filter(null)).toBe('0 bytes')
-    expect(filter("a random string")).toBe('0 bytes')
+    expect(filter('a random string')).toBe('0 bytes')
   })
 
-  it('bytes with global options', function() {
+  it('bytes with global options', function () {
     var filter = otherFilters.bytes.bind({
-      bytes: { decimalDigits: 1 }
+      bytes: { decimalDigits: 1 },
     })
 
     expect(filter(2000)).toBe('2.0 kB')
   })
 
-  it('percent', function() {
+  it('percent', function () {
     var filter = otherFilters.percent
-    
-    expect(filter(12)).toBe('12%')
-    expect(filter(100, 0)).toBe('100%')
-    expect(filter(100, 1)).toBe('100.0%')
+
+    expect(filter(1.2)).toBe('120%')
+    expect(filter(-0.2)).toBe('-20%')
+    expect(filter(12)).toBe('1200%')
+    expect(filter(100, 0)).toBe('10000%')
+    expect(filter(1, 1)).toBe('100.0%')
     expect(filter(0.974878234, 3)).toBe('97.488%')
     expect(filter(0.0003, 1)).toBe('0.0%')
 
     // edge cases
     expect(filter(undefined)).toBe('0%')
     expect(filter(null)).toBe('0%')
-    expect(filter("a random string")).toBe('0%')
+    expect(filter('a random string')).toBe('0%')
   })
 
-  it('percent with global options', function() {
+  it('percent with global options', function () {
     var filter = otherFilters.percent.bind({
-      percent: { decimalDigits: 1 }
+      percent: { decimalDigits: 1 },
     })
 
-    expect(filter(100)).toBe('100.0%')
+    expect(filter(100)).toBe('10000.0%')
   })
 
   it('limitByArray', function () {
@@ -330,9 +334,9 @@ describe('Filters', function() {
   it('filterBy', function () {
     var filter = arrayFilters.filterBy
     var arr = [
-      { a: 1, b: { c: 'hello' }},
+      { a: 1, b: { c: 'hello' } },
       { a: 2, b: 'hello' },
-      { a: 3, b: ['yoyo'] }
+      { a: 3, b: ['yoyo'] },
     ]
     var res
     // normal
@@ -351,7 +355,7 @@ describe('Filters', function() {
     res = filter(arr, 'yoyo')
     assertArray(res, [arr[2]])
     // filter by false (#928)
-    arr = [{a: false}, {b: true}]
+    arr = [{ a: false }, { b: true }]
     res = filter(arr, false)
     assertArray(res, [arr[0]])
     // filter by a function
@@ -366,7 +370,7 @@ describe('Filters', function() {
     var arr = [
       { firstname: 'A', lastname: 'B' },
       { firstname: 'C', lastname: 'B' },
-      { firstname: 'A', lastname: 'D' }
+      { firstname: 'A', lastname: 'D' },
     ]
     // multiple string keys
     var res
@@ -378,12 +382,12 @@ describe('Filters', function() {
     assertArray(res, [arr[0], arr[2]])
   })
 
-  it('find', function() {
+  it('find', function () {
     var find = arrayFilters.find
     var arr = [
-      { a: 1, b: { c: 'hello' }},
+      { a: 1, b: { c: 'hello' } },
       { a: 2, b: 'hello' },
-      { a: 3, b: ['yoyo'] }
+      { a: 3, b: ['yoyo'] },
     ]
     var res = find(arr, 'hello')
     assertArray(res, [arr[0]])
@@ -394,7 +398,7 @@ describe('Filters', function() {
     var arr = [
       { a: { b: 0 }, c: 'B' },
       { a: { b: 2 }, c: 'c' },
-      { a: { b: 1 }, c: 'a' }
+      { a: { b: 1 }, c: 'a' },
     ]
     var res
     // sort key
@@ -419,7 +423,7 @@ describe('Filters', function() {
     var arr = [
       { $key: 'a', $value: 3 },
       { $key: 'c', $value: 1 },
-      { $key: 'b', $value: 2 }
+      { $key: 'b', $value: 2 },
     ]
     var res = filter(arr, '$key')
     assertArray(res, [arr[0], arr[2], arr[1]])
@@ -429,7 +433,7 @@ describe('Filters', function() {
     arr = [
       { $key: 'a', $value: { v: 3 } },
       { $key: 'c', $value: { v: 1 } },
-      { $key: 'b', $value: { v: 2 } }
+      { $key: 'b', $value: { v: 2 } },
     ]
     res = filter(arr, 'v')
     assertArray(res, [arr[1], arr[2], arr[0]])
@@ -457,7 +461,7 @@ describe('Filters', function() {
       { a: 1, b: 2, c: 0 }, // 2
       { a: 1, b: 0, c: 0 }, // 3
       { a: 0, b: 0, c: 0 }, // 4
-      { a: 0, b: 1, c: 0 }  // 5
+      { a: 0, b: 1, c: 0 }, // 5
     ]
     var res
     // sort two keys
@@ -497,7 +501,7 @@ describe('Filters', function() {
   })
 })
 
-function evenBeforeOdd (a, b) {
+function evenBeforeOdd(a, b) {
   if (a % 2 === 0) {
     if (b % 2 === 0) {
       return a - b
@@ -511,14 +515,14 @@ function evenBeforeOdd (a, b) {
   }
 }
 
-function assertArray (res, expectations) {
+function assertArray(res, expectations) {
   expect(res.length).toBe(expectations.length)
   expectations.forEach(function (exp, i) {
     expect(exp).toBe(res[i])
   })
 }
 
-function assertNumberAndFalsy (filter) {
+function assertNumberAndFalsy(filter) {
   // should stringify numbers
   expect(filter(12345)).toBe('12345')
   expect(filter(0)).toBe('0')
