@@ -277,6 +277,12 @@ describe('Filters', function () {
     expect(filter(0.974878234, 3)).toBe('97.488%')
     expect(filter(0.0003, 1)).toBe('0.0%')
 
+    // different multiplier
+    expect(filter(0.1, 0, 150)).toBe('15%')
+    expect(filter(0.2, 1, 150)).toBe('30.0%')
+    expect(filter(1.2, 0, 300)).toBe('360%')
+    expect(filter(0.974878234, 3, 150)).toBe('146.232%')
+
     // edge cases
     expect(filter(undefined)).toBe('0%')
     expect(filter(null)).toBe('0%')
@@ -285,10 +291,10 @@ describe('Filters', function () {
 
   it('percent with global options', function () {
     var filter = otherFilters.percent.bind({
-      percent: { decimalDigits: 1 },
+      percent: { decimalDigits: 1, multiplier: 150 },
     })
 
-    expect(filter(100)).toBe('10000.0%')
+    expect(filter(100)).toBe('15000.0%')
   })
 
   it('limitByArray', function () {
