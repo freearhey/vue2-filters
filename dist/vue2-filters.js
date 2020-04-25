@@ -795,12 +795,14 @@ function number_toFixed(num, precision) {
  * @param {Number} decimals Decimal places (default: 2)
  */
 
-function percent(value, decimals) {
+function percent(value, decimals, multiplier) {
   var globalOptions = this && this.percent ? this.percent : {};
+  multiplier = src_util.exist(multiplier) ? multiplier : globalOptions.multiplier;
+  multiplier = typeof multiplier !== 'undefined' ? multiplier : 100;
   decimals = src_util.exist(decimals) ? decimals : globalOptions.decimalDigits;
   decimals = typeof decimals !== 'undefined' ? decimals : 0;
   value = value === null || isNaN(value) ? 0 : value;
-  return "".concat((value * 100).toFixed(decimals), "%");
+  return "".concat((value * multiplier).toFixed(decimals), "%");
 }
 
 /* harmony default export */ var other_percent = (percent);
