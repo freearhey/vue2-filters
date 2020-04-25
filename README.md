@@ -264,6 +264,7 @@ export default {
 
 + Arguments:
   * `{Number} [decimalDigits] - default: 0`
+  * `{Number} [multiplier] - default: 100`
 
 + Examples:
 
@@ -279,6 +280,12 @@ export default {
 
   ```js
   {{ 0.974878234 | percent(3) }} // => 97.488%
+  ```
+
+  Change the multiplier:
+
+  ```js
+  {{ 0.974878234 | percent(3, 150) }} // => 146.232%
   ```
 
 #### currency
@@ -518,7 +525,8 @@ var Vue2FiltersConfig = {
     decimalDigits: 2
   },
   percent: {
-    decimalDigits: 2
+    decimalDigits: 2,
+    multiplier: 100
   },
   currency: {
     symbol: '$',
