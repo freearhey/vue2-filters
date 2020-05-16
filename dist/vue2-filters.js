@@ -668,7 +668,7 @@ function ordinal(value, options) {
  * 123456 => '123,456'
  *
  * @params {Object} options
- * 
+ *
  */
 
 function number_number(value, format, options) {
@@ -686,20 +686,9 @@ function number_number(value, format, options) {
     return config.sign + numberWithUnit;
   }
 
-  var int = config.decimals === 0 ? number_toFixed(number.float, 0) : number.int;
-
-  switch (config.base) {
-    case '':
-      int = '';
-      break;
-
-    case '0,0':
-      int = addSeparator(int, thousandsSeparator);
-      break;
-  }
-
-  var fraction = getFraction(number.float, config.decimals, decimalSeparator);
-  return config.sign + int + fraction;
+  var rounded = number_toFixed(number.float, config.decimals);
+  var output = addSeparators(rounded, config.base, thousandsSeparator, decimalSeparator);
+  return config.sign + output;
 }
 
 Math.sign = function (x) {
@@ -738,13 +727,13 @@ function addUnit(num, config) {
   var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
   var si = [{
     value: 1,
-    symbol: ""
+    symbol: ''
   }, {
-    value: 1E3,
-    symbol: "K"
+    value: 1e3,
+    symbol: 'K'
   }, {
-    value: 1E6,
-    symbol: "M"
+    value: 1e6,
+    symbol: 'M'
   }];
   var i;
 
@@ -754,19 +743,28 @@ function addUnit(num, config) {
     }
   }
 
-  num = (num / si[i].value).toFixed(config.decimals).replace(rx, "$1");
+  num = (num / si[i].value).toFixed(config.decimals).replace(rx, '$1');
   return num + config.unit.replace('a', si[i].symbol);
 }
 
-function addSeparator(num, separator) {
+function addSeparators(num, base, thousandsSeparator, decimalSeparator) {
   var regex = /(\d+)(\d{3})/;
   var string = num.toString();
   var x = string.split('.');
   var x1 = x[0];
-  var x2 = x.length > 1 ? '.' + x[1] : '';
+  var x2 = x.length > 1 ? decimalSeparator + x[1] : '';
 
-  while (regex.test(x1)) {
-    x1 = x1.replace(regex, '$1' + separator + '$2');
+  switch (base) {
+    case '':
+      x1 = '';
+      break;
+
+    case '0,0':
+      while (regex.test(x1)) {
+        x1 = x1.replace(regex, '$1' + thousandsSeparator + '$2');
+      }
+
+      break;
   }
 
   return x1 + x2;
