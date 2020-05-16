@@ -4,11 +4,11 @@ import util from '../util/index'
  * 123456 => '123,456'
  *
  * @params {Object} options
- * 
+ *
  */
 
-function number (value, format, options) {
-  const globalOptions = (this && this.number) ? this.number : {}
+function number(value, format, options) {
+  const globalOptions = this && this.number ? this.number : {}
   format = util.exist(format) ? format : globalOptions.format
   options = options || globalOptions
   const config = parseFormat(format)
@@ -18,30 +18,22 @@ function number (value, format, options) {
 
   config.sign = config.sign || number.sign
 
-  if(config.unit) {
+  if (config.unit) {
     const numberWithUnit = addUnit(number.float, config)
     return config.sign + numberWithUnit
   }
-  
-  let int = config.decimals === 0 ? toFixed(number.float, 0) : number.int
-  switch(config.base) {
-    case '':
-      int = ''
-      break
-    case '0,0':
-      int = addSeparator(int, thousandsSeparator)
-      break
-  }
 
-  let fraction = getFraction(number.float, config.decimals, decimalSeparator)
+  const rounded = toFixed(number.float, config.decimals)
 
-  return config.sign + int + fraction
+  const output = addSeparators(rounded, config.base, thousandsSeparator, decimalSeparator)
+
+  return config.sign + output
 }
 
-Math.sign = function(x) {
+Math.sign = function (x) {
   x = +x
   if (x === 0 || isNaN(x)) {
-    return x  
+    return x
   }
   return x > 0 ? 1 : -1
 }
@@ -56,7 +48,7 @@ function parseNumber(num) {
 
 function parseFormat(string = '0') {
   const regex = /([\+\-])?([0-9\,]+)?([\.0-9]+)?([a\s]+)?/
-  const matches = string ? string.match(regex) : ['','','','','']
+  const matches = string ? string.match(regex) : ['', '', '', '', '']
   const float = matches[3]
   const decimals = float ? float.match(/0/g).length : 0
 
@@ -71,9 +63,9 @@ function parseFormat(string = '0') {
 function addUnit(num, config) {
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/
   const si = [
-    { value: 1, symbol: "" },
-    { value: 1E3, symbol: "K" },
-    { value: 1E6, symbol: "M" }
+    { value: 1, symbol: '' },
+    { value: 1e3, symbol: 'K' },
+    { value: 1e6, symbol: 'M' }
   ]
 
   let i
@@ -83,19 +75,27 @@ function addUnit(num, config) {
     }
   }
 
-  num = (num / si[i].value).toFixed(config.decimals).replace(rx, "$1")
+  num = (num / si[i].value).toFixed(config.decimals).replace(rx, '$1')
 
   return num + config.unit.replace('a', si[i].symbol)
 }
 
-function addSeparator(num, separator) {
+function addSeparators(num, base, thousandsSeparator, decimalSeparator) {
   const regex = /(\d+)(\d{3})/
   const string = num.toString()
   const x = string.split('.')
   let x1 = x[0]
-  let x2 = x.length > 1 ? '.' + x[1] : ''
-  while (regex.test(x1)) {
-    x1 = x1.replace(regex, '$1' + separator + '$2')
+  let x2 = x.length > 1 ? decimalSeparator + x[1] : ''
+
+  switch (base) {
+    case '':
+      x1 = ''
+      break
+    case '0,0':
+      while (regex.test(x1)) {
+        x1 = x1.replace(regex, '$1' + thousandsSeparator + '$2')
+      }
+      break
   }
 
   return x1 + x2
