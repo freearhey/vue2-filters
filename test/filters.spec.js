@@ -30,6 +30,9 @@ describe('Filters', function () {
     // options
     expect(filter(123456, '0,0', { thousandsSeparator: '|' })).toBe('123|456')
     expect(filter(123456.789, '0.00', { decimalSeparator: '|' })).toBe('123456|79')
+    expect(filter(10000.998, '0,0.00', { thousandsSeparator: '.', decimalSeparator: '|' })).toBe(
+      '10.001|00'
+    )
   })
 
   it('number with global options', function () {
@@ -37,8 +40,8 @@ describe('Filters', function () {
       number: {
         thousandsSeparator: '@',
         decimalSeparator: '|',
-        format: '0,0.000',
-      },
+        format: '0,0.000'
+      }
     })
 
     expect(filter(123456.789)).toBe('123@456|789')
@@ -164,8 +167,8 @@ describe('Filters', function () {
         decimalSeparator: '|',
         symbolOnLeft: false,
         spaceBetweenAmountAndSymbol: true,
-        showPlusSign: true,
-      },
+        showPlusSign: true
+      }
     })
 
     expect(filter(1234)).toBe('+1,234|000 @')
@@ -200,7 +203,7 @@ describe('Filters', function () {
 
   it('pluralize with global options', function () {
     var filter = otherFilters.pluralize.bind({
-      pluralize: { includeNumber: false },
+      pluralize: { includeNumber: false }
     })
     var word = 'item'
 
@@ -229,7 +232,7 @@ describe('Filters', function () {
 
   it('ordinal with global options', function () {
     var filter = otherFilters.ordinal.bind({
-      ordinal: { includeNumber: false },
+      ordinal: { includeNumber: false }
     })
 
     expect(filter(4)).toBe('th')
@@ -260,7 +263,7 @@ describe('Filters', function () {
 
   it('bytes with global options', function () {
     var filter = otherFilters.bytes.bind({
-      bytes: { decimalDigits: 1 },
+      bytes: { decimalDigits: 1 }
     })
 
     expect(filter(2000)).toBe('2.0 kB')
@@ -291,7 +294,7 @@ describe('Filters', function () {
 
   it('percent with global options', function () {
     var filter = otherFilters.percent.bind({
-      percent: { decimalDigits: 1, multiplier: 150 },
+      percent: { decimalDigits: 1, multiplier: 150 }
     })
 
     expect(filter(100)).toBe('15000.0%')
@@ -342,7 +345,7 @@ describe('Filters', function () {
     var arr = [
       { a: 1, b: { c: 'hello' } },
       { a: 2, b: 'hello' },
-      { a: 3, b: ['yoyo'] },
+      { a: 3, b: ['yoyo'] }
     ]
     var res
     // normal
@@ -376,7 +379,7 @@ describe('Filters', function () {
     var arr = [
       { firstname: 'A', lastname: 'B' },
       { firstname: 'C', lastname: 'B' },
-      { firstname: 'A', lastname: 'D' },
+      { firstname: 'A', lastname: 'D' }
     ]
     // multiple string keys
     var res
@@ -393,7 +396,7 @@ describe('Filters', function () {
     var arr = [
       { a: 1, b: { c: 'hello' } },
       { a: 2, b: 'hello' },
-      { a: 3, b: ['yoyo'] },
+      { a: 3, b: ['yoyo'] }
     ]
     var res = find(arr, 'hello')
     assertArray(res, [arr[0]])
@@ -404,7 +407,7 @@ describe('Filters', function () {
     var arr = [
       { a: { b: 0 }, c: 'B' },
       { a: { b: 2 }, c: 'c' },
-      { a: { b: 1 }, c: 'a' },
+      { a: { b: 1 }, c: 'a' }
     ]
     var res
     // sort key
@@ -429,7 +432,7 @@ describe('Filters', function () {
     var arr = [
       { $key: 'a', $value: 3 },
       { $key: 'c', $value: 1 },
-      { $key: 'b', $value: 2 },
+      { $key: 'b', $value: 2 }
     ]
     var res = filter(arr, '$key')
     assertArray(res, [arr[0], arr[2], arr[1]])
@@ -439,7 +442,7 @@ describe('Filters', function () {
     arr = [
       { $key: 'a', $value: { v: 3 } },
       { $key: 'c', $value: { v: 1 } },
-      { $key: 'b', $value: { v: 2 } },
+      { $key: 'b', $value: { v: 2 } }
     ]
     res = filter(arr, 'v')
     assertArray(res, [arr[1], arr[2], arr[0]])
@@ -467,7 +470,7 @@ describe('Filters', function () {
       { a: 1, b: 2, c: 0 }, // 2
       { a: 1, b: 0, c: 0 }, // 3
       { a: 0, b: 0, c: 0 }, // 4
-      { a: 0, b: 1, c: 0 }, // 5
+      { a: 0, b: 1, c: 0 } // 5
     ]
     var res
     // sort two keys
