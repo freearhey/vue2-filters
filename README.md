@@ -265,6 +265,7 @@ export default {
 + Arguments:
   * `{Number} [decimalDigits] - default: 0`
   * `{Number} [multiplier] - default: 100`
+  * `{Object} [options] - default: {}`
 
 + Options:
   * `{String} [decimalSeparator] - default: '.'`
