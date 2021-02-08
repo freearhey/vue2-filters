@@ -266,6 +266,9 @@ export default {
   * `{Number} [decimalDigits] - default: 0`
   * `{Number} [multiplier] - default: 100`
 
++ Options:
+  * `{String} [decimalSeparator] - default: '.'`
+
 + Examples:
 
   ```js
@@ -286,6 +289,12 @@ export default {
 
   ```js
   {{ 0.974878234 | percent(3, 150) }} // => 146.232%
+  ```
+
+  Use a different decimal separator:
+
+  ```js
+  {{ 0.07 | percent(2, 100, { decimalSeparator: '|' }) }} // => 7|00%
   ```
 
 #### currency
@@ -526,7 +535,8 @@ var Vue2FiltersConfig = {
   },
   percent: {
     decimalDigits: 2,
-    multiplier: 100
+    multiplier: 100,
+    decimalSeparator: '.'
   },
   currency: {
     symbol: '$',

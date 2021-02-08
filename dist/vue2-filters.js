@@ -117,15 +117,19 @@ __webpack_require__.d(other_namespaceObject, "number", function() { return other
 __webpack_require__.d(other_namespaceObject, "percent", function() { return other_percent; });
 
 // CONCATENATED MODULE: ./src/util/index.js
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var ArrayProto = Array.prototype,
     ObjProto = Object.prototype;
@@ -791,16 +795,20 @@ function number_toFixed(num, precision) {
  *
  * @param {Number} value
  * @param {Number} decimals Decimal places (default: 2)
+ * @param {Number} multiplier (default: 100)
+ * @params {Object} options
  */
 
-function percent(value, decimals, multiplier) {
+function percent(value, decimals, multiplier, options) {
   var globalOptions = this && this.percent ? this.percent : {};
+  options = options || globalOptions;
   multiplier = src_util.exist(multiplier) ? multiplier : globalOptions.multiplier;
   multiplier = typeof multiplier !== 'undefined' ? multiplier : 100;
   decimals = src_util.exist(decimals) ? decimals : globalOptions.decimalDigits;
   decimals = typeof decimals !== 'undefined' ? decimals : 0;
+  var decimalSeparator = options.decimalSeparator != null ? options.decimalSeparator : '.';
   value = value === null || isNaN(value) ? 0 : value;
-  return "".concat((value * multiplier).toFixed(decimals), "%");
+  return "".concat((value * multiplier).toFixed(decimals).replace('.', decimalSeparator), "%");
 }
 
 /* harmony default export */ var other_percent = (percent);
