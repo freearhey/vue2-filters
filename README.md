@@ -459,6 +459,8 @@ export default {
   <div v-for="user in filterBy(users, 'Jack', 'name')">
   <!-- the filter will only search for "Bonnie" in the name or age fields of each user object -->
   <div v-for="user in filterBy(users, 'Bonnie', 'name', 'age')">
+  <!-- filter using a custom function -->
+  <div v-for="user in filterBy(users, user => user.age > 16 && user.age < 60)">
   ```
 
 #### find
