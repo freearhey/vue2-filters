@@ -25,6 +25,10 @@ describe('Filters', function () {
     expect(filter(10245, '0 a')).toBe('10 K')
     expect(filter(10245678, '0.0a')).toBe('10.2M')
     expect(filter(-10245678, '.0a')).toBe('-10.2M')
+    expect(filter(10737418240, '0.0a')).toBe('10.7B')
+    expect(filter(-10737418240, '.0a')).toBe('-10.7B')
+    expect(filter(2317370418240, '0.00a')).toBe('2.32T')
+    expect(filter(-2317370418240, '.00a')).toBe('-2.32T')
     expect(filter(-123456.093, '0.00 a')).toBe('-123.46 K')
     expect(filter(-0.23, '.00')).toBe('-.23')
     // options
