@@ -519,6 +519,40 @@ describe('Filters', function () {
     res = filter(arr, evenBeforeOdd, -1)
     assertArray(res, [arr[1], arr[0], arr[2], arr[3]])
   })
+
+  it("every", () => {
+    const filter = arrayFilters.every;
+    const array = [2, 4, 6, 8];
+    expect(filter(array, (value) => value % 2 === 0)).toBe(true);
+    expect(filter(array, (value) => value === 2)).toBe(false);
+  });
+
+  it("some", () => {
+    const filter = arrayFilters.some;
+    const array = [2, 3, 6, 7];
+    expect(filter(array, (value) => value % 2 === 0)).toBe(true);
+    expect(filter(array, (value) => value === 2)).toBe(true);
+    expect(filter(array, (value) => value === 9)).toBe(false);
+  });
+
+  it("repeat", () => {
+    const filter = stringFilters.repeat;
+    expect(filter("a", 2)).toBe("aa");
+    expect(filter("a", 5)).toBe("aaaaa");
+    expect(filter("2", 2)).toBe("22");
+  });
+
+  it("reverse", () => {
+    const filter = stringFilters.reverse;
+    const value = "abcd";
+    expect(filter(value)).toBe("dcba");
+  });
+
+  it("wrap", () => {
+    const filter = stringFilters.wrap;
+    const value = "value";
+    expect(filter(value, "/")).toBe("/value/");
+  });
 })
 
 function evenBeforeOdd(a, b) {
