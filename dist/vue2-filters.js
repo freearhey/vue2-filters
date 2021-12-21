@@ -107,6 +107,15 @@ __webpack_require__.d(string_namespaceObject, "uppercase", function() { return s
 __webpack_require__.d(string_namespaceObject, "lowercase", function() { return string_lowercase; });
 __webpack_require__.d(string_namespaceObject, "placeholder", function() { return string_placeholder; });
 __webpack_require__.d(string_namespaceObject, "truncate", function() { return string_truncate; });
+__webpack_require__.d(string_namespaceObject, "repeat", function() { return string_repeat; });
+__webpack_require__.d(string_namespaceObject, "wrap", function() { return string_wrap; });
+__webpack_require__.d(string_namespaceObject, "reverse", function() { return string_reverse; });
+var array_namespaceObject = {};
+__webpack_require__.r(array_namespaceObject);
+__webpack_require__.d(array_namespaceObject, "limitBy", function() { return array_limitBy; });
+__webpack_require__.d(array_namespaceObject, "filterBy", function() { return array_filterBy; });
+__webpack_require__.d(array_namespaceObject, "orderBy", function() { return array_orderBy; });
+__webpack_require__.d(array_namespaceObject, "find", function() { return array_find; });
 var other_namespaceObject = {};
 __webpack_require__.r(other_namespaceObject);
 __webpack_require__.d(other_namespaceObject, "currency", function() { return other_currency; });
@@ -332,7 +341,52 @@ function truncate(value, length) {
 }
 
 /* harmony default export */ var string_truncate = (truncate);
+// CONCATENATED MODULE: ./src/string/repeat.js
+/**
+ * Repeats a given value an x amount of times
+ *
+ * @author Bastiaan Jansen
+ * @param {string | number} value to repeat
+ * @param {number} amount
+ * @returns repeated string
+ */
+var repeat = function repeat(value) {
+  var amount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return amount ? value.toString().repeat(amount) : '';
+};
+
+/* harmony default export */ var string_repeat = (repeat);
+// CONCATENATED MODULE: ./src/string/wrap.js
+/**
+ * Wraps a string or number with a string
+ *
+ * @author Bastiaan Jansen
+ * @param {string | number} value to wrap
+ * @param {string | number} wrap wrap string
+ * @returns wrapped string
+ */
+var wrap = function wrap(value, _wrap) {
+  return [_wrap, value, _wrap].join("");
+};
+
+/* harmony default export */ var string_wrap = (wrap);
+// CONCATENATED MODULE: ./src/string/reverse.js
+/**
+ * Reverses a string
+ *
+ * @author Bastiaan Jansen
+ * @param {string} value
+ * @returns reversed string
+ */
+var reverse = function reverse(value) {
+  return Array.from(value).reverse().join("");
+};
+
+/* harmony default export */ var string_reverse = (reverse);
 // CONCATENATED MODULE: ./src/string/index.js
+
+
+
 
 
 
@@ -823,6 +877,10 @@ function percent(value, decimals, multiplier, options) {
 
 
 // CONCATENATED MODULE: ./src/index.js
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -837,12 +895,7 @@ var Vue2Filters = {
     });
   },
   mixin: {
-    methods: {
-      limitBy: array_limitBy,
-      filterBy: array_filterBy,
-      orderBy: array_orderBy,
-      find: array_find
-    }
+    methods: _objectSpread({}, array_namespaceObject)
   }
 };
 /* harmony default export */ var src = __webpack_exports__["default"] = (Vue2Filters);
