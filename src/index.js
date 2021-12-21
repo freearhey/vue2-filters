@@ -14,12 +14,7 @@ var Vue2Filters = {
     })
   },
   mixin: {
-    methods: {
-        limitBy: arrayFilters.limitBy,
-        filterBy: arrayFilters.filterBy,
-        orderBy: arrayFilters.orderBy,
-        find: arrayFilters.find
-    }
+    methods: { ...arrayFilters }
   }
 }
 
