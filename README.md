@@ -119,6 +119,9 @@ export default {
 - [lowercase](#lowercase)
 - [placeholder](#placeholder)
 - [truncate](#truncate)
+- [repeat](#repeat)
+- [reverse](#reverse)
+- [wrap](#wrap)
 - [number](#number)
 - [bytes](#bytes)
 - [percent](#percent)
@@ -188,6 +191,36 @@ export default {
 
   ```js
   {{ msg | truncate(10) }} // 'lorem ipsum dolor' => 'lorem ipsu...'
+  ```
+
+#### repeat
+
++ Arguments:
+  * `{Number} [amount] - default: 1`
+
++ Example:
+
+  ```js
+  {{ msg | repeat(3) }} // 'a' => 'aaa'
+  ```
+
+#### reverse
+
++ Example:
+
+  ```js
+  {{ msg | reverse }} // 'abc' => 'cba'
+  ```
+
+#### wrap
+
++ Arguments:
+  * `{String} [string]`
+
++ Example:
+
+  ```js
+  {{ msg | wrap('###') }} // 'ipsum' => '###ipsum###'
   ```
 
 #### number
