@@ -6,8 +6,8 @@
  * @param {number} amount
  * @returns repeated string
  */
-const repeat = (value, amount) => {
-    return String(value) ? value.repeat(amount) : "";
+const repeat = (value, amount = 1) => {
+    return amount ? value.toString().repeat(amount) : '';
 };
 
 export default repeat;
