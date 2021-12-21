@@ -1,4 +1,4 @@
-# vue2-filters [![Build Status](https://travis-ci.org/freearhey/vue2-filters.svg?branch=master)](https://travis-ci.org/freearhey/vue2-filters)
+# vue2-filters [![Build Status](https://app.travis-ci.com/freearhey/vue2-filters.svg?branch=master)](https://app.travis-ci.com/freearhey/vue2-filters)
 
 A collection Vue.js filters.
 
